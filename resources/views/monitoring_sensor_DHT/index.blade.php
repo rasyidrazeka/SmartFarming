@@ -75,43 +75,19 @@
         <div class="row">
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
-                    <div class="card-body">Soil Temperature</div>
+                    <div class="card-body">Room Temperature</div>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
-                    <div class="card-body">Soil Humidity</div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-lg-6">
-                <div class="card" style="border-color: #CED4DA">
-                    <div class="card-body">Soil Conductivity</div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="card" style="border-color: #CED4DA">
-                    <div class="card-body">Soil pH</div>
+                    <div class="card-body">Room Humidity</div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
-                    <div class="card-body">Soil Nitrogen</div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="card" style="border-color: #CED4DA">
-                    <div class="card-body">Soil Phosphorus</div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-lg-6">
-                <div class="card" style="border-color: #CED4DA">
-                    <div class="card-body">Soil Potassium</div>
+                    <div class="card-body">Luminosity</div>
                 </div>
             </div>
         </div>
