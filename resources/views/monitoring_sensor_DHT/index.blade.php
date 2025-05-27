@@ -75,19 +75,40 @@
         <div class="row">
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
-                    <div class="card-body">Room Temperature</div>
+                    <div class="card-body">
+                        <h6>Room Temperature</h6>
+                        <div class="ratio ratio-16x9">
+                            <iframe
+                                src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=1&__feature.dashboardSceneSolo"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
-                    <div class="card-body">Room Humidity</div>
+                    <div class="card-body">
+                        <h6>Room Humidity</h6>
+                        <div class="ratio ratio-16x9">
+                            <iframe
+                                src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=3&__feature.dashboardSceneSolo"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
-                    <div class="card-body">Luminosity</div>
+                    <div class="card-body">
+                        <h6>Luminosity</h6>
+                        <div class="ratio ratio-16x9">
+                            <iframe
+                                src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=4&__feature.dashboardSceneSolo"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

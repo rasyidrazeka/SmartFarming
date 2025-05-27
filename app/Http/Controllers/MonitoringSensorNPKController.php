@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SensorsModel;
 use Illuminate\Http\Request;
 
 class MonitoringSensorNPKController extends Controller
@@ -17,9 +18,11 @@ class MonitoringSensorNPKController extends Controller
             ]
         ];
         $activeMenu = 'monitoringSensorNPK';
+        $sensor_npk = SensorsModel::where('table_id', 2)->get();
         return view('monitoring_sensor_npk.index', compact(
             'breadcrumb',
             'activeMenu',
+            'sensor_npk'
         ));
     }
 }

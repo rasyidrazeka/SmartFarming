@@ -17,7 +17,7 @@
                     <i class="ti ti-dashboard"></i>
                 </li> --}}
                 <li class="pc-item pc-hasmenu">
-                    <a href="#!" class="pc-link">
+                    <a href="#" class="pc-link">
                         <span class="pc-micon">
                             <i class="ti ti-access-point"></i>
                         </span>

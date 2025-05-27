@@ -17,7 +17,7 @@
                             @if ($key == count($breadcrumb->list) - 1)
                                 <li class="breadcrumb-item active">{{ $value['label'] }}</li>
                             @else
-                                <li class="breadcrumb-item"><a href="{{ $value['url'] }}">{{ $value['label'] }}</a></li>
+                                <li class="breadcrumb-item hover-underline"><a href="{{ $value['url'] }}">{{ $value['label'] }}</a></li>
                             @endif
                         @endforeach
                     </ul>
