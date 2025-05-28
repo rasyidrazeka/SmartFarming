@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class MonitoringSensorNPKController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $breadcrumb = (object) [
             'title' => 'Monitoring Sensor NPK',
@@ -19,10 +19,19 @@ class MonitoringSensorNPKController extends Controller
         ];
         $activeMenu = 'monitoringSensorNPK';
         $sensor_npk = SensorsModel::where('table_id', 2)->get();
+        $selectedSensor = $request->input('selected_sensor_npk');
+        session(['selected_sensor_npk' => $selectedSensor]);
         return view('monitoring_sensor_npk.index', compact(
             'breadcrumb',
             'activeMenu',
-            'sensor_npk'
+            'sensor_npk',
+            'selectedSensor'
         ));
+    }
+
+    public function storeFilter(Request $request)
+    {
+        $request->session()->put('selected_sensor', $request->input('selected_sensor_npk'));
+        return redirect()->route('monitoringSensorNPK.index');
     }
 }
