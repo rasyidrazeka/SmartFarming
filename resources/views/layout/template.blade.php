@@ -10,6 +10,8 @@
     <meta name="description" content="Web Monitoring dan Visualisasi Data Smart Farming">
     <meta name="keywords" content="Web Monitoring Smart Farming">
     <meta name="author" content="Rasyid">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <!-- [Favicon] icon -->
     <link rel="icon" href="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/images/favicon.svg') }}"
@@ -29,6 +31,8 @@
     <!-- [Template CSS Files] -->
     <link rel="stylesheet" href="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/css/style.css') }}" id="main-style-link">
     <link rel="stylesheet" href="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/css/style-preset.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
     <style>
         .hover-underline {
             color: #ffffff;
@@ -105,6 +109,12 @@
     <!-- [ Footer ] end -->
 
     <!-- Required Js -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
     <script src="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/js/plugins/popper.min.js') }}"></script>
     <script src="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/js/plugins/simplebar.min.js') }}"></script>
     <script src="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/js/plugins/bootstrap.min.js') }}"></script>
@@ -155,7 +165,14 @@
             });
         });
     </script>
-
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+    @stack('js')
 </body>
 <!-- [Body] end -->
 

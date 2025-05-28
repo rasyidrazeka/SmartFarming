@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'driver' => 'bcrypt',
+    'driver' => 'argon2id',
 
     /*
     |--------------------------------------------------------------------------
@@ -31,6 +31,12 @@ return [
     'bcrypt' => [
         'rounds' => env('BCRYPT_ROUNDS', 12),
         'verify' => true,
+    ],
+
+    'argon' => [
+        'memory' => 4096,
+        'threads' => 1,
+        'time' => 3,
     ],
 
     /*
