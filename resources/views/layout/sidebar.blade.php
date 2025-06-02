@@ -28,7 +28,7 @@
                     </a>
                     <ul class="pc-submenu">
                         <li class="pc-item">
-                            <a class="pc-link" href="{{ url('/monitoringSensorNPK') }}">Sensor NPK</a>
+                            <a class="pc-link" href="{{ route('monitoringSensorNPK.index') }}">Sensor NPK</a>
                         </li>
                         <li class="pc-item">
                             <a class="pc-link" href="{{ route('monitoringSensorDHT.index') }}">Sensor DHT</a>
