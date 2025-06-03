@@ -2,6 +2,10 @@
 @section('title', 'Contoh')
 @section('content')
     <div class="container-fluid">
+        <div class="form-group col-6 col-lg-3 ms-auto">
+            <label for="start_date" class="form-label">Filter Tanggal:</label>
+            <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Masukkan tanggal">
+        </div>
         <div class="card">
             <div class="card-body">
                 <table class="table align-middle table-striped table-bordered" id="table_riwayat_data_dht">
@@ -23,54 +27,85 @@
 @push('js')
     <script>
         $(document).ready(function() {
+            let startDate = '';
+            let endDate = '';
+
             var datadhts = $('#table_riwayat_data_dht').DataTable({
                 searching: false,
                 processing: true,
-                serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
+                serverSide: true,
+                responsive: true,
                 responsive: true,
                 ajax: {
-                    "url": "{{ url('riwayatDataDHT/list') }}",
-                    "dataType": "json",
-                    "type": "POST",
-                    // "data": function(d) {
-                    //     d.barang_id = $('#barang_id').val();
-                    // }
+                    url: "{{ url('riwayatDataDHT/list') }}",
+                    type: "POST",
+                    data: function(d) {
+                        d.start_date = startDate;
+                        d.end_date = endDate;
+                    }
                 },
                 columns: [{
-                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "text-center",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "temperature",
-                    className: "text-center",
-                    orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
-                    searchable: false // searchable: true, jika ingin kolom ini bisa dicari
-                }, {
-                    data: "humidity",
-                    className: "text-center",
-                    orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
-                    searchable: false // searchable: true, jika ingin kolom ini bisa dicari
-                }, {
-                    data: "luminosity",
-                    className: "text-center",
-                    orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
-                    searchable: false // searchable: true, jika ingin kolom ini bisa dicari
-                }, {
-                    data: "sensors.sensor_name",
-                    className: "text-center",
-                    orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
-                    searchable: false // searchable: true, jika ingin kolom ini bisa dicari
-                }, {
-                    data: "created_at",
-                    className: "text-center",
-                    orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
-                    searchable: false // searchable: true, jika ingin kolom ini bisa dicari
-                }]
+                        data: "DT_RowIndex",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "temperature",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "humidity",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "luminosity",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "sensors.sensor_name",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "created_at",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
             });
-            // $('#barang_id').on('change', function() {
-            //     dataTransaksiKeluar.ajax.reload();
-            // });
+
+            $('#daterange').daterangepicker({
+                opens: 'left',
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: 'DD-MM-YYYY'
+                }
+            });
+
+            $('#daterange').on('apply.daterangepicker', function(ev, picker) {
+                startDate = picker.startDate.format('YYYY-MM-DD');
+                endDate = picker.endDate.format('YYYY-MM-DD');
+                $(this).val(picker.startDate.format('DD-MM-YY') + ' ==> ' + picker.endDate.format(
+                    'DD-MM-YY'));
+                datadhts.draw();
+            });
+
+            $('#daterange').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                startDate = '';
+                endDate = '';
+                datadhts.draw();
+            });
         });
     </script>
 @endpush
