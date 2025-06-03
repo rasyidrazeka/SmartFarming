@@ -55,7 +55,7 @@
                     </a>
                     <ul class="pc-submenu">
                         <li class="pc-item">
-                            <a class="pc-link" href="#">Sensor NPK</a>
+                            <a class="pc-link" href="{{ route('riwayatDataNPK.index') }}">Sensor NPK</a>
                         </li>
                         <li class="pc-item">
                             <a class="pc-link" href="{{ route('riwayatDataDHT.index') }}">Sensor DHT</a>

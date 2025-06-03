@@ -35,6 +35,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/riwayatDataDHT.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/riwayatDataNPK.css') }}">
     @stack('css')
 </head>
 <!-- [Head] end -->

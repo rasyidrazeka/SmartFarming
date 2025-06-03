@@ -1,8 +1,8 @@
 #table_riwayat_data_npk thead th {
-    background-color: #227066; /* contoh: biru Bootstrap */
-    color: white;
-    text-align: center;
-    vertical-align: middle;
+    background-color: #227066 !important; /* contoh: biru Bootstrap */
+    color: white !important;
+    text-align: center !important;
+    vertical-align: middle !important;
 }
 
 #table_riwayat_data_npk_wrapper .dataTables_paginate {

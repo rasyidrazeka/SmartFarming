@@ -17,4 +17,9 @@ class SensorsModel extends Model
     {
         return $this->hasMany(DHTSModel::class, 'sensor_id', 'id');
     }
+
+    public function npks()
+    {
+        return $this->hasMany(NPKSModel::class, 'sensor_id', 'id');
+    }
 }
