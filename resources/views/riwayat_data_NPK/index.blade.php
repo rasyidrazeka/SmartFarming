@@ -7,7 +7,7 @@
                 <label for="sensor_npk" class="form-label">Sensor NPK:</label>
                 <div class="form-group">
                     <select class="choices form-select" name="selected_sensor_npk" id="selected_sensor_npk" required>
-                        <option value="">- Semua -</option>
+                        <option value="">- Semua Sensor -</option>
                         @foreach ($sensor_npk as $item)
                             <option value="{{ $item->id }}"
                                 {{ request()->get('selected_sensor_npk') == $item->id ? 'selected' : '' }}>

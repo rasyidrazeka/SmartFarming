@@ -59,19 +59,19 @@ class RiwayatDataNPKController extends Controller
                 return $row->humidity . ' %';
             })
             ->editColumn('conductivity', function ($row) {
-                return $row->conductivity . ' lux';
+                return $row->conductivity . ' μS/cm';
             })
             ->editColumn('ph', function ($row) {
-                return $row->ph . ' lux';
+                return $row->ph . ' pH';
             })
             ->editColumn('nitrogen', function ($row) {
-                return $row->nitrogen . ' lux';
+                return $row->nitrogen . ' mg/kg';
             })
             ->editColumn('phosphorus', function ($row) {
-                return $row->phosphorus . ' lux';
+                return $row->phosphorus . ' mg/kg';
             })
             ->editColumn('potassium', function ($row) {
-                return $row->potassium . ' lux';
+                return $row->potassium . ' mg/kg';
             })
             ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d-m-Y H:i:s');
