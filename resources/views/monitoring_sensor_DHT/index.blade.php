@@ -3,6 +3,12 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
+            <div class="form-group col-6 col-lg-3 ms-auto">
+                <label for="start_date" class="form-label">Filter Tanggal:</label>
+                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Masukkan tanggal">
+            </div>
+        </div>
+        <div class="row">
             @foreach ($dataDHT->slice(0, 4) as $item)
                 <div class="col-12 col-lg-3">
                     <div class="card text-center p-3" style="border-color: #CED4DA">
@@ -57,3 +63,38 @@
         </div>
     </div>
 @endsection
+@push('css')
+@endpush
+@push('js')
+    <script>
+        $('#daterange').daterangepicker({
+            opens: 'left',
+            autoUpdateInput: false,
+            locale: {
+                applyLabel: 'Pilih',
+                cancelLabel: 'Batal',
+                format: 'DD-MM-YYYY',
+                daysOfWeek: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+                monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                    'Juli', 'Agustus', 'September', 'Oktober', 'November',
+                    'Desember'
+                ],
+            }
+        });
+
+        $('#daterange').on('apply.daterangepicker', function(ev, picker) {
+            startDate = picker.startDate.format('YYYY-MM-DD');
+            endDate = picker.endDate.format('YYYY-MM-DD');
+            $(this).val(picker.startDate.format('DD-MM-YY') + ' ==> ' + picker.endDate.format(
+                'DD-MM-YY'));
+            datadhts.draw();
+        });
+
+        $('#daterange').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+            startDate = '';
+            endDate = '';
+            datadhts.draw();
+        });
+    </script>
+@endpush

@@ -2,7 +2,7 @@
 @section('title', 'Monitoring NPK - Agrilink Vocpro')
 @section('content')
     <div class="container-fluid">
-        <div class="d-flex align-items-end form-group row">
+        <div class="d-flex align-items-end form-group row mb-0">
             <div class="form-group col-12 col-lg-3 mb-0">
                 <label for="sensor_npk" class="form-label">Sensor NPK:</label>
                 <div class="form-group">
@@ -18,16 +18,8 @@
                 </div>
             </div>
             <div class="form-group col-6 col-lg-3 ms-auto">
-                <label for="start_date" class="form-label">Start Date:</label>
-                <input type="datetime-local" class="form-control" name="" id="">
-            </div>
-            <div class="form-group col-6 col-lg-3">
-                <label for="start_date" class="form-label">End Date:</label>
-                <input type="datetime-local" class="form-control" name="" id="">
-            </div>
-            <div class="form-group col-2 col-lg-1">
-                <button class="btn btn-md btn-success mb-1"
-                    style="color: white; background-color: #227066; border: none">Search</button>
+                <label for="start_date" class="form-label">Filter Tanggal:</label>
+                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Masukkan tanggal">
             </div>
         </div>
         <!-- Carousel Mulai dari sini -->
@@ -101,6 +93,36 @@
             const currentUrl = new URL(window.location.href);
             currentUrl.searchParams.set('selected_sensor_npk', selectedValue);
             window.location.href = currentUrl.toString(); // Redirect ke URL baru dengan param
+        });
+
+        $('#daterange').daterangepicker({
+            opens: 'left',
+            autoUpdateInput: false,
+            locale: {
+                applyLabel: 'Pilih',
+                cancelLabel: 'Batal',
+                format: 'DD-MM-YYYY',
+                daysOfWeek: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+                monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                    'Juli', 'Agustus', 'September', 'Oktober', 'November',
+                    'Desember'
+                ],
+            }
+        });
+
+        $('#daterange').on('apply.daterangepicker', function(ev, picker) {
+            startDate = picker.startDate.format('YYYY-MM-DD');
+            endDate = picker.endDate.format('YYYY-MM-DD');
+            $(this).val(picker.startDate.format('DD-MM-YY') + ' ==> ' + picker.endDate.format(
+                'DD-MM-YY'));
+            datadhts.draw();
+        });
+
+        $('#daterange').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+            startDate = '';
+            endDate = '';
+            datadhts.draw();
         });
     </script>
 @endpush

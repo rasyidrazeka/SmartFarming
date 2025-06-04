@@ -132,8 +132,14 @@
                 opens: 'left',
                 autoUpdateInput: false,
                 locale: {
-                    cancelLabel: 'Clear',
-                    format: 'DD-MM-YYYY'
+                    applyLabel: 'Pilih',
+                    cancelLabel: 'Batal',
+                    format: 'DD-MM-YYYY',
+                    daysOfWeek: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+                    monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                        'Juli', 'Agustus', 'September', 'Oktober', 'November',
+                        'Desember'
+                    ],
                 }
             });
 
