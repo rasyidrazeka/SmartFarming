@@ -50,7 +50,7 @@ class MonitoringSensorDHTController extends Controller
                 'label' => 'Luminosity',
                 'value' => $data->luminosity,
                 'unit' => 'lux',
-                'icon' => 'bi-lightning'
+                'icon' => 'bi-brightness-high-fill'
             ]);
         }
 
