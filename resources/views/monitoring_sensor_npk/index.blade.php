@@ -38,7 +38,7 @@
                     <div class="row">
                         @foreach ($dataNPK->slice(0, 4) as $item)
                             <div class="col-12 col-lg-3">
-                                <div class="card text-center p-3 border">
+                                <div class="card text-center p-3">
                                     <div class="mb-2">
                                         <i class="{{ $item['icon'] }} fs-1" style="color: #227066"></i>
                                     </div>
@@ -87,6 +87,10 @@
             @endif
         </div>
     </div>
+@endsection
+@push('css')
+@endpush
+@push('js')
     <script>
         const npkFilter = document.getElementById('selected_sensor_npk');
 
@@ -97,4 +101,4 @@
             window.location.href = currentUrl.toString(); // Redirect ke URL baru dengan param
         });
     </script>
-@endsection
+@endpush
