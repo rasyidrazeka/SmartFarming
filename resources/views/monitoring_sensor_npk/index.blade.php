@@ -38,7 +38,7 @@
                     <div class="row">
                         @foreach ($dataNPK->slice(0, 4) as $item)
                             <div class="col-12 col-lg-3">
-                                <div class="card text-center p-3">
+                                <div class="card text-center p-3" style="border-color: #CED4DA">
                                     <div class="mb-2">
                                         <i class="{{ $item['icon'] }} fs-1" style="color: #227066"></i>
                                     </div>
@@ -55,7 +55,7 @@
                     <div class="row">
                         @foreach ($dataNPK->slice(4, 4) as $item)
                             <div class="col-md-3">
-                                <div class="card text-center p-3 border">
+                                <div class="card text-center p-3" style="border-color: #CED4DA">
                                     <div class="mb-2">
                                         <i class="{{ $item['icon'] }} fs-1" style="color: #227066"></i>
                                     </div>
