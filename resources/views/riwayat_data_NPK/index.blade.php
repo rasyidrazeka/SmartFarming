@@ -1,5 +1,5 @@
 @extends('layout.template')
-@section('title', 'Contoh')
+@section('title', 'Riwayat NPK - Agrilink Vocpro')
 @section('content')
     <div class="container-fluid">
         <div class="row">

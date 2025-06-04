@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>{{ config('app.name', 'Smart Farming') }}</title>
+    <title>@yield('title', 'Agrilink Vocpro')</title>
     <!-- [Meta] -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -14,8 +14,7 @@
 
 
     <!-- [Favicon] icon -->
-    <link rel="icon" href="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/images/favicon.svg') }}"
-        type="image/x-icon">
+    <link rel="icon" href="{{ asset('storage/asset_web/LOGO NO BG.png') }}" type="image/x-icon">
     <!-- [Google Font] Family -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
