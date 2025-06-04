@@ -37,7 +37,7 @@
                 <div class="carousel-item active">
                     <div class="row">
                         @foreach ($dataNPK->slice(0, 4) as $item)
-                            <div class="col-md-3">
+                            <div class="col-12 col-lg-3">
                                 <div class="card text-center p-3 border">
                                     <div class="mb-2">
                                         <i class="{{ $item['icon'] }} fs-1" style="color: #227066"></i>
