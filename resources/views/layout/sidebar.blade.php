@@ -1,7 +1,9 @@
 <nav class="pc-sidebar">
     <div class="navbar-wrapper">
         <div class="m-header">
-            <img src="{{ Storage::url('asset_web/logo.png') }}" class="img-fluid p-3" alt="logo">
+            <a href="{{ route('dashboard.index') }}">
+                <img src="{{ Storage::url('asset_web/logo.png') }}" class="img-fluid p-3" alt="logo">
+            </a>
         </div>
         <div class="navbar-content">
             <ul class="pc-navbar">
@@ -145,8 +147,8 @@
             </ul> --}}
                 <div class="card text-center">
                     <div class="card-body">
-                        <img src="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/images/img-navbar-card.png') }}"
-                            alt="images" class="img-fluid mb-2">
+                        <img src="{{ asset('storage/asset_web/No Image Profile.png') }}" alt="images"
+                            class="img-fluid mb-3">
                         <h5>Selamat Datang</h5>
                         <p>Nama User</p>
                     </div>
