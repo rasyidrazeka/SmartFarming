@@ -81,7 +81,7 @@
         $('#daterange').on('apply.daterangepicker', function(ev, picker) {
             startDate = picker.startDate.format('YYYY-MM-DD');
             endDate = picker.endDate.format('YYYY-MM-DD');
-            $(this).val(picker.startDate.format('DD-MM-YY') + ' ==> ' + picker.endDate.format(
+            $(this).val(picker.startDate.format('DD-MM-YY') + ' → ' + picker.endDate.format(
                 'DD-MM-YY'));
             updateGrafanaIframe(startDate, endDate);
         });
