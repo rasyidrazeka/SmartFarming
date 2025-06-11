@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <h6>Room Temperature</h6>
                         <div class="ratio ratio-16x9">
-                            <iframe
+                            <iframe id="grafanaIframeTemperature"
                                 src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=1&__feature.dashboardSceneSolo"
                                 allowfullscreen></iframe>
                         </div>
@@ -39,7 +39,7 @@
                     <div class="card-body">
                         <h6>Room Humidity</h6>
                         <div class="ratio ratio-16x9">
-                            <iframe
+                            <iframe id="grafanaIframeHumidity"
                                 src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=3&__feature.dashboardSceneSolo"
                                 allowfullscreen></iframe>
                         </div>
@@ -53,7 +53,7 @@
                     <div class="card-body">
                         <h6>Luminosity</h6>
                         <div class="ratio ratio-16x9">
-                            <iframe
+                            <iframe id="grafanaIframeLuminosity"
                                 src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=4&__feature.dashboardSceneSolo"
                                 allowfullscreen></iframe>
                         </div>
@@ -87,14 +87,60 @@
             endDate = picker.endDate.format('YYYY-MM-DD');
             $(this).val(picker.startDate.format('DD-MM-YY') + ' → ' + picker.endDate.format(
                 'DD-MM-YY'));
-            datadhts.draw();
+            updateGrafanaIframe(startDate, endDate);
         });
 
         $('#daterange').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
             startDate = '';
             endDate = '';
-            datadhts.draw();
+            defaultGrafanaIframe();
         });
+    </script>
+
+    <script>
+        function updateGrafanaIframe(startDate, endDate) {
+            const fromTimestamp = new Date(startDate).getTime(); // Konversi ke timestamp (ms)
+            const toTimestamp = new Date(endDate).getTime(); // Konversi ke timestamp (ms)
+
+            const grafanaEmbedUrlTemperature =
+                "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
+            // Update URL iframe dengan parameter waktu
+            const temperatureGrafana =
+                `${grafanaEmbedUrlTemperature}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&panelId=6&__feature.dashboardSceneSolo`;
+            document.getElementById('grafanaIframeTemperature').src = temperatureGrafana;
+
+            const grafanaEmbedUrlHumidity =
+                "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
+            // Update URL iframe dengan parameter waktu
+            const humidityGrafana =
+                `${grafanaEmbedUrlHumidity}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&panelId=7&__feature.dashboardSceneSolo`;
+            document.getElementById('grafanaIframeHumidity').src = humidityGrafana;
+
+            const grafanaEmbedUrlLuminosity =
+                "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
+            // Update URL iframe dengan parameter waktu
+            const luminosityGrafana =
+                `${grafanaEmbedUrlLuminosity}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&showCategory=Standard%20options&theme=light&panelId=8&__feature.dashboardSceneSolo`;
+            document.getElementById('grafanaIframeLuminosity').src = luminosityGrafana;
+        }
+    </script>
+    <script>
+        function defaultGrafanaIframe() {
+            const grafanaEmbedUrlTemperature =
+                "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=1&__feature.dashboardSceneSolo"; // URL dasbor Grafana
+            // Update URL iframe dengan parameter waktu
+            document.getElementById('grafanaIframeTemperature').src = grafanaEmbedUrlTemperature;
+
+            const grafanaEmbedUrlHumidity =
+                "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=3&__feature.dashboardSceneSolo"; // URL dasbor Grafana
+            // Update URL iframe dengan parameter waktu
+            document.getElementById('grafanaIframeHumidity').src = grafanaEmbedUrlHumidity;
+
+            const grafanaEmbedUrlLuminosity =
+                "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=4&__feature.dashboardSceneSolo"; // URL dasbor Grafana
+            // Update URL iframe dengan parameter waktu
+            document.getElementById('grafanaIframeLuminosity').src = grafanaEmbedUrlLuminosity;
+        }
     </script>
 @endpush

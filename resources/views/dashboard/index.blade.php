@@ -90,9 +90,10 @@
             $(this).val('');
             startDate = '';
             endDate = '';
-            updateGrafanaIframe(startDate, endDate);
+            defaultGrafanaIframe();
         });
     </script>
+
     <script>
         function updateGrafanaIframe(startDate, endDate) {
             const fromTimestamp = new Date(startDate).getTime(); // Konversi ke timestamp (ms)
@@ -118,6 +119,25 @@
             const npks2Grafana =
                 `${grafanaEmbedUrlDhts}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&panelId=4&__feature.dashboardSceneSolo`;
             document.getElementById('grafanaIframeNpks2').src = npks2Grafana;
+        }
+    </script>
+
+    <script>
+        function defaultGrafanaIframe() {
+            const grafanaEmbedUrlDhts =
+                "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=7&__feature.dashboardSceneSolo"; // URL dasbor Grafana
+            // Update URL iframe dengan parameter waktu
+            document.getElementById('grafanaIframeDhts').src = grafanaEmbedUrlDhts;
+
+            const grafanaEmbedUrlNpks1 =
+                "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=10&__feature.dashboardSceneSolo"; // URL dasbor Grafana
+            // Update URL iframe dengan parameter waktu
+            document.getElementById('grafanaIframeNpks1').src = grafanaEmbedUrlNpks1;
+
+            const grafanaEmbedUrlNpks2 =
+                "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=11&__feature.dashboardSceneSolo"; // URL dasbor Grafana
+            // Update URL iframe dengan parameter waktu
+            document.getElementById('grafanaIframeNpks2').src = grafanaEmbedUrlNpks2;
         }
     </script>
 @endpush
