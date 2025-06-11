@@ -115,14 +115,12 @@
             endDate = picker.endDate.format('YYYY-MM-DD');
             $(this).val(picker.startDate.format('DD-MM-YY') + ' → ' + picker.endDate.format(
                 'DD-MM-YY'));
-            datadhts.draw();
         });
 
         $('#daterange').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
             startDate = '';
             endDate = '';
-            datadhts.draw();
         });
     </script>
 @endpush
