@@ -27,14 +27,14 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            let startDate = '';
-            let endDate = '';
+            let startDate = getQueryParam('start_date') || '';
+            let endDate = getQueryParam('end_date') || '';
 
-            var datadhts = $('#table_riwayat_data_dht').DataTable({
+            // Inisialisasi DataTable
+            const datadhts = $('#table_riwayat_data_dht').DataTable({
                 searching: false,
                 processing: true,
                 serverSide: true,
-                responsive: true,
                 responsive: true,
                 ajax: {
                     url: "{{ url('riwayatDataDHT/list') }}",
@@ -83,6 +83,13 @@
                 ]
             });
 
+            // Tampilkan ulang tanggal terpilih jika tersedia di URL
+            if (startDate && endDate) {
+                $('#daterange').val(moment(startDate).format('DD-MM-YY') + ' → ' + moment(endDate).format(
+                    'DD-MM-YY'));
+            }
+
+            // Inisialisasi Daterangepicker
             $('#daterange').daterangepicker({
                 opens: 'left',
                 autoUpdateInput: false,
@@ -92,26 +99,56 @@
                     format: 'DD-MM-YYYY',
                     daysOfWeek: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
                     monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-                        'Juli', 'Agustus', 'September', 'Oktober', 'November',
-                        'Desember'
+                        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
                     ],
                 }
             });
 
+            // Saat tombol "Pilih" ditekan
             $('#daterange').on('apply.daterangepicker', function(ev, picker) {
                 startDate = picker.startDate.format('YYYY-MM-DD');
                 endDate = picker.endDate.format('YYYY-MM-DD');
                 $(this).val(picker.startDate.format('DD-MM-YY') + ' → ' + picker.endDate.format(
                     'DD-MM-YY'));
+
+                // Simpan ke URL
+                const newUrl = updateQueryString(window.location.href, startDate, endDate);
+                window.history.replaceState(null, '', newUrl);
+
                 datadhts.draw();
             });
 
+            // Saat "Batal" ditekan
             $('#daterange').on('cancel.daterangepicker', function(ev, picker) {
                 $(this).val('');
                 startDate = '';
                 endDate = '';
+                const newUrl = removeQueryString(window.location.href);
+                window.history.replaceState(null, '', newUrl);
                 datadhts.draw();
             });
+
+            // Helper: Ambil query param dari URL
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            // Helper: Update query string dengan tanggal baru
+            function updateQueryString(url, start, end) {
+                const urlObj = new URL(url);
+                urlObj.searchParams.set('start_date', start);
+                urlObj.searchParams.set('end_date', end);
+                return urlObj.toString();
+            }
+
+            // Helper: Hapus query string
+            function removeQueryString(url) {
+                const urlObj = new URL(url);
+                urlObj.searchParams.delete('start_date');
+                urlObj.searchParams.delete('end_date');
+                return urlObj.pathname;
+            }
         });
     </script>
 @endpush

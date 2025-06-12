@@ -83,7 +83,7 @@
                 // Ini penting agar iframe langsung update
                 setTimeout(() => {
                     updateGrafanaIframe(startDateParam, endDateParam);
-                }, 500); // tambahkan delay kecil untuk memastikan iframe ada di DOM
+                }, 1000); // tambahkan delay kecil untuk memastikan iframe ada di DOM
             } else {
                 defaultGrafanaIframe();
             }

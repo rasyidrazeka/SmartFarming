@@ -47,14 +47,26 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            let startDate = '';
-            let endDate = '';
+            // Ambil nilai dari URL jika tersedia
+            let startDate = getQueryParam('start_date') || '';
+            let endDate = getQueryParam('end_date') || '';
+            let selectedSensor = getQueryParam('selected_sensor_npk') || '';
 
-            var datadhts = $('#table_riwayat_data_npk').DataTable({
+            // Set nilai awal dropdown jika ada di URL
+            if (selectedSensor) {
+                $('#selected_sensor_npk').val(selectedSensor).trigger('change');
+            }
+
+            // Tampilkan tanggal di input jika tersedia
+            if (startDate && endDate) {
+                $('#daterange').val(moment(startDate).format('DD-MM-YY') + ' → ' + moment(endDate).format(
+                    'DD-MM-YY'));
+            }
+
+            const datadhts = $('#table_riwayat_data_npk').DataTable({
                 searching: false,
                 processing: true,
                 serverSide: true,
-                responsive: true,
                 responsive: true,
                 ajax: {
                     url: "{{ route('riwayatDataNPK.list') }}",
@@ -128,6 +140,7 @@
                 ]
             });
 
+            // Inisialisasi date range picker
             $('#daterange').daterangepicker({
                 opens: 'left',
                 autoUpdateInput: false,
@@ -137,8 +150,7 @@
                     format: 'DD-MM-YYYY',
                     daysOfWeek: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
                     monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-                        'Juli', 'Agustus', 'September', 'Oktober', 'November',
-                        'Desember'
+                        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
                     ],
                 }
             });
@@ -148,6 +160,7 @@
                 endDate = picker.endDate.format('YYYY-MM-DD');
                 $(this).val(picker.startDate.format('DD-MM-YY') + ' → ' + picker.endDate.format(
                     'DD-MM-YY'));
+                updateURL();
                 datadhts.draw();
             });
 
@@ -155,11 +168,44 @@
                 $(this).val('');
                 startDate = '';
                 endDate = '';
+                updateURL();
                 datadhts.draw();
             });
+
             $('#selected_sensor_npk').on('change', function() {
-                datadhts.draw(); // Reload tabel dengan filter baru
+                updateURL();
+                datadhts.draw();
             });
+
+            // -----------------------------
+            // Helper Functions
+            // -----------------------------
+
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            function updateURL() {
+                const newUrl = new URL(window.location.href);
+                if (startDate && endDate) {
+                    newUrl.searchParams.set('start_date', startDate);
+                    newUrl.searchParams.set('end_date', endDate);
+                } else {
+                    newUrl.searchParams.delete('start_date');
+                    newUrl.searchParams.delete('end_date');
+                }
+
+                const selectedSensor = $('#selected_sensor_npk').val();
+                if (selectedSensor) {
+                    newUrl.searchParams.set('selected_sensor_npk', selectedSensor);
+                } else {
+                    newUrl.searchParams.delete('selected_sensor_npk');
+                }
+
+                // Update URL tanpa reload
+                window.history.replaceState({}, '', newUrl);
+            }
         });
     </script>
 @endpush
