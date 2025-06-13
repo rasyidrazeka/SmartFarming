@@ -1,5 +1,5 @@
 @extends('layout.template')
-@section('title', 'Monitoring NPK - Agrilink Vocpro')
+@section('title', 'Monitoring NPK | Agrilink Vocpro')
 @section('content')
     <div class="container-fluid">
         <div class="d-flex align-items-end form-group row mb-0">

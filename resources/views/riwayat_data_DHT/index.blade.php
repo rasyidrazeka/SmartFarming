@@ -1,5 +1,5 @@
 @extends('layout.template')
-@section('title', 'Riwayat DHT - Agrilink Vocpro')
+@section('title', 'Riwayat DHT | Agrilink Vocpro')
 @section('content')
     <div class="container-fluid">
         <div class="form-group col-6 col-lg-3 ms-auto">
