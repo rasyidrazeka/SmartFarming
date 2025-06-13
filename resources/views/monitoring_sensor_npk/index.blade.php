@@ -94,7 +94,33 @@
             currentUrl.searchParams.set('selected_sensor_npk', selectedValue);
             window.location.href = currentUrl.toString(); // Redirect ke URL baru dengan param
         });
+    </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const startDateParam = urlParams.get('start_date');
+            const endDateParam = urlParams.get('end_date');
+
+            if (startDateParam && endDateParam) {
+                const start = moment(startDateParam, "YYYY-MM-DD");
+                const end = moment(endDateParam, "YYYY-MM-DD");
+
+                $('#daterange').data('daterangepicker').setStartDate(start);
+                $('#daterange').data('daterangepicker').setEndDate(end);
+                $('#daterange').val(start.format('DD-MM-YY') + ' → ' + end.format('DD-MM-YY'));
+
+                // Ini penting agar iframe langsung update
+                setTimeout(() => {
+                    updateGrafanaIframe(startDateParam, endDateParam);
+                }, 1000); // tambahkan delay kecil untuk memastikan iframe ada di DOM
+            } else {
+                defaultGrafanaIframe();
+            }
+        });
+    </script>
+
+    <script>
         $('#daterange').daterangepicker({
             opens: 'left',
             autoUpdateInput: false,
@@ -111,16 +137,84 @@
         });
 
         $('#daterange').on('apply.daterangepicker', function(ev, picker) {
-            startDate = picker.startDate.format('YYYY-MM-DD');
-            endDate = picker.endDate.format('YYYY-MM-DD');
-            $(this).val(picker.startDate.format('DD-MM-YY') + ' → ' + picker.endDate.format(
-                'DD-MM-YY'));
+            const startDate = picker.startDate.format('YYYY-MM-DD');
+            const endDate = picker.endDate.format('YYYY-MM-DD');
+            $(this).val(picker.startDate.format('DD-MM-YY') + ' → ' + picker.endDate.format('DD-MM-YY'));
+
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('start_date', startDate);
+            currentUrl.searchParams.set('end_date', endDate);
+
+            window.history.replaceState({}, '', currentUrl); // Update URL tanpa reload
+
+            updateGrafanaIframe(startDate, endDate);
         });
 
         $('#daterange').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
-            startDate = '';
-            endDate = '';
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.delete('start_date');
+            currentUrl.searchParams.delete('end_date');
+            window.history.replaceState({}, '', currentUrl); // Update URL tanpa reload
+            defaultGrafanaIframe();
         });
+    </script>
+
+    <script>
+        function updateGrafanaIframe(startDate, endDate) {
+            const selectedSensor = '{{ request()->get('selected_sensor_npk') }}' || 'all'; // sensor ID atau all
+
+            const panelMapSensor2 = {
+                'Temperature': 12,
+                'Humidity': 13,
+                'Conductivity': 14,
+                'Ph': 15,
+                'Nitrogen': 16,
+                'Phosphorus': 17,
+                'Potassium': 18,
+            };
+
+            const panelMapSensor3 = {
+                'Temperature': 19,
+                'Humidity': 20,
+                'Conductivity': 21,
+                'Ph': 22,
+                'Nitrogen': 23,
+                'Phosphorus': 24,
+                'Potassium': 25,
+            };
+
+            if (selectedSensor == 2) {
+                Object.entries(panelMapSensor2).forEach(([label, panelId]) => {
+                    const iframeId = `grafanaIframe${label}_sensor${selectedSensor}`;
+                    const iframe = document.getElementById(iframeId);
+                    if (!iframe) return;
+
+                    const from = new Date(startDate).getTime();
+                    const to = new Date(endDate).getTime();
+
+                    const newSrc =
+                        `http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+
+                    iframe.src = newSrc;
+                });
+            } else if (selectedSensor == 3) {
+                Object.entries(panelMapSensor3).forEach(([label, panelId]) => {
+                    const iframeId = `grafanaIframe${label}_sensor${selectedSensor}`;
+                    const iframe = document.getElementById(iframeId);
+                    if (!iframe) return;
+
+                    const from = new Date(startDate).getTime();
+                    const to = new Date(endDate).getTime();
+
+                    const newSrc =
+                        `http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+
+                    iframe.src = newSrc;
+                });
+            } else {
+                // aksi jika semua kondisi di atas tidak terpenuhi
+            }
+        }
     </script>
 @endpush

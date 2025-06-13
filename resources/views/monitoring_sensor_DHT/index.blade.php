@@ -132,47 +132,62 @@
 
     <script>
         function updateGrafanaIframe(startDate, endDate) {
-            const fromTimestamp = new Date(startDate).getTime(); // Konversi ke timestamp (ms)
-            const toTimestamp = new Date(endDate).getTime(); // Konversi ke timestamp (ms)
+            const fromTimestamp = new Date(startDate).getTime();
+            const toTimestamp = new Date(endDate).getTime();
 
-            const grafanaEmbedUrlTemperature =
-                "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
-            // Update URL iframe dengan parameter waktu
-            const temperatureGrafana =
-                `${grafanaEmbedUrlTemperature}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&panelId=6&__feature.dashboardSceneSolo`;
-            document.getElementById('grafanaIframeTemperature').src = temperatureGrafana;
+            const baseGrafanaUrl = "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1";
+            const commonParams =
+                `&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&__feature.dashboardSceneSolo`;
 
-            const grafanaEmbedUrlHumidity =
-                "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
-            // Update URL iframe dengan parameter waktu
-            const humidityGrafana =
-                `${grafanaEmbedUrlHumidity}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&panelId=7&__feature.dashboardSceneSolo`;
-            document.getElementById('grafanaIframeHumidity').src = humidityGrafana;
+            const panels = [{
+                    id: 6,
+                    elementId: "grafanaIframeTemperature"
+                },
+                {
+                    id: 7,
+                    elementId: "grafanaIframeHumidity"
+                },
+                {
+                    id: 8,
+                    elementId: "grafanaIframeLuminosity"
+                }
+            ];
 
-            const grafanaEmbedUrlLuminosity =
-                "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
-            // Update URL iframe dengan parameter waktu
-            const luminosityGrafana =
-                `${grafanaEmbedUrlLuminosity}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&showCategory=Standard%20options&theme=light&panelId=8&__feature.dashboardSceneSolo`;
-            document.getElementById('grafanaIframeLuminosity').src = luminosityGrafana;
+            panels.forEach(panel => {
+                const url = `${baseGrafanaUrl}${commonParams}&panelId=${panel.id}`;
+                const iframe = document.getElementById(panel.elementId);
+                if (iframe) {
+                    iframe.src = url;
+                }
+            });
         }
     </script>
+
     <script>
         function defaultGrafanaIframe() {
-            const grafanaEmbedUrlTemperature =
-                "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=1&__feature.dashboardSceneSolo"; // URL dasbor Grafana
-            // Update URL iframe dengan parameter waktu
-            document.getElementById('grafanaIframeTemperature').src = grafanaEmbedUrlTemperature;
+            const baseGrafanaUrl = "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data";
+            const commonParams = "?orgId=1&timezone=browser&theme=light&__feature.dashboardSceneSolo";
 
-            const grafanaEmbedUrlHumidity =
-                "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=3&__feature.dashboardSceneSolo"; // URL dasbor Grafana
-            // Update URL iframe dengan parameter waktu
-            document.getElementById('grafanaIframeHumidity').src = grafanaEmbedUrlHumidity;
+            const panels = [{
+                    id: 1,
+                    elementId: "grafanaIframeTemperature"
+                },
+                {
+                    id: 3,
+                    elementId: "grafanaIframeHumidity"
+                },
+                {
+                    id: 4,
+                    elementId: "grafanaIframeLuminosity"
+                }
+            ];
 
-            const grafanaEmbedUrlLuminosity =
-                "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=4&__feature.dashboardSceneSolo"; // URL dasbor Grafana
-            // Update URL iframe dengan parameter waktu
-            document.getElementById('grafanaIframeLuminosity').src = grafanaEmbedUrlLuminosity;
+            panels.forEach(panel => {
+                const iframe = document.getElementById(panel.elementId);
+                if (iframe) {
+                    iframe.src = `${baseGrafanaUrl}${commonParams}&panelId=${panel.id}`;
+                }
+            });
         }
     </script>
 @endpush
