@@ -239,4 +239,72 @@
             }
         }
     </script>
+
+    <script>
+        function defaultGrafanaIframe() {
+            const selectedSensor = '{{ request()->get('selected_sensor_npk') }}' || 'all';
+
+            const panelMapSensor2 = {
+                'Temperature': 12,
+                'Humidity': 13,
+                'Conductivity': 14,
+                'Ph': 15,
+                'Nitrogen': 16,
+                'Phosphorus': 17,
+                'Potassium': 18,
+            };
+
+            const panelMapSensor3 = {
+                'Temperature': 19,
+                'Humidity': 20,
+                'Conductivity': 21,
+                'Ph': 22,
+                'Nitrogen': 23,
+                'Phosphorus': 24,
+                'Potassium': 25,
+            };
+
+            const panelMapSensorAll = {
+                'Temperature': 27,
+                'Humidity': 28,
+                'Conductivity': 29,
+                'Ph': 30,
+                'Nitrogen': 31,
+                'Phosphorus': 32,
+                'Potassium': 33,
+            };
+
+            if (selectedSensor == 2) {
+                Object.entries(panelMapSensor2).forEach(([label, panelId]) => {
+                    const iframeId = `grafanaIframe${label}_sensor${selectedSensor}`;
+                    const iframe = document.getElementById(iframeId);
+                    if (!iframe) return;
+
+                    const defaultSrc =
+                        `http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                    iframe.src = defaultSrc;
+                });
+            } else if (selectedSensor == 3) {
+                Object.entries(panelMapSensor3).forEach(([label, panelId]) => {
+                    const iframeId = `grafanaIframe${label}_sensor${selectedSensor}`;
+                    const iframe = document.getElementById(iframeId);
+                    if (!iframe) return;
+
+                    const defaultSrc =
+                        `http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                    iframe.src = defaultSrc;
+                });
+            } else if (selectedSensor == 'all') {
+                Object.entries(panelMapSensorAll).forEach(([label, panelId]) => {
+                    const iframeId = `grafanaIframe${label}_sensorAll`;
+                    const iframe = document.getElementById(iframeId);
+                    if (!iframe) return;
+
+                    const defaultSrc =
+                        `http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                    iframe.src = defaultSrc;
+                });
+            }
+        }
+    </script>
 @endpush
