@@ -236,8 +236,6 @@
 
                     iframe.src = newSrc;
                 });
-            } else {
-                // aksi jika semua kondisi di atas tidak terpenuhi
             }
         }
     </script>
