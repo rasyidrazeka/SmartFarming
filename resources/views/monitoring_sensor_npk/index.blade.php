@@ -184,6 +184,16 @@
                 'Potassium': 25,
             };
 
+            const panelMapSensorAll = {
+                'Temperature': 26,
+                'Humidity': 27,
+                'Conductivity': 28,
+                'Ph': 29,
+                'Nitrogen': 30,
+                'Phosphorus': 31,
+                'Potassium': 32,
+            };
+
             if (selectedSensor == 2) {
                 Object.entries(panelMapSensor2).forEach(([label, panelId]) => {
                     const iframeId = `grafanaIframe${label}_sensor${selectedSensor}`;
@@ -201,6 +211,20 @@
             } else if (selectedSensor == 3) {
                 Object.entries(panelMapSensor3).forEach(([label, panelId]) => {
                     const iframeId = `grafanaIframe${label}_sensor${selectedSensor}`;
+                    const iframe = document.getElementById(iframeId);
+                    if (!iframe) return;
+
+                    const from = new Date(startDate).getTime();
+                    const to = new Date(endDate).getTime();
+
+                    const newSrc =
+                        `http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+
+                    iframe.src = newSrc;
+                });
+            } else if (selectedSensor == 'all') {
+                Object.entries(panelMapSensorAll).forEach(([label, panelId]) => {
+                    const iframeId = `grafanaIframe${label}_sensorAll`;
                     const iframe = document.getElementById(iframeId);
                     if (!iframe) return;
 
