@@ -17,29 +17,31 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group col-6 col-lg-3 ms-auto">
+            <div class="form-group col-12 col-lg-3 ms-auto">
                 <label for="start_date" class="form-label">Filter Tanggal:</label>
                 <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Masukkan tanggal">
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <table class="table align-middle table-striped table-bordered" id="table_riwayat_data_npk">
-                    <thead>
-                        <tr class="text-center">
-                            <th class="text-center">No</th>
-                            <th class="text-center">Temperature</th>
-                            <th class="text-center">Humidity</th>
-                            <th class="text-center">Conductivity</th>
-                            <th class="text-center">pH</th>
-                            <th class="text-center">Nitrogen</th>
-                            <th class="text-center">Phosphorus</th>
-                            <th class="text-center">Potassium</th>
-                            <th class="text-center">Sensor</th>
-                            <th class="text-center">Tanggal</th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="responsive-table-wrapper">
+                    <table class="table align-middle table-striped table-bordered" id="table_riwayat_data_npk">
+                        <thead>
+                            <tr class="text-center">
+                                <th class="text-center">No</th>
+                                <th class="text-center">Temperature</th>
+                                <th class="text-center">Humidity</th>
+                                <th class="text-center">Conductivity</th>
+                                <th class="text-center">pH</th>
+                                <th class="text-center">Nitrogen</th>
+                                <th class="text-center">Phosphorus</th>
+                                <th class="text-center">Potassium</th>
+                                <th class="text-center">Sensor</th>
+                                <th class="text-center">Tanggal</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

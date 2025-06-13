@@ -8,18 +8,20 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <table class="table align-middle table-striped table-bordered" id="table_riwayat_data_dht">
-                    <thead>
-                        <tr class="text-center">
-                            <th class="text-center">No</th>
-                            <th class="text-center">Temperature</th>
-                            <th class="text-center">Humidity</th>
-                            <th class="text-center">Luminosity</th>
-                            <th class="text-center">sensor</th>
-                            <th class="text-center">Tanggal</th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="responsive-table-wrapper">
+                    <table class="table align-middle table-striped table-bordered" id="table_riwayat_data_dht">
+                        <thead>
+                            <tr class="text-center">
+                                <th class="text-center">No</th>
+                                <th class="text-center">Temperature</th>
+                                <th class="text-center">Humidity</th>
+                                <th class="text-center">Luminosity</th>
+                                <th class="text-center">sensor</th>
+                                <th class="text-center">Tanggal</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
