@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [LoginController::class, 'index'])->name('login.index')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate')->middleware('guest');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 

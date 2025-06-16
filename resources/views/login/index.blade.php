@@ -49,32 +49,38 @@
         <div class="auth-wrapper v3">
             <div class="auth-form">
                 <div class="auth-header">
-                    <a href="#"><img src="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/images/logo-dark.svg') }}"
-                            alt="img"></a>
+                    <a href="{{ route('login.index') }}"><img src="{{ asset('storage/asset_web/logo.png') }}"
+                            alt="img" style="width: 180px; height: auto;"></a>
                 </div>
                 <div class="card my-5">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-end mb-4">
                             <h3 class="mb-0"><b>Login</b></h3>
                         </div>
-                        <div class="form-group mb-3">
-                            <label class="form-label">Email Address</label>
-                            <input type="email" class="form-control" placeholder="Email Address">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="form-label">Password</label>
-                            <input type="password" class="form-control" placeholder="Password">
-                        </div>
-                        <div class="d-flex mt-1 justify-content-between">
-                            <div class="form-check">
-                                <input class="form-check-input input-primary" type="checkbox" id="customCheckc1"
-                                    checked="">
-                                <label class="form-check-label text-muted" for="customCheckc1">Keep me sign in</label>
+                        <form action="{{ route('login.authenticate') }}" method="POST">
+                            @csrf
+                            <div class="form-group mb-3">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" placeholder="Masukkan Username" id="username"
+                                    name="username">
                             </div>
-                        </div>
-                        <div class="d-grid mt-4">
-                            <button type="button" class="btn btn-primary">Login</button>
-                        </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" placeholder="Masukkan Password" id="password"
+                                    name="password">
+                            </div>
+                            <div class="d-flex mt-1 justify-content-between">
+                                <div class="form-check">
+                                    <input class="form-check-input input-primary" type="checkbox" id="customCheckc1"
+                                        checked="">
+                                    <label class="form-check-label text-muted" for="customCheckc1">Keep me sign
+                                        in</label>
+                                </div>
+                            </div>
+                            <div class="d-grid mt-4">
+                                <button type="button" class="btn btn-primary">Login</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="auth-footer row">
