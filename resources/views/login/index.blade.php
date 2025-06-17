@@ -57,28 +57,34 @@
                         <div class="d-flex justify-content-between align-items-end mb-4">
                             <h3 class="mb-0"><b>Login</b></h3>
                         </div>
-                        <form action="{{ route('login.authenticate') }}" method="POST">
+                        <form method="POST" action="{{ route('login.authenticate') }}" name="login" id="login">
                             @csrf
                             <div class="form-group mb-3">
-                                <label class="form-label">Username</label>
-                                <input type="text" class="form-control" placeholder="Masukkan Username" id="username"
-                                    name="username">
+                                <label class="form-label">Email</label>
+                                <input type="text" class="form-control  @error('email') is-invalid @enderror"
+                                    placeholder="example@gmail.com" id="email" name="email" autofocus required>
+                                @if ($errors->has('email'))
+                                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-control" placeholder="Masukkan Password" id="password"
-                                    name="password">
+                                <input type="password" class="form-control  @error('password') is-invalid @enderror"
+                                    placeholder="Masukkan Password" id="password" name="password" required>
+                                @if ($errors->has('password'))
+                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
                             </div>
                             <div class="d-flex mt-1 justify-content-between">
                                 <div class="form-check">
-                                    <input class="form-check-input input-primary" type="checkbox" id="customCheckc1"
-                                        checked="">
+                                    <input class="form-check-input input-primary" type="checkbox" id="remember"
+                                        name="remember">
                                     <label class="form-check-label text-muted" for="customCheckc1">Keep me sign
                                         in</label>
                                 </div>
                             </div>
                             <div class="d-grid mt-4">
-                                <button type="button" class="btn btn-primary">Login</button>
+                                <button type="submit" class="btn btn-primary">Login</button>
                             </div>
                         </form>
                     </div>

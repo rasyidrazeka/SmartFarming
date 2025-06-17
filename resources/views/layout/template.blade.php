@@ -42,6 +42,7 @@
 <!-- [Body] Start -->
 
 <body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
+    @include('sweetalert::alert')
     <!-- [ Pre-loader ] start -->
     <div class="loader-bg">
         <div class="loader-track">

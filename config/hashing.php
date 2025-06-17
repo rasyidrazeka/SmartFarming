@@ -33,7 +33,7 @@ return [
         'verify' => true,
     ],
 
-    'argon' => [
+    'argon2id' => [
         'memory' => 4096,
         'threads' => 1,
         'time' => 3,

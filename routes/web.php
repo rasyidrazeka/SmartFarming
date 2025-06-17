@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [LoginController::class, 'index'])->name('login.index')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate')->middleware('guest');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('auth');
 
 Route::group(['prefix' => 'riwayatDataDHT'], function () {
     Route::get('/', [RiwayatDataDHTController::class, 'index'])->name('riwayatDataDHT.index');
