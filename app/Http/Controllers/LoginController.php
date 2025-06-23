@@ -48,4 +48,29 @@ class LoginController extends Controller
             return back();
         }
     }
+
+    public function logout(Request $request)
+    {
+        $token = session('token'); // Ambil token dari session
+
+        if (!$token) {
+            Alert::toast('Tidak ada sesi login aktif.', 'warning');
+            return redirect()->route('login.index');
+        }
+
+        // Kirim permintaan logout ke API menggunakan Bearer token
+        $response = Http::withToken($token)
+            ->post('http://labai.polinema.ac.id:3042/auth/logout');
+
+        if ($response->successful()) {
+            // Bersihkan semua session
+            session()->flush();
+            Alert::toast('Logout berhasil.', 'success');
+            return redirect()->route('login.index');
+        } else {
+            $message = $response->json()['message'] ?? 'Logout gagal dari server.';
+            Alert::toast($message, 'error');
+            return back();
+        }
+    }
 }

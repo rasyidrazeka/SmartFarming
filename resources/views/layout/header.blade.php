@@ -138,10 +138,17 @@
                                     <i class="ti ti-user"></i>
                                     <span>View Profile</span>
                                 </a>
-                                <a href="#!" class="dropdown-item">
+                                <a href="#" class="dropdown-item"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="ti ti-power"></i>
                                     <span>Logout</span>
                                 </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
+
                             </div>
                             <div class="tab-pane fade" id="drp-tab-2" role="tabpanel" aria-labelledby="drp-t2"
                                 tabindex="0">
