@@ -19,10 +19,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [LoginController::class, 'index'])->name('login.index')->middleware('guest');
-Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate')->middleware('guest');
+Route::get('/', [LoginController::class, 'index'])->name('login.index');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('auth');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 Route::group(['prefix' => 'riwayatDataDHT'], function () {
     Route::get('/', [RiwayatDataDHTController::class, 'index'])->name('riwayatDataDHT.index');

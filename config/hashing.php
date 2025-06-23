@@ -34,9 +34,9 @@ return [
     ],
 
     'argon2id' => [
-        'memory' => 4096,
-        'threads' => 1,
-        'time' => 3,
+        'memory' => 4096,      // sesuai Express
+        'threads' => 1,        // sesuai Express
+        'time' => 3,           // sesuai Express
     ],
 
     /*

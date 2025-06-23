@@ -15,8 +15,8 @@
     <meta name="author" content="CodedThemes">
 
     <!-- [Favicon] icon -->
-    <link rel="icon" href="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/images/favicon.svg') }}"
-        type="image/x-icon"> <!-- [Google Font] Family -->
+    <link rel="icon" href="{{ asset('storage/asset_web/LOGO NO BG.png') }}" type="image/x-icon">
+    <!-- [Google Font] Family -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
         id="main-font-link">
@@ -31,6 +31,21 @@
     <!-- [Template CSS Files] -->
     <link rel="stylesheet" href="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/css/style.css') }}" id="main-style-link">
     <link rel="stylesheet" href="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/css/style-preset.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <style>
+        .auth-main {
+            background: url("{{ asset('storage/asset_web/bg login.png') }}") no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        .auth-form {
+            background: none !important;
+        }
+    </style>
 
 </head>
 <!-- [Head] end -->
@@ -57,15 +72,15 @@
                         <div class="d-flex justify-content-between align-items-end mb-4">
                             <h3 class="mb-0"><b>Login</b></h3>
                         </div>
-                        <form method="POST" action="{{ route('login.authenticate') }}" name="login" id="login">
+                        <form action="{{ route('login.authenticate') }}" method="POST">
                             @csrf
                             <div class="form-group mb-3">
                                 <label class="form-label">Email</label>
                                 <input type="text" class="form-control  @error('email') is-invalid @enderror"
                                     placeholder="example@gmail.com" id="email" name="email" autofocus required>
-                                @if ($errors->has('email'))
-                                    <span class="text-danger">{{ $errors->first('email') }}</span>
-                                @endif
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Password</label>
@@ -77,8 +92,8 @@
                             </div>
                             <div class="d-flex mt-1 justify-content-between">
                                 <div class="form-check">
-                                    <input class="form-check-input input-primary" type="checkbox" id="remember"
-                                        name="remember">
+                                    <input class="form-check-input input-primary" type="checkbox" value="1"
+                                        id="remember" name="remember" checked>
                                     <label class="form-check-label text-muted" for="customCheckc1">Keep me sign
                                         in</label>
                                 </div>
@@ -90,7 +105,6 @@
                     </div>
                 </div>
                 <div class="auth-footer row">
-                    <!-- <div class=""> -->
                     <div class="col my-1">
                         <p class="m-0">Copyright © Agrilink Vocpro</p>
                     </div>
@@ -99,7 +113,6 @@
                             <li class="list-inline-item"><a href="{{ route('login.index') }}">Home</a></li>
                         </ul>
                     </div>
-                    <!-- </div> -->
                 </div>
             </div>
         </div>
@@ -143,9 +156,13 @@
     <script>
         font_change("Public-Sans");
     </script>
-
-
-
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
 </body>
 <!-- [Body] end -->
 

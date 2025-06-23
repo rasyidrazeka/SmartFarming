@@ -2,50 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LoginController extends Controller
 {
     public function index()
     {
-        if (auth()->check()) {
-            return redirect()->route('dashboard.index');
-        }
-        return response()
-            ->view('login.index');
+        return view('login.index');
     }
 
     public function authenticate(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email:dns',
-            'password' => 'required'
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
+        $remember = $request->has('remember_me');
 
-        $user = UserModel::where('email', $request->email)->first();
+        $response = Http::withBasicAuth($request->email, $request->password)
+            ->post('http://labai.polinema.ac.id:3042/auth/login', [
+                'remember_me' => $remember
+            ]);
 
-        if (!$user) {
-            return back()->withErrors(['email' => 'Email tidak ditemukan.'])->onlyInput('email');
+        if ($response->successful()) {
+            $data = $response->json();
+
+            // Ambil token dari struktur response
+            $token = $data['data']['token'] ?? null;
+
+            if ($token) {
+                session(['token' => $token]);
+                Alert::toast('Selamat Datang', 'success');
+                return redirect('/dashboard');
+            } else {
+                // Kalau tidak ada token di response
+                Alert::toast('Respon login tidak valid', 'error');
+                return back();
+            }
+        } else {
+            // Tangani error dari API
+            $message = $response->json()['message'] ?? 'Login gagal';
+            Alert::toast($message, 'error');
+            return back();
         }
-
-        // 1. Coba verifikasi password lama (argon2id dari eksternal)
-        if (password_verify($request->password, $user->password)) {
-            dd('email dan pass sudah sesuai');
-            // 2. Upgrade password hash ke Laravel format
-            // $user->password = Hash::make($request->password);
-            // $user->save();
-
-            // 3. Login user secara manual
-            // Auth::login($user);
-            // $request->session()->regenerate();
-
-            // return redirect()->intended('/dashboard');
-        }
-
-        return back()->withErrors(['email' => 'Email atau password salah.'])->onlyInput('email');
     }
 }

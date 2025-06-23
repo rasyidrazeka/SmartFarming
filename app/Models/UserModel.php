@@ -14,6 +14,10 @@ class UserModel extends Authenticatable
     protected $table = 'user.account';
     protected $primaryKey = 'id';
     protected $fillable = ['urole_id', 'username', 'password', 'email', 'google_id', 'fullname', 'avatar', 'is_ban', 'created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = [
+        'password',
+    ];
+    public $timestamps = true;
 
     public function role(): BelongsTo
     {
