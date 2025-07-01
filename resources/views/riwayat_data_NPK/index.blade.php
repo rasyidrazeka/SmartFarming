@@ -160,6 +160,22 @@
             $('#daterange').on('apply.daterangepicker', function(ev, picker) {
                 startDate = picker.startDate.format('YYYY-MM-DD');
                 endDate = picker.endDate.format('YYYY-MM-DD');
+                const today = moment().format('YYYY-MM-DD');
+
+                if (endDate > today) {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Tanggal tidak boleh lebih dari hari ini',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
+                    $(this).val(''); // Reset input
+                    return;
+                }
+
                 $(this).val(picker.startDate.format('DD-MM-YY') + ' → ' + picker.endDate.format(
                     'DD-MM-YY'));
                 updateURL();
