@@ -100,7 +100,7 @@
                         role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
                         <img src="{{ asset('storage/asset_web/No Image Profile.png') }}" alt="user-image"
                             class="user-avtar">
-                        <span>Stebin Ben</span>
+                        <span>{{ session('nama') }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
                         <div class="dropdown-header">
@@ -110,11 +110,17 @@
                                         class="user-avtar wid-35">
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <h6 class="mb-1">Stebin Ben</h6>
-                                    <span>UI/UX Designer</span>
+                                    <h6 class="mb-1">{{ session('nama') }}</h6>
+                                    <span>{{ session('role_name') }}</span>
                                 </div>
-                                <a href="#!" class="pc-head-link bg-transparent"><i
-                                        class="ti ti-power text-danger"></i></a>
+                                <a href="#" class="pc-head-link bg-transparent"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="ti ti-power text-danger"></i>
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
                         </div>
                         <ul class="nav drp-tabs nav-fill nav-tabs" id="mydrpTab" role="tablist">
@@ -134,7 +140,7 @@
                         <div class="tab-content" id="mysrpTabContent">
                             <div class="tab-pane fade show active" id="drp-tab-1" role="tabpanel"
                                 aria-labelledby="drp-t1" tabindex="0">
-                                <a href="#!" class="dropdown-item">
+                                <a href="{{ route('profil.index') }}" class="dropdown-item">
                                     <i class="ti ti-user"></i>
                                     <span>View Profile</span>
                                 </a>

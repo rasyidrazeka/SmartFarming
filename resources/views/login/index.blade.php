@@ -13,6 +13,10 @@
     <meta name="keywords"
         content="Mantis, Dashboard UI Kit, Bootstrap 5, Admin Template, Admin Dashboard, CRM, CMS, Bootstrap Admin Template">
     <meta name="author" content="CodedThemes">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
 
     <!-- [Favicon] icon -->
     <link rel="icon" href="{{ asset('storage/asset_web/LOGO NO BG.png') }}" type="image/x-icon">
@@ -164,6 +168,15 @@
             }
         });
     </script>
+    <script>
+        window.addEventListener("pageshow", function(event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                // Jika halaman diakses via tombol back
+                window.location.reload();
+            }
+        });
+    </script>
+
 </body>
 <!-- [Body] end -->
 

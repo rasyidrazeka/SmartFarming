@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DHTSModel;
+use App\Models\SensorReadingsModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -27,8 +28,9 @@ class RiwayatDataDHTController extends Controller
 
     public function list(Request $request)
     {
-        $dhts = DHTSModel::select(['id', 'temperature', 'humidity', 'luminosity', 'sensor_id', 'created_at'])
-            ->with(['sensors'])
+        $dhts = SensorReadingsModel::select(['id', 'payload', 'sensor_id', 'created_at'])
+            ->with(['sensor'])
+            ->where('sensor_id', 1)
             ->orderBy('created_at', 'desc');
 
         // ✅ Tambahkan filter tanggal jika tersedia
@@ -41,21 +43,32 @@ class RiwayatDataDHTController extends Controller
 
         return DataTables::of($dhts)
             ->addIndexColumn()
+
+            // Ambil temperature dari payload
             ->editColumn('temperature', function ($row) {
-                return $row->temperature . ' °C';
+                return ($row->payload['viciTemperature'] ?? 'null') . ' °C';
             })
+
+            // Ambil humidity dari payload
             ->editColumn('humidity', function ($row) {
-                return $row->humidity . ' %';
+                return ($row->payload['viciHumidity'] ?? 'null') . ' %';
             })
+
+            // Ambil luminosity dari payload
             ->editColumn('luminosity', function ($row) {
-                return $row->luminosity . ' lux';
+                return ($row->payload['viciLuminosity'] ?? 'null') . ' lux';
             })
+
+            // Format tanggal
             ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d-m-Y H:i:s');
             })
-            ->addColumn('sensors.sensor_name', function ($row) {
-                return optional($row->sensors)->sensor_name;
+
+            // Tampilkan sensor name dari relasi jika ada
+            ->addColumn('sensors.public_name', function ($row) {
+                return optional($row->sensor)->public_name;
             })
+
             ->make(true);
     }
 }

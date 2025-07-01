@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MonitoringSensorDHTController;
 use App\Http\Controllers\MonitoringSensorNPKController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RiwayatDataDHTController;
 use App\Http\Controllers\RiwayatDataNPKController;
 use Illuminate\Support\Facades\Route;
@@ -19,24 +20,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [LoginController::class, 'index'])->name('login.index');
-Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-
-Route::group(['prefix' => 'riwayatDataDHT'], function () {
-    Route::get('/', [RiwayatDataDHTController::class, 'index'])->name('riwayatDataDHT.index');
-    Route::post('/list', [RiwayatDataDHTController::class, 'list'])->name('riwayatDataDHT.list');
+Route::middleware(['guest.custom'])->group(function () {
+    Route::get('/', [LoginController::class, 'index'])->name('login.index');
+    Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 });
 
-Route::group(['prefix' => 'riwayatDataNPK'], function () {
-    Route::get('/', [RiwayatDataNPKController::class, 'index'])->name('riwayatDataNPK.index');
-    Route::post('/list', [RiwayatDataNPKController::class, 'list'])->name('riwayatDataNPK.list');
-});
-
-Route::group(['prefix' => 'monitoringSensor'], function () {
-    Route::get('/NPK', [MonitoringSensorNPKController::class, 'index'])->name('monitoringSensorNPK.index');
-    Route::get('/DHT', [MonitoringSensorDHTController::class, 'index'])->name('monitoringSensorDHT.index');
-});
+Route::middleware(['checkrole:ADMN,USER', 'prevent_back'])->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::group(['prefix' => 'monitoringSensor'], function () {
+        Route::get('/NPK', [MonitoringSensorNPKController::class, 'index'])->name('monitoringSensorNPK.index');
+        Route::get('/DHT', [MonitoringSensorDHTController::class, 'index'])->name('monitoringSensorDHT.index');
+    });
+    Route::group(['prefix' => 'riwayatDataDHT'], function () {
+        Route::get('/', [RiwayatDataDHTController::class, 'index'])->name('riwayatDataDHT.index');
+        Route::post('/list', [RiwayatDataDHTController::class, 'list'])->name('riwayatDataDHT.list');
+    });
+    Route::group(['prefix' => 'riwayatDataNPK'], function () {
+        Route::get('/', [RiwayatDataNPKController::class, 'index'])->name('riwayatDataNPK.index');
+        Route::post('/list', [RiwayatDataNPKController::class, 'list'])->name('riwayatDataNPK.list');
+    });
+    Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
+}); // untuk user dan admin

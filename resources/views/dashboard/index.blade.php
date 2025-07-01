@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="row">
-            @foreach ($dataDHT->slice(0, 4) as $item)
+            @foreach ($weatherData->slice(0, 4) as $item)
                 <div class="col-12 col-lg-3">
                     <div class="card text-center p-3" style="border-color: #CED4DA">
                         <div class="mb-2">

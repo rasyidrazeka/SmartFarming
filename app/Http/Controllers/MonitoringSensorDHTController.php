@@ -21,12 +21,14 @@ class MonitoringSensorDHTController extends Controller
         $activeMenu = 'monitoringSensorDHT';
 
         Carbon::setLocale('id');
-        $latestData = DB::table('dhts')
-            ->latest('created_at')
-            ->take(1) // ambil data terbaru saja
+        $latestData = DB::table('sensor_readings')
+            ->where('sensor_id', 1)
+            ->orderByDesc('created_at')
+            ->limit(1)
             ->get();
         $dataDHT = collect();
         foreach ($latestData as $data) {
+            $payload = json_decode($data->payload, true);
             $tanggal = \Carbon\Carbon::parse($data->created_at)->translatedFormat('d F Y');
             $dataDHT->push([
                 'label' => 'Last Update',
@@ -36,19 +38,19 @@ class MonitoringSensorDHTController extends Controller
             ]);
             $dataDHT->push([
                 'label' => 'Room Temperature',
-                'value' => $data->temperature,
+                'value' => $payload['viciTemperature'] ?? null,
                 'unit' => '°C',
                 'icon' => 'bi-thermometer-half'
             ]);
             $dataDHT->push([
                 'label' => 'Room Humidity',
-                'value' => $data->humidity,
+                'value' => $payload['viciHumidity'] ?? null,
                 'unit' => '%',
                 'icon' => 'bi-droplet-half'
             ]);
             $dataDHT->push([
                 'label' => 'Luminosity',
-                'value' => $data->luminosity,
+                'value' => $payload['viciLuminosity'] ?? null,
                 'unit' => 'lux',
                 'icon' => 'bi-brightness-high-fill'
             ]);

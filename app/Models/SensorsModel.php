@@ -11,15 +11,15 @@ class SensorsModel extends Model
 
     protected $table = 'sensors';
     protected $primaryKey = 'id';
-    protected $fillable = ['sensor_name', 'table_id'];
+    protected $fillable = ['name', 'public_name', 'desc', 'created_at', 'updated_at', 'deleted_at', 'bed_location_id'];
 
-    public function dhts()
+    public function bed_location()
     {
-        return $this->hasMany(DHTSModel::class, 'sensor_id', 'id');
+        return $this->belongsTo(BedLocationModel::class, 'bed_location_id', 'id');
     }
 
-    public function npks()
+    public function sensor_readings()
     {
-        return $this->hasMany(NPKSModel::class, 'sensor_id', 'id');
+        return $this->hasMany(SensorReadingsModel::class, 'sensor_id', 'id');
     }
 }

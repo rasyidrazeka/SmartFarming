@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\NPKSModel;
+use App\Models\SensorReadingsModel;
 use App\Models\SensorsModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -21,7 +22,7 @@ class RiwayatDataNPKController extends Controller
         ];
         $activeMenu = 'riwayatDataNPK';
 
-        $sensor_npk = SensorsModel::where('table_id', 2)->get();
+        $sensor_npk = SensorsModel::whereNotNull('bed_location_id')->get();
         $selectedSensor = $request->input('selected_sensor_npk');
         session(['selected_sensor_npk' => $selectedSensor]);
 
@@ -34,8 +35,9 @@ class RiwayatDataNPKController extends Controller
 
     public function list(Request $request)
     {
-        $npks = NPKSModel::select(['id', 'temperature', 'humidity', 'conductivity', 'ph', 'nitrogen', 'phosphorus', 'potassium', 'created_at', 'read_at', 'sensor_id'])
-            ->with(['sensors'])
+        $npks = SensorReadingsModel::select(['id', 'payload', 'sensor_id', 'created_at'])
+            ->with(['sensor'])
+            ->whereIn('sensor_id', [2, 3])
             ->orderBy('created_at', 'desc');
 
         // ✅ Tambahkan filter tanggal jika tersedia
@@ -53,31 +55,31 @@ class RiwayatDataNPKController extends Controller
         return DataTables::of($npks)
             ->addIndexColumn()
             ->editColumn('temperature', function ($row) {
-                return $row->temperature . ' °C';
+                return ($row->payload['soilTemperature'] ?? 'null') . ' °C';
             })
             ->editColumn('humidity', function ($row) {
-                return $row->humidity . ' %';
+                return ($row->payload['soilHumidity'] ?? 'null') . ' %';
             })
             ->editColumn('conductivity', function ($row) {
-                return $row->conductivity . ' μS/cm';
+                return ($row->payload['soilConductivity'] ?? 'null') . ' μS/cm';
             })
             ->editColumn('ph', function ($row) {
-                return $row->ph . ' pH';
+                return ($row->payload['soilPh'] ?? 'null') . ' pH';
             })
             ->editColumn('nitrogen', function ($row) {
-                return $row->nitrogen . ' mg/kg';
+                return ($row->payload['soilNitrogen'] ?? 'null') . ' mg/kg';
             })
             ->editColumn('phosphorus', function ($row) {
-                return $row->phosphorus . ' mg/kg';
+                return ($row->payload['soilPhosphorus'] ?? 'null') . ' mg/kg';
             })
             ->editColumn('potassium', function ($row) {
-                return $row->potassium . ' mg/kg';
+                return ($row->payload['soilPotassium'] ?? 'null') . ' mg/kg';
             })
             ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d-m-Y H:i:s');
             })
-            ->addColumn('sensors.sensor_name', function ($row) {
-                return optional($row->sensors)->sensor_name;
+            ->addColumn('sensors.public_name', function ($row) {
+                return optional($row->sensor)->public_name;
             })
             ->make(true);
     }

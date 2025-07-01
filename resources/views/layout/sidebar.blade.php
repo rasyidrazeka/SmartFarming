@@ -13,57 +13,82 @@
                         <span class="pc-mtext">Dashboard</span>
                     </a>
                 </li>
-
-                {{-- <li class="pc-item pc-caption">
-                    <label>UI Components</label>
+                <li class="pc-item pc-caption">
+                    <label>Sensors</label>
                     <i class="ti ti-dashboard"></i>
-                </li> --}}
+                </li>
                 <li class="pc-item pc-hasmenu">
                     <a href="#" class="pc-link">
                         <span class="pc-micon">
                             <i class="ti ti-access-point"></i>
                         </span>
-                        <span class="pc-mtext">Monitoring Sensor</span>
+                        <span class="pc-mtext">Sensors Monitoring</span>
                         <span class="pc-arrow">
                             <i data-feather="chevron-right"></i>
                         </span>
                     </a>
                     <ul class="pc-submenu">
                         <li class="pc-item">
-                            <a class="pc-link" href="{{ route('monitoringSensorNPK.index') }}">Sensor NPK</a>
+                            <a class="pc-link" href="{{ route('monitoringSensorNPK.index') }}">NPK Sensors</a>
                         </li>
                         <li class="pc-item">
-                            <a class="pc-link" href="{{ route('monitoringSensorDHT.index') }}">Sensor DHT</a>
+                            <a class="pc-link" href="{{ route('monitoringSensorDHT.index') }}">DHT Sensor</a>
                         </li>
                     </ul>
+                </li>
+                <li class="pc-item pc-hasmenu">
+                    <a href="#" class="pc-link">
+                        <span class="pc-micon">
+                            <i class="ti ti-history"></i>
+                        </span>
+                        <span class="pc-mtext">Sensors History</span>
+                        <span class="pc-arrow">
+                            <i data-feather="chevron-right"></i>
+                        </span>
+                    </a>
+                    <ul class="pc-submenu">
+                        <li class="pc-item">
+                            <a class="pc-link" href="{{ route('riwayatDataNPK.index') }}">NPK Sensors</a>
+                        </li>
+                        <li class="pc-item">
+                            <a class="pc-link" href="{{ route('riwayatDataDHT.index') }}">DHT Sensor</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="pc-item pc-caption">
+                    <label>Weather</label>
+                    <i class="ti ti-dashboard"></i>
                 </li>
                 <li class="pc-item">
                     <a href="#" class="pc-link">
                         <span class="pc-micon">
                             <i class="ti ti-cloud"></i>
                         </span>
-                        <span class="pc-mtext">Monitoring Cuaca</span>
+                        <span class="pc-mtext">Weather Monitoring</span>
                     </a>
                 </li>
-                <li class="pc-item pc-hasmenu">
+                <li class="pc-item">
                     <a href="#" class="pc-link">
                         <span class="pc-micon">
-                            <i class="ti ti-access-point"></i>
+                            <i class="ti ti-history"></i>
                         </span>
-                        <span class="pc-mtext">Riwayat Data</span>
-                        <span class="pc-arrow">
-                            <i data-feather="chevron-right"></i>
-                        </span>
+                        <span class="pc-mtext">Weather History</span>
                     </a>
-                    <ul class="pc-submenu">
-                        <li class="pc-item">
-                            <a class="pc-link" href="{{ route('riwayatDataNPK.index') }}">Sensor NPK</a>
-                        </li>
-                        <li class="pc-item">
-                            <a class="pc-link" href="{{ route('riwayatDataDHT.index') }}">Sensor DHT</a>
-                        </li>
-                    </ul>
                 </li>
+                @if (session('role_code') === 'ADMN')
+                    <li class="pc-item pc-caption">
+                        <label>Manage</label>
+                        <i class="ti ti-dashboard"></i>
+                    </li>
+                    <li class="pc-item">
+                        <a href="#" class="pc-link">
+                            <span class="pc-micon">
+                                <i class="ti ti-user-check"></i>
+                            </span>
+                            <span class="pc-mtext">Manage Users</span>
+                        </a>
+                    </li>
+                @endif
                 {{-- <li class="pc-item">
                     <a href="../elements/bc_color.html" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-color-swatch"></i></span>
@@ -145,14 +170,6 @@
                     </a>
                 </li>
             </ul> --}}
-                <div class="card text-center">
-                    <div class="card-body">
-                        <img src="{{ asset('storage/asset_web/No Image Profile.png') }}" alt="images"
-                            class="img-fluid mb-3">
-                        <h5>Selamat Datang</h5>
-                        <p>Nama User</p>
-                    </div>
-                </div>
         </div>
     </div>
 </nav>

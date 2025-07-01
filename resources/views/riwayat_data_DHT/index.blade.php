@@ -71,7 +71,7 @@
                         searchable: false
                     },
                     {
-                        data: "sensors.sensor_name",
+                        data: "sensors.public_name",
                         className: "text-center",
                         orderable: false,
                         searchable: false

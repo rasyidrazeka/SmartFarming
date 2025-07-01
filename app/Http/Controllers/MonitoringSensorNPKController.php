@@ -21,25 +21,27 @@ class MonitoringSensorNPKController extends Controller
         ];
         $activeMenu = 'monitoringSensorNPK';
 
-        $sensor_npk = SensorsModel::where('table_id', 2)->get();
+        $sensor_npk = SensorsModel::whereNotNull('bed_location_id')->get();
         $selectedSensor = $request->input('selected_sensor_npk');
         session(['selected_sensor_npk' => $selectedSensor]);
 
         Carbon::setLocale('id');
         if ($selectedSensor) {
-            $latestData = DB::table('npks')
+            $latestData = DB::table('sensor_readings')
                 ->where('sensor_id', $selectedSensor)
                 ->latest('created_at')
                 ->take(1) // ambil data terbaru saja
                 ->get();
         } else {
-            $latestData = DB::table('npks')
-                ->latest('created_at')
-                ->take(1) // ambil data terbaru saja
+            $latestData = DB::table('sensor_readings')
+                ->whereIn('sensor_id', [1, 2]) // ambil sensor_id 1 dan 2
+                ->orderByDesc('created_at')    // urutkan dari yang terbaru
+                ->limit(1)                     // ambil data terbaru
                 ->get();
         }
         $dataNPK = collect();
         foreach ($latestData as $data) {
+            $payload = json_decode($data->payload, true);
             $tanggal = \Carbon\Carbon::parse($data->created_at)->translatedFormat('d F Y');
             $dataNPK->push([
                 'label' => 'Last Update',
@@ -49,43 +51,43 @@ class MonitoringSensorNPKController extends Controller
             ]);
             $dataNPK->push([
                 'label' => 'Soil Temperature',
-                'value' => $data->temperature,
+                'value' => $payload['soilTemperature'] ?? null,
                 'unit' => '°C',
                 'icon' => 'bi-thermometer-half'
             ]);
             $dataNPK->push([
                 'label' => 'Soil Humidity',
-                'value' => $data->humidity,
+                'value' => $payload['soilHumidity'] ?? null,
                 'unit' => '%',
                 'icon' => 'bi-droplet-half'
             ]);
             $dataNPK->push([
                 'label' => 'Soil Conductivity',
-                'value' => $data->conductivity,
+                'value' => $payload['soilConductivity'] ?? null,
                 'unit' => 'μS/cm',
                 'icon' => 'bi-lightning'
             ]);
             $dataNPK->push([
                 'label' => 'Soil pH',
-                'value' => $data->ph,
+                'value' => $payload['soilPh'] ?? null,
                 'unit' => 'pH',
                 'icon' => 'bi-speedometer'
             ]);
             $dataNPK->push([
                 'label' => 'Soil Nitrogen',
-                'value' => $data->nitrogen,
+                'value' => $payload['soilNitrogen'] ?? null,
                 'unit' => 'mg/kg',
                 'icon' => 'bi-droplet-half'
             ]);
             $dataNPK->push([
                 'label' => 'Soil Phosphorus',
-                'value' => $data->phosphorus,
+                'value' => $payload['soilPhosphorus'] ?? null,
                 'unit' => 'mg/kg',
                 'icon' => 'bi-capsule'
             ]);
             $dataNPK->push([
                 'label' => 'Soil Potassium',
-                'value' => $data->potassium,
+                'value' => $payload['soilPotassium'] ?? null,
                 'unit' => 'mg/kg',
                 'icon' => 'bi-shield-check'
             ]);

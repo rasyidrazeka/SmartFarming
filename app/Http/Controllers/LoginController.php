@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LoginController extends Controller
@@ -19,7 +20,8 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        $remember = $request->has('remember_me');
+
+        $remember = $request->has('remember');
 
         $response = Http::withBasicAuth($request->email, $request->password)
             ->post('http://labai.polinema.ac.id:3042/auth/login', [
@@ -29,48 +31,63 @@ class LoginController extends Controller
         if ($response->successful()) {
             $data = $response->json();
 
-            // Ambil token dari struktur response
+            // Ambil token dan jwtToken
             $token = $data['data']['token'] ?? null;
+            $jwt   = $data['data']['jwtToken'] ?? null;
 
-            if ($token) {
-                session(['token' => $token]);
+            if ($token && $jwt) {
+                // Decode JWT
+                $decoded = $this->decodeJwtPayload($jwt);
+
+                // Simpan ke session
+                session([
+                    'token' => $token,
+                    'jwt'   => $jwt,
+                    'username'  => $decoded['user']['username'] ?? 'guest',
+                    'nama'  => $decoded['user']['fullname'] ?? 'Guest',
+                    'email' => $decoded['user']['email'] ?? null,
+                    'created_at' => $decoded['user']['created_at'] ?? null,
+                    'updated_at' => $decoded['user']['updated_at'] ?? null,
+                    'role_name'  => $decoded['user']['role']['name'] ?? 'GUEST',
+                    'role_code'  => $decoded['user']['role']['code'] ?? 'Guest',
+                ]);
                 Alert::toast('Selamat Datang', 'success');
                 return redirect('/dashboard');
             } else {
-                // Kalau tidak ada token di response
                 Alert::toast('Respon login tidak valid', 'error');
-                return back();
+                return back()->withInput();
             }
         } else {
-            // Tangani error dari API
             $message = $response->json()['message'] ?? 'Login gagal';
             Alert::toast($message, 'error');
-            return back();
+            return back()->withInput();
         }
+    }
+
+    function decodeJwtPayload($token)
+    {
+        $parts = explode('.', $token);
+        if (count($parts) !== 3) return null;
+
+        $payload = base64_decode(strtr($parts[1], '-_', '+/'));
+        return json_decode($payload, true);
     }
 
     public function logout(Request $request)
     {
-        $token = session('token'); // Ambil token dari session
+        $token = session('token');
 
-        if (!$token) {
-            Alert::toast('Tidak ada sesi login aktif.', 'warning');
-            return redirect()->route('login.index');
+        if ($token) {
+            $response = Http::withToken($token)
+                ->post('http://labai.polinema.ac.id:3042/auth/logout');
+
+            if ($response->successful()) {
+                Alert::toast('Berhasil logout!', 'success');
+            } else {
+                Alert::toast('Gagal menghubungi server logout.', 'error');
+            }
         }
-
-        // Kirim permintaan logout ke API menggunakan Bearer token
-        $response = Http::withToken($token)
-            ->post('http://labai.polinema.ac.id:3042/auth/logout');
-
-        if ($response->successful()) {
-            // Bersihkan semua session
-            session()->flush();
-            Alert::toast('Logout berhasil.', 'success');
-            return redirect()->route('login.index');
-        } else {
-            $message = $response->json()['message'] ?? 'Logout gagal dari server.';
-            Alert::toast($message, 'error');
-            return back();
-        }
+        Session::flush();
+        return redirect()->route('login.index');
     }
 }

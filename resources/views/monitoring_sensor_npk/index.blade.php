@@ -11,7 +11,7 @@
                         @foreach ($sensor_npk as $item)
                             <option value="{{ $item->id }}"
                                 {{ request()->get('selected_sensor_npk') == $item->id ? 'selected' : '' }}>
-                                {{ $item->sensor_name }}
+                                {{ $item->public_name }}
                             </option>
                         @endforeach
                     </select>
