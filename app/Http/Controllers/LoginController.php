@@ -43,6 +43,7 @@ class LoginController extends Controller
                 session([
                     'token' => $token,
                     'jwt'   => $jwt,
+                    'user_id'  => $decoded['user']['id'] ?? 'guest',
                     'username'  => $decoded['user']['username'] ?? 'guest',
                     'nama'  => $decoded['user']['fullname'] ?? 'Guest',
                     'email' => $decoded['user']['email'] ?? null,

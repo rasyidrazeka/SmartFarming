@@ -10,11 +10,11 @@
                 <li class="pc-item">
                     <a href="{{ url('/dashboard') }}" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-                        <span class="pc-mtext">Dashboard</span>
+                        <span class="pc-mtext">Dasbor</span>
                     </a>
                 </li>
                 <li class="pc-item pc-caption">
-                    <label>Sensors</label>
+                    <label>Sensor</label>
                     <i class="ti ti-dashboard"></i>
                 </li>
                 <li class="pc-item pc-hasmenu">
@@ -22,17 +22,17 @@
                         <span class="pc-micon">
                             <i class="ti ti-access-point"></i>
                         </span>
-                        <span class="pc-mtext">Sensors Monitoring</span>
+                        <span class="pc-mtext">Pemantauan Sensor</span>
                         <span class="pc-arrow">
                             <i data-feather="chevron-right"></i>
                         </span>
                     </a>
                     <ul class="pc-submenu">
                         <li class="pc-item">
-                            <a class="pc-link" href="{{ route('monitoringSensorNPK.index') }}">NPK Sensors</a>
+                            <a class="pc-link" href="{{ route('monitoringSensorNPK.index') }}">Sensor NPK</a>
                         </li>
                         <li class="pc-item">
-                            <a class="pc-link" href="{{ route('monitoringSensorDHT.index') }}">DHT Sensor</a>
+                            <a class="pc-link" href="{{ route('monitoringSensorDHT.index') }}">Sensor DHT</a>
                         </li>
                     </ul>
                 </li>
@@ -41,22 +41,22 @@
                         <span class="pc-micon">
                             <i class="ti ti-history"></i>
                         </span>
-                        <span class="pc-mtext">Sensors History</span>
+                        <span class="pc-mtext">Riwayat Sensor</span>
                         <span class="pc-arrow">
                             <i data-feather="chevron-right"></i>
                         </span>
                     </a>
                     <ul class="pc-submenu">
                         <li class="pc-item">
-                            <a class="pc-link" href="{{ route('riwayatDataNPK.index') }}">NPK Sensors</a>
+                            <a class="pc-link" href="{{ route('riwayatDataNPK.index') }}">Sensor NPK</a>
                         </li>
                         <li class="pc-item">
-                            <a class="pc-link" href="{{ route('riwayatDataDHT.index') }}">DHT Sensor</a>
+                            <a class="pc-link" href="{{ route('riwayatDataDHT.index') }}">Sensor DHT</a>
                         </li>
                     </ul>
                 </li>
                 <li class="pc-item pc-caption">
-                    <label>Weather</label>
+                    <label>Cuaca</label>
                     <i class="ti ti-dashboard"></i>
                 </li>
                 <li class="pc-item">
@@ -64,7 +64,7 @@
                         <span class="pc-micon">
                             <i class="ti ti-cloud"></i>
                         </span>
-                        <span class="pc-mtext">Weather Monitoring</span>
+                        <span class="pc-mtext">Pemantauan Cuaca</span>
                     </a>
                 </li>
                 <li class="pc-item">
@@ -72,22 +72,22 @@
                         <span class="pc-micon">
                             <i class="ti ti-history"></i>
                         </span>
-                        <span class="pc-mtext">Weather History</span>
+                        <span class="pc-mtext">Riwayat Cuaca</span>
+                    </a>
+                </li>
+                <li class="pc-item pc-caption">
+                    <label>Manajemen</label>
+                    <i class="ti ti-dashboard"></i>
+                </li>
+                <li class="pc-item">
+                    <a href="{{ route('kelolaPengguna.index') }}" class="pc-link">
+                        <span class="pc-micon">
+                            <i class="ti ti-user-check"></i>
+                        </span>
+                        <span class="pc-mtext">Kelola Pengguna</span>
                     </a>
                 </li>
                 @if (session('role_code') === 'ADMN')
-                    <li class="pc-item pc-caption">
-                        <label>Manage</label>
-                        <i class="ti ti-dashboard"></i>
-                    </li>
-                    <li class="pc-item">
-                        <a href="#" class="pc-link">
-                            <span class="pc-micon">
-                                <i class="ti ti-user-check"></i>
-                            </span>
-                            <span class="pc-mtext">Manage Users</span>
-                        </a>
-                    </li>
                 @endif
                 {{-- <li class="pc-item">
                     <a href="../elements/bc_color.html" class="pc-link">

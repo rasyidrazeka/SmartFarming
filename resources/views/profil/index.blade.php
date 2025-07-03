@@ -1,12 +1,12 @@
 @extends('layout.template')
-@section('title', 'Riwayat NPK | Agrilink Vocpro')
+@section('title', 'Profil Pengguna | Agrilink Vocpro')
 @section('content')
     <div class="container">
         <div class="main-body">
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body py-5">
                             <div class="d-flex flex-column align-items-center text-center">
                                 <img src="{{ asset('storage/asset_web/No Image Profile.png') }}" alt="Admin"
                                     class="rounded-circle" width="150">
