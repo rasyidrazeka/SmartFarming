@@ -12,6 +12,12 @@
             </select>
         </div>
         <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-sm btn-primary" href="{{ route('kelolaPengguna.create') }}"
+                        style="background-color: #227066; border-color: #227066;">Tambah</a>
+                </div>
+            </div>
             <div class="card-body">
                 <div class="responsive-table-wrapper">
                     <table class="table align-middle table-striped table-bordered" id="table_kelola_pengguna">

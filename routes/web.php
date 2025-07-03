@@ -49,7 +49,7 @@ Route::group(['prefix' => 'profil'], function () {
 Route::group(['prefix' => 'kelolaPengguna'], function () {
     Route::get('/', [UserController::class, 'index'])->name('kelolaPengguna.index');
     Route::post('/list', [UserController::class, 'list'])->name('kelolaPengguna.list');
-    // Route::get('/create', [UserController::class, 'create'])->name('kelolaPengguna.create');
+    Route::get('/create', [UserController::class, 'create'])->name('kelolaPengguna.create');
     // Route::post('/', [UserController::class, 'store'])->name('kelolaPengguna.store');
     Route::get('/{id}', [UserController::class, 'show'])->name('kelolaPengguna.show');
     Route::get('/{id}/edit', [UserController::class, 'edit'])->name('kelolaPengguna.edit');

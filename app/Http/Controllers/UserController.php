@@ -6,6 +6,7 @@ use App\Models\AccountModel;
 use App\Models\RoleModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -35,9 +36,18 @@ class UserController extends Controller
     public function list(Request $request)
     {
         $user = AccountModel::select([
-            'user.account.*',
+            'user.account.id as account_id',
+            'user.account.username',
+            'user.account.fullname',
+            'user.account.email',
+            'user.account.avatar',
+            'user.account.is_ban',
+            'user.account.urole_id',
+            'user.account.created_at',
+            'user.account.updated_at',
+            'user.account.deleted_at',
             'user.role.name as role_name'
-        ])->leftJoin('user.role', 'user.account.urole_id', '=', 'user.role.id');
+        ])->leftJoin('user.role', 'user.account.urole_id', '=', 'user.role.id')->get();
 
         if ($request->role) {
             $user->whereHas('role', function ($query) use ($request) {
@@ -70,40 +80,78 @@ class UserController extends Controller
 
             ->addColumn('role_name', fn($row) => optional($row->role)->name ?? '-')
 
-            // ->editColumn(
-            //     'created_at',
-            //     fn($row) =>
-            //     $row->created_at ? $row->created_at->format('d-m-Y H:i:s') : '-'
-            // )
-
             // ✅ Kolom Aksi
             ->addColumn('aksi', function ($row) {
-                return '
-                <div class="text-center d-flex gap-1 justify-content-center">
-                    <a href="' . route('kelolaPengguna.show', $row->id) . '" class="btn btn-sm btn-info">Show</a>
-                    <a href="' . route('kelolaPengguna.edit', $row->id) . '" class="btn btn-sm btn-warning">Edit</a>
-                    <button class="btn btn-sm btn-danger" onclick="hapusPengguna(\'' . $row->id . '\')">Hapus</button>
-                </div>';
+                $btn = '<div class="text-center d-flex gap-1 justify-content-center">';
+                $btn .= '<a href="' . route('kelolaPengguna.show', $row->account_id) . '" class="btn btn-sm btn-info">Show</a>';
+                $btn .= '<a href="' . route('kelolaPengguna.edit', $row->account_id) . '" class="btn btn-sm btn-warning">Edit</a>';
+                $btn .= '<button class="btn btn-sm btn-danger" onclick="hapusPengguna(\'' . $row->id . '\')">Hapus</button>';
+                $btn .= '</div>';
+                return $btn;
             })
 
             ->rawColumns(['avatar', 'is_ban', 'aksi']) // biar HTML badge dan tombol ditampilkan
             ->make(true);
     }
 
-    public function edit()
+    // public function edit()
+    // {
+    //     $breadcrumb = (object) [
+    //         'title' => 'Kelola Pengguna',
+    //         'paragraph' => 'Kelola semua akun pengguna dengan mudah dan efisien. Atur peran, ubah informasi, dan pastikan data tetap terkini.',
+    //         'list' => [
+    //             ['label' => 'Kelola Pengguna', 'url' => route('kelolaPengguna.index')],
+    //             ['label' => 'List'],
+    //         ]
+    //     ];
+    //     $activeMenu = 'kelolaPengguna';
+    //     return view('kelola_pengguna.index', compact(
+    //         'breadcrumb',
+    //         'activeMenu',
+    //     ));
+    // }
+
+    public function show($id)
     {
+        if (!Str::isUuid($id)) {
+            abort(404, 'ID tidak valid');
+        }
+
         $breadcrumb = (object) [
-            'title' => 'Kelola Pengguna',
-            'paragraph' => 'Kelola semua akun pengguna dengan mudah dan efisien. Atur peran, ubah informasi, dan pastikan data tetap terkini.',
+            'title' => 'Detail Pengguna',
+            'paragraph' => 'Lihat informasi lengkap akun pengguna.',
             'list' => [
                 ['label' => 'Kelola Pengguna', 'url' => route('kelolaPengguna.index')],
-                ['label' => 'List'],
+                ['label' => 'Detail Pengguna'],
             ]
         ];
+
         $activeMenu = 'kelolaPengguna';
-        return view('kelola_pengguna.index', compact(
+
+        $user = AccountModel::select([
+            'user.account.id as account_id',
+            'user.account.username',
+            'user.account.fullname',
+            'user.account.email',
+            'user.account.avatar',
+            'user.account.is_ban',
+            'user.account.urole_id',
+            'user.account.created_at',
+            'user.account.updated_at',
+            'user.account.deleted_at',
+            'user.role.name as role_name'
+        ])->leftJoin('user.role', 'user.account.urole_id', '=', 'user.role.id')
+            ->where('user.account.id', $id)
+            ->first();;
+
+        if (!$user) {
+            return abort(404, 'Pengguna tidak ditemukan');
+        }
+
+        return view('kelola_pengguna.show', compact(
             'breadcrumb',
             'activeMenu',
+            'user',
         ));
     }
 }
