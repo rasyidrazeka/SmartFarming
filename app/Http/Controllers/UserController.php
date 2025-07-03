@@ -46,14 +46,20 @@ class UserController extends Controller
             'user.account.created_at',
             'user.account.updated_at',
             'user.account.deleted_at',
+            'user.role.code as role_code',
             'user.role.name as role_name'
-        ])->leftJoin('user.role', 'user.account.urole_id', '=', 'user.role.id')->get();
+        ])->leftJoin('user.role', 'user.account.urole_id', '=', 'user.role.id');
 
         if ($request->role) {
             $user->whereHas('role', function ($query) use ($request) {
                 $query->where('code', $request->role); // sesuaikan jika role disimpan di kolom lain seperti 'name'
             });
         }
+
+        if ($request->filled('is_ban') && in_array($request->is_ban, ['0', '1'])) {
+            $user->where('user.account.is_ban', $request->is_ban);
+        }
+
 
         return DataTables::of($user)
             ->addIndexColumn()

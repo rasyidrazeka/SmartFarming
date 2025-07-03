@@ -2,14 +2,24 @@
 @section('title', 'Kelola Pengguna | Agrilink Vocpro')
 @section('content')
     <div class="container-fluid">
-        <div class="form-group col-6 col-lg-3 ms-auto">
-            <label for="start_date" class="form-label">Filter Role:</label>
-            <select class="form-select" name="role" id="role">
-                <option value="">- Semua Role -</option>
-                @foreach ($roles as $role)
-                    <option value="{{ $role->code }}">{{ $role->name }}</option>
-                @endforeach
-            </select>
+        <div class="d-flex row justify-content-between mb-2">
+            <div class="form-group col-6 col-lg-3">
+                <label for="start_date" class="form-label">Filter Status Akun:</label>
+                <select id="is_ban" class="form-select">
+                    <option value="">Semua Status</option>
+                    <option value="0">Aktif</option>
+                    <option value="1">Banned</option>
+                </select>
+            </div>
+            <div class="form-group col-6 col-lg-3">
+                <label for="start_date" class="form-label">Filter Role:</label>
+                <select class="form-select" name="role" id="role">
+                    <option value="">- Semua Role -</option>
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->code }}">{{ $role->name }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
         <div class="card">
             <div class="card-header">
@@ -20,21 +30,23 @@
             </div>
             <div class="card-body">
                 <div class="responsive-table-wrapper">
-                    <table class="table align-middle table-striped table-bordered" id="table_kelola_pengguna">
-                        <thead>
-                            <tr class="text-center">
-                                <th>No</th>
-                                {{-- <th>Username</th>
+                    <div class="responsive-table-wrapper">
+                        <table class="table align-middle table-striped table-bordered" id="table_kelola_pengguna">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>No</th>
+                                    {{-- <th>Username</th>
                                 <th>Email</th> --}}
-                                <th>Nama Lengkap</th>
-                                <th>Role</th>
-                                <th>Avatar</th>
-                                <th>Status Akun</th>
-                                {{-- <th>Terdaftar</th> --}}
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                    </table>
+                                    <th>Nama Lengkap</th>
+                                    <th>Role</th>
+                                    <th>Avatar</th>
+                                    <th>Status Akun</th>
+                                    {{-- <th>Terdaftar</th> --}}
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,6 +64,7 @@
                     data: function(d) {
                         _token: '{{ csrf_token() }}' // wajib untuk POST
                         d.role = $('#role').val();
+                        d.is_ban = $('#is_ban').val();
                     }
                 },
                 columns: [{
@@ -112,7 +125,7 @@
             });
         });
 
-        $('#role').on('change', function() {
+        $('#role, #is_ban').on('change', function() {
             table.ajax.reload();
         });
 
