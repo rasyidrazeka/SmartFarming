@@ -19,13 +19,13 @@ class DashboardController extends Controller
         ];
         $activeMenu = 'dashboard';
 
-        $now = \Carbon\Carbon::now('Asia/Jakarta');
+        $nowJakarta = Carbon::now('Asia/Jakarta');
+        $nowUtc = $nowJakarta->copy()->setTimezone('UTC');
         $latestData = DB::table('weather_data')
-            ->whereDate('time', $now->toDateString())
-            ->whereTime('time', '<=', $now->toTimeString())
+            ->whereDate('time', $nowUtc->toDateString()) // tanggal dalam UTC
+            ->whereTime('time', '<=', $nowUtc->format('H:i:s')) // waktu dalam UTC
             ->orderByDesc('time')
-            ->limit(1)
-            ->get();
+            ->first();
 
         $weatherDescriptions = [
             0 => 'Cerah',
@@ -102,12 +102,13 @@ class DashboardController extends Controller
 
         $weatherData = collect();
 
-        foreach ($latestData as $data) {
-            $deskripsiCuaca = $weatherDescriptions[$data->weather_code] ?? 'Tidak diketahui';
-            $ikonCuaca = $weatherIcons[$data->weather_code] ?? 'bi-question-circle-fill';
-            if ($data->temperature_2m <= 20) {
+        if ($latestData) {
+            $deskripsiCuaca = $weatherDescriptions[$latestData->weather_code] ?? 'Tidak diketahui';
+            $ikonCuaca = $weatherIcons[$latestData->weather_code] ?? 'bi-question-circle-fill';
+
+            if ($latestData->temperature_2m <= 20) {
                 $ikonSuhu = 'bi-thermometer-snow';
-            } elseif ($data->temperature_2m <= 30) {
+            } elseif ($latestData->temperature_2m <= 30) {
                 $ikonSuhu = 'bi-thermometer-half';
             } else {
                 $ikonSuhu = 'bi-thermometer-sun';
@@ -115,19 +116,19 @@ class DashboardController extends Controller
 
             $weatherData->push([
                 'label' => 'Temperature',
-                'value' => $data->temperature_2m,
+                'value' => $latestData->temperature_2m,
                 'unit' => '°C',
                 'icon' => 'bi ' . $ikonSuhu
             ]);
             $weatherData->push([
                 'label' => 'Cloud Cover',
-                'value' => $data->cloud_cover,
+                'value' => $latestData->cloud_cover,
                 'unit' => '%',
                 'icon' => 'bi bi-clouds-fill'
             ]);
             $weatherData->push([
                 'label' => 'Wind Speed',
-                'value' => $data->wind_speed_10m,
+                'value' => $latestData->wind_speed_10m,
                 'unit' => 'km/h',
                 'icon' => 'bi bi-wind'
             ]);

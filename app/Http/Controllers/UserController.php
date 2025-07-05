@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\AccountModel;
 use App\Models\RoleModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -65,16 +67,16 @@ class UserController extends Controller
             ->addIndexColumn()
 
             // ->editColumn('username', fn($row) => $row->username ?? '-')
-            // ->editColumn('email', fn($row) => $row->email ?? '-')
+            ->editColumn('email', fn($row) => $row->email ?? '-')
             ->editColumn('fullname', fn($row) => $row->fullname ?? '-')
 
-            ->editColumn(
-                'avatar',
-                fn($row) =>
-                $row->avatar
-                    ? '<span class="badge bg-success">Tersedia</span>'
-                    : '<span class="badge bg-secondary">Tidak Ada</span>'
-            )
+            // ->editColumn(
+            //     'avatar',
+            //     fn($row) =>
+            //     $row->avatar
+            //         ? '<span class="badge bg-success">Tersedia</span>'
+            //         : '<span class="badge bg-secondary">Tidak Ada</span>'
+            // )
 
             ->editColumn(
                 'is_ban',
@@ -100,20 +102,30 @@ class UserController extends Controller
             ->make(true);
     }
 
-    // public function edit()
+    // public function create()
     // {
     //     $breadcrumb = (object) [
-    //         'title' => 'Kelola Pengguna',
-    //         'paragraph' => 'Kelola semua akun pengguna dengan mudah dan efisien. Atur peran, ubah informasi, dan pastikan data tetap terkini.',
+    //         'title' => 'Tambah Pengguna',
+    //         'paragraph' => 'Masukkan data pengguna baru dengan lengkap untuk proses registrasi akun.',
     //         'list' => [
     //             ['label' => 'Kelola Pengguna', 'url' => route('kelolaPengguna.index')],
-    //             ['label' => 'List'],
+    //             ['label' => 'Tambah Pengguna'],
     //         ]
     //     ];
+
+    //     $roles = RoleModel::select([
+    //         'user.role.id as role_id',
+    //         'user.role.code as role_code',
+    //         'user.role.name as role_name',
+    //         'user.role.created_at as role_createdAt',
+    //         'user.role.updated_at as role_updatedAt',
+    //     ])->get();
+
     //     $activeMenu = 'kelolaPengguna';
-    //     return view('kelola_pengguna.index', compact(
+    //     return view('kelola_pengguna.create', compact(
     //         'breadcrumb',
     //         'activeMenu',
+    //         'roles',
     //     ));
     // }
 
@@ -148,16 +160,98 @@ class UserController extends Controller
             'user.role.name as role_name'
         ])->leftJoin('user.role', 'user.account.urole_id', '=', 'user.role.id')
             ->where('user.account.id', $id)
-            ->first();;
-
-        if (!$user) {
-            return abort(404, 'Pengguna tidak ditemukan');
-        }
+            ->first();
 
         return view('kelola_pengguna.show', compact(
             'breadcrumb',
             'activeMenu',
             'user',
         ));
+    }
+
+    public function edit($id)
+    {
+        if (!Str::isUuid($id)) {
+            abort(404, 'ID tidak valid');
+        }
+
+        $breadcrumb = (object) [
+            'title' => 'Edit Pengguna',
+            'paragraph' => 'Perbarui informasi akun pengguna untuk memastikan data tetap akurat dan terkini.',
+            'list' => [
+                ['label' => 'Kelola Pengguna', 'url' => route('kelolaPengguna.index')],
+                ['label' => 'List'],
+            ]
+        ];
+        $activeMenu = 'kelolaPengguna';
+
+        $user = AccountModel::select([
+            'user.account.id as account_id',
+            'user.account.username',
+            'user.account.fullname',
+            'user.account.email',
+            'user.account.avatar',
+            'user.account.is_ban',
+            'user.account.urole_id',
+            'user.account.created_at',
+            'user.account.updated_at',
+            'user.account.deleted_at',
+            'user.role.name as role_name'
+        ])->leftJoin('user.role', 'user.account.urole_id', '=', 'user.role.id')
+            ->where('user.account.id', $id)
+            ->first();
+
+        $roles = RoleModel::select([
+            'user.role.id as role_id',
+            'user.role.code as role_code',
+            'user.role.name as role_name',
+            'user.role.created_at as role_createdAt',
+            'user.role.updated_at as role_updatedAt',
+        ])->get();
+
+        return view('kelola_pengguna.edit', compact(
+            'breadcrumb',
+            'activeMenu',
+            'user',
+            'roles'
+        ));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = AccountModel::select([
+            'user.account.id as account_id',
+            'user.account.username',
+            'user.account.fullname',
+            'user.account.email',
+            'user.account.avatar',
+            'user.account.is_ban',
+            'user.account.urole_id',
+            'user.account.created_at',
+            'user.account.updated_at',
+            'user.account.deleted_at',
+            'user.role.name as role_name'
+        ])->leftJoin('user.role', 'user.account.urole_id', '=', 'user.role.id')
+            ->where('user.account.id', $id)
+            ->first();
+
+        $validated = $request->validate([
+            'fullname' => 'required|string|max:255',
+            'username' => 'required|string|max:50|unique:user.account,username,' . $id,
+            'email' => 'required|email|unique:user.account,email,' . $id,
+            'password' => 'nullable|min:6',
+            'urole_id' => 'required|exists:user.role,id',
+            'is_ban' => 'required|boolean',
+        ]);
+
+        if ($request->filled('password')) {
+            $validated['password'] = Hash::make($request->password);
+        } else {
+            unset($validated['password']); // jangan ubah password jika kosong
+        }
+
+        $user->update($validated);
+        Alert::toast('Data pengguna berhasil diperbarui!', 'success');
+        return redirect()->route('kelolaPengguna.index');
     }
 }

@@ -28,7 +28,7 @@
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeDhts"
                             src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=7&__feature.dashboardSceneSolo"
-                            allowfullscreen></iframe>
+                            allowfullscreen style="display: none"></iframe>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeNpks1"
                             src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=10&__feature.dashboardSceneSolo"
-                            allowfullscreen></iframe>
+                            allowfullscreen style="display: none"></iframe>
                     </div>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeNpks2"
                             src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=11&__feature.dashboardSceneSolo"
-                            allowfullscreen></iframe>
+                            allowfullscreen style="display: none"></iframe>
                     </div>
                 </div>
             </div>
@@ -62,6 +62,36 @@
 @push('css')
 @endpush
 @push('js')
+    <script>
+        const iframeIds = [
+            'grafanaIframeDhts',
+            'grafanaIframeNpks1',
+            'grafanaIframeNpks2',
+        ];
+
+        let loadedCount = 0;
+        const totalIframes = iframeIds.length;
+
+        function showAllIframes() {
+            iframeIds.forEach(id => {
+                const iframe = document.getElementById(id);
+                if (iframe) iframe.style.display = 'block';
+            });
+        }
+
+        iframeIds.forEach(id => {
+            const iframe = document.getElementById(id);
+            if (iframe) {
+                iframe.onload = function() {
+                    loadedCount++;
+                    if (loadedCount === totalIframes) {
+                        showAllIframes();
+                    }
+                };
+            }
+        });
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);

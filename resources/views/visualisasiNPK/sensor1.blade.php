@@ -6,7 +6,7 @@
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframeTemperature_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=12&__feature.dashboardSceneSolo"
-                        allowfullscreen></iframe>
+                        allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframeHumidity_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=13&__feature.dashboardSceneSolo"
-                        allowfullscreen></iframe>
+                        allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframeConductivity_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=14&__feature.dashboardSceneSolo"
-                        allowfullscreen></iframe>
+                        allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframePh_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=15&__feature.dashboardSceneSolo"
-                        allowfullscreen></iframe>
+                        allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframeNitrogen_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=16&__feature.dashboardSceneSolo"
-                        allowfullscreen></iframe>
+                        allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
         </div>
@@ -70,7 +70,7 @@
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframePhosphorus_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=18&__feature.dashboardSceneSolo"
-                        allowfullscreen></iframe>
+                        allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
         </div>
@@ -84,9 +84,43 @@
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframePotassium_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=17&__feature.dashboardSceneSolo"
-                        allowfullscreen></iframe>
+                        allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const iframeIds = [
+        'grafanaIframeTemperature_sensor2',
+        'grafanaIframeHumidity_sensor2',
+        'grafanaIframeConductivity_sensor2',
+        'grafanaIframePh_sensor2',
+        'grafanaIframeNitrogen_sensor2',
+        'grafanaIframePhosphorus_sensor2',
+        'grafanaIframePotassium_sensor2'
+    ];
+
+    let loadedCount = 0;
+    const totalIframes = iframeIds.length;
+
+    function showAllIframes() {
+        iframeIds.forEach(id => {
+            const iframe = document.getElementById(id);
+            if (iframe) iframe.style.display = 'block';
+        });
+    }
+
+    iframeIds.forEach(id => {
+        const iframe = document.getElementById(id);
+        if (iframe) {
+            iframe.onload = function() {
+                loadedCount++;
+                if (loadedCount === totalIframes) {
+                    showAllIframes();
+                }
+            };
+        }
+    });
+</script>

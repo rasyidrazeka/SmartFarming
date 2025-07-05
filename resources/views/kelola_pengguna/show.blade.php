@@ -99,14 +99,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="d-flex justify-content-end me-3">
+                            <a href="{{ route('kelolaPengguna.index') }}" class="btn btn-sm btn-primary my-3"
+                                style="background-color: #227066; border-color: #227066;">Kembali</a>
+                        </div>
                     </div>
                 </div>
             </div>
         @endempty
-        <div class="d-flex justify-content-end">
-            <a href="{{ route('kelolaPengguna.index') }}" class="btn btn-sm btn-primary my-3"
-                style="background-color: #227066; border-color: #227066;">Kembali</a>
-        </div>
     </div>
 @endsection
 @push('js')

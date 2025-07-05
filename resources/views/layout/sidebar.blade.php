@@ -75,19 +75,19 @@
                         <span class="pc-mtext">Riwayat Cuaca</span>
                     </a>
                 </li>
-                <li class="pc-item pc-caption">
-                    <label>Manajemen</label>
-                    <i class="ti ti-dashboard"></i>
-                </li>
-                <li class="pc-item">
-                    <a href="{{ route('kelolaPengguna.index') }}" class="pc-link">
-                        <span class="pc-micon">
-                            <i class="ti ti-user-check"></i>
-                        </span>
-                        <span class="pc-mtext">Kelola Pengguna</span>
-                    </a>
-                </li>
                 @if (session('role_code') === 'ADMN')
+                    <li class="pc-item pc-caption">
+                        <label>Manajemen</label>
+                        <i class="ti ti-dashboard"></i>
+                    </li>
+                    <li class="pc-item">
+                        <a href="{{ route('kelolaPengguna.index') }}" class="pc-link">
+                            <span class="pc-micon">
+                                <i class="ti ti-user-check"></i>
+                            </span>
+                            <span class="pc-mtext">Kelola Pengguna</span>
+                        </a>
+                    </li>
                 @endif
                 {{-- <li class="pc-item">
                     <a href="../elements/bc_color.html" class="pc-link">

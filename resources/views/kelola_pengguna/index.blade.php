@@ -6,7 +6,7 @@
             <div class="form-group col-6 col-lg-3">
                 <label for="start_date" class="form-label">Filter Status Akun:</label>
                 <select id="is_ban" class="form-select">
-                    <option value="">Semua Status</option>
+                    <option value="">- Semua Status -</option>
                     <option value="0">Aktif</option>
                     <option value="1">Banned</option>
                 </select>
@@ -24,7 +24,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex justify-content-end">
-                    <a class="btn btn-sm btn-primary" href="{{ route('kelolaPengguna.create') }}"
+                    <a class="btn btn-sm btn-primary" href="#"
                         style="background-color: #227066; border-color: #227066;">Tambah</a>
                 </div>
             </div>
@@ -35,11 +35,11 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>No</th>
-                                    {{-- <th>Username</th>
-                                <th>Email</th> --}}
+                                    {{-- <th>Username</th> --}}
                                     <th>Nama Lengkap</th>
+                                    <th>Email</th>
                                     <th>Role</th>
-                                    <th>Avatar</th>
+                                    {{-- <th>Avatar</th> --}}
                                     <th>Status Akun</th>
                                     {{-- <th>Terdaftar</th> --}}
                                     <th>Aksi</th>
@@ -55,6 +55,14 @@
 @push('js')
     <script>
         $(document).ready(function() {
+            // Ambil nilai filter dari localStorage (jika ada)
+            if (localStorage.getItem('filter_role')) {
+                $('#role').val(localStorage.getItem('filter_role'));
+            }
+            if (localStorage.getItem('filter_is_ban')) {
+                $('#is_ban').val(localStorage.getItem('filter_is_ban'));
+            }
+
             table = $('#table_kelola_pengguna').DataTable({
                 processing: true,
                 serverSide: true,
@@ -79,12 +87,6 @@
                     //     orderable: false,
                     //     searchable: false
                     // },
-                    // {
-                    //     data: 'email',
-                    //     className: "text-center",
-                    //     orderable: false,
-                    //     searchable: false
-                    // },
                     {
                         data: 'fullname',
                         className: "",
@@ -92,17 +94,23 @@
                         searchable: true
                     },
                     {
-                        data: 'role_name',
+                        data: 'email',
                         className: "text-center",
                         orderable: false,
                         searchable: false
                     },
                     {
-                        data: 'avatar',
+                        data: 'role_name',
                         className: "text-center",
                         orderable: false,
                         searchable: false
                     },
+                    // {
+                    //     data: 'avatar',
+                    //     className: "text-center",
+                    //     orderable: false,
+                    //     searchable: false
+                    // },
                     {
                         data: 'is_ban',
                         className: "text-center",
@@ -126,8 +134,14 @@
         });
 
         $('#role, #is_ban').on('change', function() {
+            // Simpan ke localStorage
+            localStorage.setItem('filter_role', $('#role').val());
+            localStorage.setItem('filter_is_ban', $('#is_ban').val());
+
+            // Reload table
             table.ajax.reload();
         });
+
 
         // Fungsi hapus
         function hapusPengguna(id) {
