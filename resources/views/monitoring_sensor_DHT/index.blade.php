@@ -178,7 +178,10 @@
     <script>
         function updateGrafanaIframe(startDate, endDate) {
             const fromTimestamp = new Date(startDate).getTime();
-            const toTimestamp = new Date(endDate).getTime();
+
+            const toDate = new Date(endDate);
+            toDate.setHours(23, 59, 59, 999); // pastikan akhir hari
+            const toTimestamp = toDate.getTime();
 
             const baseGrafanaUrl = "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1";
             const commonParams =

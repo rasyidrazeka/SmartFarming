@@ -57,6 +57,19 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-lg-12">
+            <div class="card" style="border-color: #CED4DA">
+                <div class="card-body">
+                    <h6 id="titleCuaca" data-original="Cuaca">Cuaca</h6>
+                    <div class="ratio ratio-16x9">
+                        <iframe id="grafanaIframeCuaca"
+                            src="http://localhost:3000/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=5&__feature.dashboardSceneSolo"
+                            allowfullscreen style="display: none"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 @endsection
 @push('css')
@@ -67,6 +80,7 @@
             'grafanaIframeDhts',
             'grafanaIframeNpks1',
             'grafanaIframeNpks2',
+            'grafanaIframeCuaca',
         ];
 
         let loadedCount = 0;
@@ -172,34 +186,45 @@
 
     <script>
         function updateGrafanaIframe(startDate, endDate) {
-            const fromTimestamp = new Date(startDate).getTime(); // Konversi ke timestamp (ms)
-            const toTimestamp = new Date(endDate).getTime(); // Konversi ke timestamp (ms)
+            const fromTimestamp = new Date(startDate).getTime();
+
+            const toDate = new Date(endDate);
+            toDate.setHours(23, 59, 59, 999); // pastikan akhir hari
+            const toTimestamp = toDate.getTime();
 
             const grafanaEmbedUrlDhts =
                 "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
             // Update URL iframe dengan parameter waktu
             const dhtsGrafana =
-                `${grafanaEmbedUrlDhts}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&panelId=1&__feature.dashboardSceneSolo`;
+                `${grafanaEmbedUrlDhts}&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1d&theme=light&panelId=1&__feature.dashboardSceneSolo`;
             document.getElementById('grafanaIframeDhts').src = dhtsGrafana;
 
             const grafanaEmbedUrlNpks1 =
                 "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
             // Update URL iframe dengan parameter waktu
             const npks1Grafana =
-                `${grafanaEmbedUrlDhts}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&panelId=3&__feature.dashboardSceneSolo`;
+                `${grafanaEmbedUrlNpks1}&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1d&theme=light&panelId=3&__feature.dashboardSceneSolo`;
             document.getElementById('grafanaIframeNpks1').src = npks1Grafana;
 
             const grafanaEmbedUrlNpks2 =
                 "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
             // Update URL iframe dengan parameter waktu
             const npks2Grafana =
-                `${grafanaEmbedUrlDhts}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&panelId=4&__feature.dashboardSceneSolo`;
+                `${grafanaEmbedUrlNpks2}&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1d&theme=light&panelId=4&__feature.dashboardSceneSolo`;
             document.getElementById('grafanaIframeNpks2').src = npks2Grafana;
+
+            const grafanaEmbedUrlCuaca =
+                "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
+            // Update URL iframe dengan parameter waktu
+            const cuacaGrafana =
+                `${grafanaEmbedUrlCuaca}&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1d&theme=light&panelId=33&__feature.dashboardSceneSolo`;
+            document.getElementById('grafanaIframeCuaca').src = cuacaGrafana;
 
             const titleIframeIds = [
                 'titleDht',
                 'titleNpk1',
                 'titleNpk2',
+                'titleCuaca',
             ];
 
             titleIframeIds.forEach(id => {
