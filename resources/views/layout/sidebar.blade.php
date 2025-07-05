@@ -8,7 +8,7 @@
         <div class="navbar-content">
             <ul class="pc-navbar">
                 <li class="pc-item">
-                    <a href="{{ url('/dashboard') }}" class="pc-link">
+                    <a href="{{ url('/dashboard') }}" class="pc-link {{ $activeMenu == 'dashboard' ? 'active' : '' }}">
                         <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
                         <span class="pc-mtext">Dasbor</span>
                     </a>
@@ -29,10 +29,12 @@
                     </a>
                     <ul class="pc-submenu">
                         <li class="pc-item">
-                            <a class="pc-link" href="{{ route('monitoringSensorNPK.index') }}">Sensor NPK</a>
+                            <a class="pc-link {{ $activeMenu == 'monitoringSensorNPK' ? 'active' : '' }}"
+                                href="{{ route('monitoringSensorNPK.index') }}">Sensor NPK</a>
                         </li>
                         <li class="pc-item">
-                            <a class="pc-link" href="{{ route('monitoringSensorDHT.index') }}">Sensor DHT</a>
+                            <a class="pc-link {{ $activeMenu == 'monitoringSensorDHT' ? 'active' : '' }}"
+                                href="{{ route('monitoringSensorDHT.index') }}">Sensor DHT</a>
                         </li>
                     </ul>
                 </li>
@@ -48,10 +50,12 @@
                     </a>
                     <ul class="pc-submenu">
                         <li class="pc-item">
-                            <a class="pc-link" href="{{ route('riwayatDataNPK.index') }}">Sensor NPK</a>
+                            <a class="pc-link {{ $activeMenu == 'riwayatDataNPK' ? 'active' : '' }}"
+                                href="{{ route('riwayatDataNPK.index') }}">Sensor NPK</a>
                         </li>
                         <li class="pc-item">
-                            <a class="pc-link" href="{{ route('riwayatDataDHT.index') }}">Sensor DHT</a>
+                            <a class="pc-link {{ $activeMenu == 'riwayatDataDHT' ? 'active' : '' }}"
+                                href="{{ route('riwayatDataDHT.index') }}">Sensor DHT</a>
                         </li>
                     </ul>
                 </li>
@@ -60,7 +64,7 @@
                     <i class="ti ti-dashboard"></i>
                 </li>
                 <li class="pc-item">
-                    <a href="#" class="pc-link">
+                    <a href="#" class="pc-link {{ $activeMenu == 'monitoringCuaca' ? 'active' : '' }}">
                         <span class="pc-micon">
                             <i class="ti ti-cloud"></i>
                         </span>
@@ -68,7 +72,7 @@
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a href="#" class="pc-link">
+                    <a href="#" class="pc-link {{ $activeMenu == 'riwayatDataCuaca' ? 'active' : '' }}">
                         <span class="pc-micon">
                             <i class="ti ti-history"></i>
                         </span>
@@ -81,7 +85,8 @@
                         <i class="ti ti-dashboard"></i>
                     </li>
                     <li class="pc-item">
-                        <a href="{{ route('kelolaPengguna.index') }}" class="pc-link">
+                        <a href="{{ route('kelolaPengguna.index') }}"
+                            class="pc-link {{ $activeMenu == 'kelolaPengguna' ? 'active' : '' }}">
                             <span class="pc-micon">
                                 <i class="ti ti-user-check"></i>
                             </span>

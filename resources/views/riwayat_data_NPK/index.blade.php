@@ -29,13 +29,13 @@
                         <thead>
                             <tr class="text-center">
                                 <th class="text-center">No</th>
-                                <th class="text-center">Temperature</th>
-                                <th class="text-center">Humidity</th>
-                                <th class="text-center">Conductivity</th>
+                                <th class="text-center">Suhu</th>
+                                <th class="text-center">Kelembapan</th>
+                                <th class="text-center">Konduktivitas</th>
                                 <th class="text-center">pH</th>
                                 <th class="text-center">Nitrogen</th>
-                                <th class="text-center">Phosphorus</th>
-                                <th class="text-center">Potassium</th>
+                                <th class="text-center">Fosfor</th>
+                                <th class="text-center">Kalium</th>
                                 <th class="text-center">Sensor</th>
                                 <th class="text-center">Tanggal</th>
                             </tr>

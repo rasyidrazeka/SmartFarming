@@ -15,7 +15,7 @@ class RiwayatDataDHTController extends Controller
             'title' => 'Riwayat Data Sensor DHT',
             'paragraph' => 'Pusat informasi kondisi greenhouse Anda secara menyeluruh',
             'list' => [
-                ['label' => 'Dashboard', 'url' => route('dashboard.index')],
+                ['label' => 'Dasbor', 'url' => route('dashboard.index')],
                 ['label' => 'Sensor DHT'],
             ]
         ];

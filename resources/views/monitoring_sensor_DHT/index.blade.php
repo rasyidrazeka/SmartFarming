@@ -25,7 +25,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6>Room Temperature</h6>
+                        <h6 id="titleTemperature" data-original="Suhu Ruangan">Suhu Ruangan</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeTemperature"
                                 src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=1&__feature.dashboardSceneSolo"
@@ -37,7 +37,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6>Room Humidity</h6>
+                        <h6 id="titleHumidity" data-original="Kelembapan Ruangan">Kelembapan Ruangan</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeHumidity"
                                 src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=3&__feature.dashboardSceneSolo"
@@ -51,7 +51,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6>Luminosity</h6>
+                        <h6 id="titleLuminosity" data-original="Intensitas Cahaya">Intensitas Cahaya</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeLuminosity"
                                 src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=4&__feature.dashboardSceneSolo"
@@ -172,69 +172,93 @@
             currentUrl.searchParams.delete('end_date');
             window.history.replaceState({}, '', currentUrl); // Update URL tanpa reload
             defaultGrafanaIframe();
-        }); <
-        />
+        });
+    </script>
 
-        <
-        script >
-            function updateGrafanaIframe(startDate, endDate) {
-                const fromTimestamp = new Date(startDate).getTime();
-                const toTimestamp = new Date(endDate).getTime();
+    <script>
+        function updateGrafanaIframe(startDate, endDate) {
+            const fromTimestamp = new Date(startDate).getTime();
+            const toTimestamp = new Date(endDate).getTime();
 
-                const baseGrafanaUrl = "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1";
-                const commonParams =
-                    `&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&__feature.dashboardSceneSolo`;
+            const baseGrafanaUrl = "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1";
+            const commonParams =
+                `&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&__feature.dashboardSceneSolo`;
 
-                const panels = [{
-                        id: 6,
-                        elementId: "grafanaIframeTemperature"
-                    },
-                    {
-                        id: 7,
-                        elementId: "grafanaIframeHumidity"
-                    },
-                    {
-                        id: 8,
-                        elementId: "grafanaIframeLuminosity"
-                    }
-                ];
+            const panels = [{
+                    id: 6,
+                    elementId: "grafanaIframeTemperature"
+                },
+                {
+                    id: 7,
+                    elementId: "grafanaIframeHumidity"
+                },
+                {
+                    id: 8,
+                    elementId: "grafanaIframeLuminosity"
+                }
+            ];
 
-                panels.forEach(panel => {
-                    const url = `${baseGrafanaUrl}${commonParams}&panelId=${panel.id}`;
-                    const iframe = document.getElementById(panel.elementId);
-                    if (iframe) {
-                        iframe.src = url;
-                    }
-                });
-            } <
-            />
+            panels.forEach(panel => {
+                const url = `${baseGrafanaUrl}${commonParams}&panelId=${panel.id}`;
+                const iframe = document.getElementById(panel.elementId);
+                if (iframe) {
+                    iframe.src = url;
+                }
+            });
 
-            <
-            script >
-            function defaultGrafanaIframe() {
-                const baseGrafanaUrl = "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data";
-                const commonParams = "?orgId=1&timezone=browser&theme=light&__feature.dashboardSceneSolo";
+            const titleIframeIds = [
+                'titleTemperature',
+                'titleHumidity',
+                'titleLuminosity',
+            ];
 
-                const panels = [{
-                        id: 1,
-                        elementId: "grafanaIframeTemperature"
-                    },
-                    {
-                        id: 3,
-                        elementId: "grafanaIframeHumidity"
-                    },
-                    {
-                        id: 4,
-                        elementId: "grafanaIframeLuminosity"
-                    }
-                ];
+            titleIframeIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    const original = el.dataset.original;
+                    el.innerText = 'Rata-Rata Harian ' + original;
+                }
+            });
+        }
+    </script>
+    <script>
+        function defaultGrafanaIframe() {
+            const baseGrafanaUrl = "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data";
+            const commonParams = "?orgId=1&timezone=browser&theme=light&__feature.dashboardSceneSolo";
 
-                panels.forEach(panel => {
-                    const iframe = document.getElementById(panel.elementId);
-                    if (iframe) {
-                        iframe.src = `${baseGrafanaUrl}${commonParams}&panelId=${panel.id}`;
-                    }
-                });
-            } <
-            />
-    @endpush
+            const panels = [{
+                    id: 1,
+                    elementId: "grafanaIframeTemperature"
+                },
+                {
+                    id: 3,
+                    elementId: "grafanaIframeHumidity"
+                },
+                {
+                    id: 4,
+                    elementId: "grafanaIframeLuminosity"
+                }
+            ];
+
+            panels.forEach(panel => {
+                const iframe = document.getElementById(panel.elementId);
+                if (iframe) {
+                    iframe.src = `${baseGrafanaUrl}${commonParams}&panelId=${panel.id}`;
+                }
+            });
+
+            const titleIframeIds = [
+                'titleTemperature',
+                'titleHumidity',
+                'titleLuminosity',
+            ];
+
+            titleIframeIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.innerText = el.dataset.original;
+                }
+            });
+        }
+    </script>
+@endpush

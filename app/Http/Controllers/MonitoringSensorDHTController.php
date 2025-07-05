@@ -11,10 +11,10 @@ class MonitoringSensorDHTController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'Monitoring Sensor DHT',
+            'title' => 'Pemantauan Sensor DHT',
             'paragraph' => 'Pantau data sensor secara real-time untuk menjaga kondisi optimal pada greenhouse.',
             'list' => [
-                ['label' => 'Dashboard', 'url' => route('dashboard.index')],
+                ['label' => 'Dasbor', 'url' => route('dashboard.index')],
                 ['label' => 'Sensor DHT'],
             ]
         ];
@@ -31,25 +31,25 @@ class MonitoringSensorDHTController extends Controller
             $payload = json_decode($data->payload, true);
             $tanggal = \Carbon\Carbon::parse($data->created_at)->translatedFormat('d F Y');
             $dataDHT->push([
-                'label' => 'Last Update',
+                'label' => 'Update Terakhir',
                 'value' => $tanggal,
                 'unit' => '',
                 'icon' => 'bi-calendar'
             ]);
             $dataDHT->push([
-                'label' => 'Room Temperature',
+                'label' => 'Suhu Ruangan',
                 'value' => $payload['viciTemperature'] ?? '-',
                 'unit' => '°C',
                 'icon' => 'bi-thermometer-half'
             ]);
             $dataDHT->push([
-                'label' => 'Room Humidity',
+                'label' => 'Kelembapan Ruangan',
                 'value' => $payload['viciHumidity'] ?? '-',
                 'unit' => '%',
                 'icon' => 'bi-droplet-half'
             ]);
             $dataDHT->push([
-                'label' => 'Luminosity',
+                'label' => 'Intensitas Cahaya',
                 'value' => $payload['viciLuminosity'] ?? '-',
                 'unit' => 'lux',
                 'icon' => 'bi-brightness-high-fill'

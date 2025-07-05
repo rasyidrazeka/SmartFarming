@@ -223,6 +223,24 @@
 
                     iframe.src = newSrc;
                 });
+
+                const titleIframeIds = [
+                    'titleTemperature_sensor2',
+                    'titleHumidity_sensor2',
+                    'titleConductivity_sensor2',
+                    'titlepH_sensor2',
+                    'titleNitrogen_sensor2',
+                    'titlePhosphorus_sensor2',
+                    'titlePotassium_sensor2',
+                ];
+
+                titleIframeIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        const original = el.dataset.original;
+                        el.innerText = 'Rata-Rata Harian ' + original;
+                    }
+                });
             } else if (selectedSensor == 3) {
                 Object.entries(panelMapSensor3).forEach(([label, panelId]) => {
                     const iframeId = `grafanaIframe${label}_sensor${selectedSensor}`;
@@ -237,6 +255,24 @@
 
                     iframe.src = newSrc;
                 });
+
+                const titleIframeIds = [
+                    'titleTemperature_sensor3',
+                    'titleHumidity_sensor3',
+                    'titleConductivity_sensor3',
+                    'titlepH_sensor3',
+                    'titleNitrogen_sensor3',
+                    'titlePhosphorus_sensor3',
+                    'titlePotassium_sensor3',
+                ];
+
+                titleIframeIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        const original = el.dataset.original;
+                        el.innerText = 'Rata-Rata Harian ' + original;
+                    }
+                });
             } else if (selectedSensor == 'all') {
                 Object.entries(panelMapSensorAll).forEach(([label, panelId]) => {
                     const iframeId = `grafanaIframe${label}_sensorAll`;
@@ -250,6 +286,24 @@
                         `http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
 
                     iframe.src = newSrc;
+                });
+
+                const titleIframeIds = [
+                    'titleTemperature_sensorAll',
+                    'titleHumidity_sensorAll',
+                    'titleConductivity_sensorAll',
+                    'titlepH_sensorAll',
+                    'titleNitrogen_sensorAll',
+                    'titlePhosphorus_sensorAll',
+                    'titlePotassium_sensorAll',
+                ];
+
+                titleIframeIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        const original = el.dataset.original;
+                        el.innerText = 'Rata-Rata Harian ' + original;
+                    }
                 });
             }
         }
@@ -299,6 +353,23 @@
                         `http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
                     iframe.src = defaultSrc;
                 });
+
+                const titleIframeIds = [
+                    'titleTemperature_sensor2',
+                    'titleHumidity_sensor2',
+                    'titleConductivity_sensor2',
+                    'titlepH_sensor2',
+                    'titleNitrogen_sensor2',
+                    'titlePhosphorus_sensor2',
+                    'titlePotassium_sensor2',
+                ];
+
+                titleIframeIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.innerText = el.dataset.original;
+                    }
+                });
             } else if (selectedSensor == 3) {
                 Object.entries(panelMapSensor3).forEach(([label, panelId]) => {
                     const iframeId = `grafanaIframe${label}_sensor${selectedSensor}`;
@@ -309,6 +380,23 @@
                         `http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
                     iframe.src = defaultSrc;
                 });
+
+                const titleIframeIds = [
+                    'titleTemperature_sensor3',
+                    'titleHumidity_sensor3',
+                    'titleConductivity_sensor3',
+                    'titlepH_sensor3',
+                    'titleNitrogen_sensor3',
+                    'titlePhosphorus_sensor3',
+                    'titlePotassium_sensor3',
+                ];
+
+                titleIframeIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.innerText = el.dataset.original;
+                    }
+                });
             } else if (selectedSensor == 'all') {
                 Object.entries(panelMapSensorAll).forEach(([label, panelId]) => {
                     const iframeId = `grafanaIframe${label}_sensorAll`;
@@ -318,6 +406,23 @@
                     const defaultSrc =
                         `http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
                     iframe.src = defaultSrc;
+                });
+
+                const titleIframeIds = [
+                    'titleTemperature_sensorAll',
+                    'titleHumidity_sensorAll',
+                    'titleConductivity_sensorAll',
+                    'titlepH_sensorAll',
+                    'titleNitrogen_sensorAll',
+                    'titlePhosphorus_sensorAll',
+                    'titlePotassium_sensorAll',
+                ];
+
+                titleIframeIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.innerText = el.dataset.original;
+                    }
                 });
             }
         }

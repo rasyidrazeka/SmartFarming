@@ -13,9 +13,9 @@
                         <thead>
                             <tr class="text-center">
                                 <th class="text-center">No</th>
-                                <th class="text-center">Temperature</th>
-                                <th class="text-center">Humidity</th>
-                                <th class="text-center">Luminosity</th>
+                                <th class="text-center">Suhu</th>
+                                <th class="text-center">Kelembapan</th>
+                                <th class="text-center">Intensitas Cahaya</th>
                                 <th class="text-center">sensor</th>
                                 <th class="text-center">Tanggal</th>
                             </tr>

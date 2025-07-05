@@ -24,7 +24,7 @@
         <div class="col-12 col-lg-12">
             <div class="card" style="border-color: #CED4DA">
                 <div class="card-body">
-                    <h6>Sensor DHT</h6>
+                    <h6 id="titleDht" data-original="Sensor DHT">Sensor DHT</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeDhts"
                             src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=7&__feature.dashboardSceneSolo"
@@ -36,7 +36,7 @@
         <div class="col-12 col-lg-12">
             <div class="card" style="border-color: #CED4DA">
                 <div class="card-body">
-                    <h6>Sensor NPK 1</h6>
+                    <h6 id="titleNpk1" data-original="Sensor NPK 1">Sensor NPK 1</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeNpks1"
                             src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=10&__feature.dashboardSceneSolo"
@@ -48,7 +48,7 @@
         <div class="col-12 col-lg-12">
             <div class="card" style="border-color: #CED4DA">
                 <div class="card-body">
-                    <h6>Sensor NPK 2</h6>
+                    <h6 id="titleNpk2" data-original="Sensor NPK 2">Sensor NPK 2</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeNpks2"
                             src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=11&__feature.dashboardSceneSolo"
@@ -195,6 +195,21 @@
             const npks2Grafana =
                 `${grafanaEmbedUrlDhts}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&panelId=4&__feature.dashboardSceneSolo`;
             document.getElementById('grafanaIframeNpks2').src = npks2Grafana;
+
+            const titleIframeIds = [
+                'titleDht',
+                'titleNpk1',
+                'titleNpk2',
+            ];
+
+            titleIframeIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    const original = el.dataset.original;
+                    el.innerText = 'Rata-Rata Harian ' + original;
+                }
+            });
+
         }
     </script>
 
@@ -214,6 +229,19 @@
                 "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=11&__feature.dashboardSceneSolo"; // URL dasbor Grafana
             // Update URL iframe dengan parameter waktu
             document.getElementById('grafanaIframeNpks2').src = grafanaEmbedUrlNpks2;
+
+            const titleIframeIds = [
+                'titleDht',
+                'titleNpk1',
+                'titleNpk2',
+            ];
+
+            titleIframeIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.innerText = el.dataset.original;
+                }
+            });
         }
     </script>
 @endpush

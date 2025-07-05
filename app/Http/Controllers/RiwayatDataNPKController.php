@@ -16,7 +16,7 @@ class RiwayatDataNPKController extends Controller
             'title' => 'Riwayat Data Sensor NPK',
             'paragraph' => 'Pusat informasi kondisi greenhouse Anda secara menyeluruh',
             'list' => [
-                ['label' => 'Dashboard', 'url' => route('dashboard.index')],
+                ['label' => 'Dasbor', 'url' => route('dashboard.index')],
                 ['label' => 'Sensor NPK'],
             ]
         ];

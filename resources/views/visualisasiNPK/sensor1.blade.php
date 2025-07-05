@@ -2,7 +2,7 @@
     <div class="col-12 col-lg-6">
         <div class="card" style="border-color: #CED4DA">
             <div class="card-body">
-                <h6>Soil Temperature</h6>
+                <h6 id="titleTemperature_sensor2" data-original="Suhu Tanah">Suhu Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframeTemperature_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=12&__feature.dashboardSceneSolo"
@@ -14,7 +14,7 @@
     <div class="col-12 col-lg-6">
         <div class="card" style="border-color: #CED4DA">
             <div class="card-body">
-                <h6>Soil Humidity</h6>
+                <h6 id="titleHumidity_sensor2" data-original="Kelembapan Tanah">Kelembapan Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframeHumidity_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=13&__feature.dashboardSceneSolo"
@@ -28,7 +28,7 @@
     <div class="col-12 col-lg-6">
         <div class="card" style="border-color: #CED4DA">
             <div class="card-body">
-                <h6>Soil Conductivity</h6>
+                <h6 id="titleConductivity_sensor2" data-original="Konduktivitas Tanah">Konduktivitas Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframeConductivity_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=14&__feature.dashboardSceneSolo"
@@ -40,7 +40,7 @@
     <div class="col-12 col-lg-6">
         <div class="card" style="border-color: #CED4DA">
             <div class="card-body">
-                <h6>Soil pH</h6>
+                <h6 id="titlepH_sensor2" data-original="pH Tanah">pH Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframePh_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=15&__feature.dashboardSceneSolo"
@@ -54,7 +54,7 @@
     <div class="col-12 col-lg-6">
         <div class="card" style="border-color: #CED4DA">
             <div class="card-body">
-                <h6>Soil Nitrogen</h6>
+                <h6 id="titleNitrogen_sensor2" data-original="Nitrogen Tanah">Nitrogen Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframeNitrogen_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=16&__feature.dashboardSceneSolo"
@@ -66,7 +66,7 @@
     <div class="col-12 col-lg-6">
         <div class="card" style="border-color: #CED4DA">
             <div class="card-body">
-                <h6>Soil Phosphorus</h6>
+                <h6 id="titlePhosphorus_sensor2" data-original="Fosfor Tanah">Fosfor Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframePhosphorus_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=18&__feature.dashboardSceneSolo"
@@ -80,7 +80,7 @@
     <div class="col-12 col-lg-6">
         <div class="card" style="border-color: #CED4DA">
             <div class="card-body">
-                <h6>Soil Potassium</h6>
+                <h6 id="titlePotassium_sensor2" data-original="Kalium Tanah">Kalium Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframePotassium_sensor2"
                         src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=17&__feature.dashboardSceneSolo"

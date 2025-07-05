@@ -11,10 +11,10 @@ class DashboardController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'Dashboard',
+            'title' => 'Dasbor',
             'paragraph' => 'Pusat informasi kondisi greenhouse Anda secara menyeluruh',
             'list' => [
-                ['label' => 'Dashboard'],
+                ['label' => 'Dasbor'],
             ]
         ];
         $activeMenu = 'dashboard';
@@ -115,25 +115,25 @@ class DashboardController extends Controller
             }
 
             $weatherData->push([
-                'label' => 'Temperature',
+                'label' => 'Suhu',
                 'value' => $latestData->temperature_2m,
                 'unit' => '°C',
                 'icon' => 'bi ' . $ikonSuhu
             ]);
             $weatherData->push([
-                'label' => 'Cloud Cover',
+                'label' => 'Tutupan Awan',
                 'value' => $latestData->cloud_cover,
                 'unit' => '%',
                 'icon' => 'bi bi-clouds-fill'
             ]);
             $weatherData->push([
-                'label' => 'Wind Speed',
+                'label' => 'Kecepatan Angin',
                 'value' => $latestData->wind_speed_10m,
                 'unit' => 'km/h',
                 'icon' => 'bi bi-wind'
             ]);
             $weatherData->push([
-                'label' => 'Weather',
+                'label' => 'Cuaca',
                 'value' => $deskripsiCuaca,
                 'unit' => '',
                 'icon' => 'bi ' . $ikonCuaca
