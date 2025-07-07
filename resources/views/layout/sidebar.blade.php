@@ -64,7 +64,8 @@
                     <i class="ti ti-dashboard"></i>
                 </li>
                 <li class="pc-item">
-                    <a href="#" class="pc-link {{ $activeMenu == 'monitoringCuaca' ? 'active' : '' }}">
+                    <a href="{{ route('monitoringCuaca.index') }}"
+                        class="pc-link {{ $activeMenu == 'monitoringCuaca' ? 'active' : '' }}">
                         <span class="pc-micon">
                             <i class="ti ti-cloud"></i>
                         </span>

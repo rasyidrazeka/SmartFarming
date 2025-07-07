@@ -144,8 +144,7 @@ class MonitoringCuacaController extends Controller
         return view('monitoring_cuaca.index', compact(
             'breadcrumb',
             'activeMenu',
-            'dataDHT',
-            'weatherData'
+            'weatherData',
         ));
     }
 }

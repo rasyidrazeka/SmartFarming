@@ -1,9 +1,15 @@
 @extends('layout.template')
-@section('title', 'Monitoring DHT | Agrilink Vocpro')
+@section('title', 'Monitoring Cuaca | Agrilink Vocpro')
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            @foreach ($dataDHT->slice(0, 4) as $item)
+            <div class="form-group col-6 col-lg-3 ms-auto">
+                <label for="start_date" class="form-label">Filter Tanggal:</label>
+                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Masukkan tanggal">
+            </div>
+        </div>
+        <div class="row">
+            @foreach ($weatherData->slice(0, 4) as $item)
                 <div class="col-12 col-lg-3">
                     <div class="card text-center p-3" style="border-color: #CED4DA">
                         <div class="mb-2">
@@ -19,11 +25,11 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6>Room Temperature</h6>
+                        <h6 id="titleTemperature" data-original="Suhu">Suhu</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeTemperature"
-                                src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=1&__feature.dashboardSceneSolo"
-                                allowfullscreen></iframe>
+                                src="http://localhost:3000/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=1&__feature.dashboardSceneSolo"
+                                allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
                 </div>
@@ -31,11 +37,11 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6>Room Humidity</h6>
+                        <h6 id="titleCloudCover" data-original="Tutupan Awan">Tutupan Awan</h6>
                         <div class="ratio ratio-16x9">
-                            <iframe id="grafanaIframeHumidity"
-                                src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=3&__feature.dashboardSceneSolo"
-                                allowfullscreen></iframe>
+                            <iframe id="grafanaIframeCloudCover"
+                                src="http://localhost:3000/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=2&__feature.dashboardSceneSolo"
+                                allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
                 </div>
@@ -45,11 +51,23 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6>Luminosity</h6>
+                        <h6 id="titleWindSpeed" data-original="Kecepatan Angin">Kecepatan Angin</h6>
                         <div class="ratio ratio-16x9">
-                            <iframe id="grafanaIframeLuminosity"
-                                src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=4&__feature.dashboardSceneSolo"
-                                allowfullscreen></iframe>
+                            <iframe id="grafanaIframeWindSpeed"
+                                src="http://localhost:3000/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=3&__feature.dashboardSceneSolo"
+                                allowfullscreen style="display: none"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="card" style="border-color: #CED4DA">
+                    <div class="card-body">
+                        <h6 id="titleWeather" data-original="Cuaca">Cuaca</h6>
+                        <div class="ratio ratio-16x9">
+                            <iframe id="grafanaIframeWeather"
+                                src="http://localhost:3000/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=4&__feature.dashboardSceneSolo"
+                                allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
                 </div>
@@ -60,6 +78,37 @@
 @push('css')
 @endpush
 @push('js')
+    <script>
+        const iframeIds = [
+            'grafanaIframeTemperature',
+            'grafanaIframeCloudCover',
+            'grafanaIframeWindSpeed',
+            'grafanaIframeWeather'
+        ];
+
+        let loadedCount = 0;
+        const totalIframes = iframeIds.length;
+
+        function showAllIframes() {
+            iframeIds.forEach(id => {
+                const iframe = document.getElementById(id);
+                if (iframe) iframe.style.display = 'block';
+            });
+        }
+
+        iframeIds.forEach(id => {
+            const iframe = document.getElementById(id);
+            if (iframe) {
+                iframe.onload = function() {
+                    loadedCount++;
+                    if (loadedCount === totalIframes) {
+                        showAllIframes();
+                    }
+                };
+            }
+        });
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -142,23 +191,29 @@
     <script>
         function updateGrafanaIframe(startDate, endDate) {
             const fromTimestamp = new Date(startDate).getTime();
-            const toTimestamp = new Date(endDate).getTime();
 
-            const baseGrafanaUrl = "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1";
+            const toDate = new Date(endDate);
+            toDate.setHours(23, 59, 59, 999); // pastikan akhir hari
+            const toTimestamp = toDate.getTime();
+            const baseGrafanaUrl = "http://localhost:3000/d-solo/cept647sue8e8f/cuaca?orgId=1";
             const commonParams =
-                `&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&__feature.dashboardSceneSolo`;
+                `&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1h&theme=light&__feature.dashboardSceneSolo`;
 
             const panels = [{
-                    id: 6,
+                    id: 1,
                     elementId: "grafanaIframeTemperature"
                 },
                 {
-                    id: 7,
-                    elementId: "grafanaIframeHumidity"
+                    id: 2,
+                    elementId: "grafanaIframeCloudCover"
                 },
                 {
-                    id: 8,
-                    elementId: "grafanaIframeLuminosity"
+                    id: 3,
+                    elementId: "grafanaIframeWindSpeed"
+                },
+                {
+                    id: 4,
+                    elementId: "grafanaIframeWeather"
                 }
             ];
 
@@ -171,23 +226,26 @@
             });
         }
     </script>
-
     <script>
         function defaultGrafanaIframe() {
-            const baseGrafanaUrl = "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data";
-            const commonParams = "?orgId=1&timezone=browser&theme=light&__feature.dashboardSceneSolo";
+            const baseGrafanaUrl = "http://localhost:3000/d-solo/cept647sue8e8f/cuaca?orgId=1";
+            const commonParams = "&timezone=Asia%2FJakarta&refresh=1h&theme=light&__feature.dashboardSceneSolo";
 
             const panels = [{
                     id: 1,
                     elementId: "grafanaIframeTemperature"
                 },
                 {
+                    id: 2,
+                    elementId: "grafanaIframeCloudCover"
+                },
+                {
                     id: 3,
-                    elementId: "grafanaIframeHumidity"
+                    elementId: "grafanaIframeWindSpeed"
                 },
                 {
                     id: 4,
-                    elementId: "grafanaIframeLuminosity"
+                    elementId: "grafanaIframeWeather"
                 }
             ];
 
