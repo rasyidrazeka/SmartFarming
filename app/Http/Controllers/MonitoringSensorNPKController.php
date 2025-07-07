@@ -42,10 +42,11 @@ class MonitoringSensorNPKController extends Controller
         $dataNPK = collect();
         foreach ($latestData as $data) {
             $payload = json_decode($data->payload, true);
-            $tanggal = \Carbon\Carbon::parse($data->created_at)->translatedFormat('d F Y');
+            $createdAt = Carbon::parse($data->created_at)->timezone('Asia/Jakarta');
+            $jamMenit = $createdAt->format('H:i');
             $dataNPK->push([
                 'label' => 'Update Terakhir',
-                'value' => $tanggal,
+                'value' => $jamMenit,
                 'unit' => '',
                 'icon' => 'bi-calendar'
             ]);
