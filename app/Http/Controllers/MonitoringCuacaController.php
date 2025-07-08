@@ -15,7 +15,7 @@ class MonitoringCuacaController extends Controller
             'paragraph' => 'Pantau data cuaca secara real-time untuk menjaga kondisi optimal pada greenhouse.',
             'list' => [
                 ['label' => 'Dasbor', 'url' => route('dashboard.index')],
-                ['label' => 'Data Cuaca'],
+                ['label' => 'Pantauan Cuaca'],
             ]
         ];
         $activeMenu = 'monitoringCuaca';

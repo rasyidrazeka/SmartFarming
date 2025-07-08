@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/riwayatDataDHT.css') }}">
     <link rel="stylesheet" href="{{ asset('css/riwayatDataNPK.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/riwayatDataCuaca.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kelolaPengguna.css') }}">
     @stack('css')
 </head>

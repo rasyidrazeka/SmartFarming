@@ -73,7 +73,8 @@
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a href="#" class="pc-link {{ $activeMenu == 'riwayatDataCuaca' ? 'active' : '' }}">
+                    <a href="{{ route('riwayatDataCuaca.index') }}"
+                        class="pc-link {{ $activeMenu == 'riwayatDataCuaca' ? 'active' : '' }}">
                         <span class="pc-micon">
                             <i class="ti ti-history"></i>
                         </span>
