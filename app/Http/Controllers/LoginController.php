@@ -23,7 +23,7 @@ class LoginController extends Controller
 
         $remember = $request->has('remember');
 
-        $response = Http::withBasicAuth($request->email, $request->password)
+        $response = Http::timeout(300)->withBasicAuth($request->email, $request->password)
             ->post('http://labai.polinema.ac.id:3042/auth/login', [
                 'remember_me' => $remember
             ]);
@@ -79,7 +79,7 @@ class LoginController extends Controller
         $token = session('token');
 
         if ($token) {
-            $response = Http::withToken($token)
+            $response = Http::timeout(300)->withToken($token)
                 ->post('http://labai.polinema.ac.id:3042/auth/logout');
 
             if ($response->successful()) {
