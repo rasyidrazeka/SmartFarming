@@ -219,7 +219,7 @@
                     const to = new Date(endDate).getTime();
 
                     const newSrc =
-                        `http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                        `http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
 
                     iframe.src = newSrc;
                 });
@@ -251,7 +251,7 @@
                     const to = new Date(endDate).getTime();
 
                     const newSrc =
-                        `http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                        `http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
 
                     iframe.src = newSrc;
                 });
@@ -283,7 +283,7 @@
                     const to = new Date(endDate).getTime();
 
                     const newSrc =
-                        `http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                        `http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
 
                     iframe.src = newSrc;
                 });
@@ -350,7 +350,7 @@
                     if (!iframe) return;
 
                     const defaultSrc =
-                        `http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                        `http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
                     iframe.src = defaultSrc;
                 });
 
@@ -377,7 +377,7 @@
                     if (!iframe) return;
 
                     const defaultSrc =
-                        `http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                        `http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
                     iframe.src = defaultSrc;
                 });
 
@@ -404,7 +404,7 @@
                     if (!iframe) return;
 
                     const defaultSrc =
-                        `http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                        `http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
                     iframe.src = defaultSrc;
                 });
 

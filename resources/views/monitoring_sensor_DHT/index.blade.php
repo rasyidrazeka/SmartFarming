@@ -28,7 +28,7 @@
                         <h6 id="titleTemperature" data-original="Suhu Ruangan">Suhu Ruangan</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeTemperature"
-                                src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=1&__feature.dashboardSceneSolo"
+                                src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=1&__feature.dashboardSceneSolo"
                                 allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                         <h6 id="titleHumidity" data-original="Kelembapan Ruangan">Kelembapan Ruangan</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeHumidity"
-                                src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=3&__feature.dashboardSceneSolo"
+                                src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=3&__feature.dashboardSceneSolo"
                                 allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         <h6 id="titleLuminosity" data-original="Intensitas Cahaya">Intensitas Cahaya</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeLuminosity"
-                                src="http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=4&__feature.dashboardSceneSolo"
+                                src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=4&__feature.dashboardSceneSolo"
                                 allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
@@ -183,7 +183,7 @@
             toDate.setHours(23, 59, 59, 999); // pastikan akhir hari
             const toTimestamp = toDate.getTime();
 
-            const baseGrafanaUrl = "http://localhost:3000/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1";
+            const baseGrafanaUrl = "http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1";
             const commonParams =
                 `&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1d&theme=light&__feature.dashboardSceneSolo`;
 
@@ -226,7 +226,7 @@
     </script>
     <script>
         function defaultGrafanaIframe() {
-            const baseGrafanaUrl = "http://localhost:3000/d-solo/eempvyqjk5csgf/website-visualisasi-data";
+            const baseGrafanaUrl = "http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data";
             const commonParams = "?orgId=1&timezone=browser&theme=light&__feature.dashboardSceneSolo";
 
             const panels = [{
