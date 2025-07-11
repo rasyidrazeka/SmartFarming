@@ -57,16 +57,13 @@
                 </div>
             </div>
         </div>
-        <iframe
-            src="http://localhost:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=5&__feature.dashboardSceneSolo"
-            width="450" height="200" frameborder="0"></iframe>
         <div class="col-12 col-lg-12">
             <div class="card" style="border-color: #CED4DA">
                 <div class="card-body">
                     <h6 id="titleCuaca" data-original="Cuaca">Cuaca</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeCuaca"
-                            src="http://localhost:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=5&__feature.dashboardSceneSolo"
+                            src="http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=6&__feature.dashboardSceneSolo"
                             allowfullscreen style="display: none"></iframe>
                     </div>
                 </div>
@@ -215,9 +212,9 @@
             const npks2Grafana =
                 `${grafanaEmbedUrlNpks2}&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1d&theme=light&panelId=4&__feature.dashboardSceneSolo`;
             document.getElementById('grafanaIframeNpks2').src = npks2Grafana;
-            // <iframe src="" width="450" height="200" frameborder="0"></iframe>
+
             const grafanaEmbedUrlCuaca =
-                "http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1"; // URL dasbor Grafana
+                "http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1"; // URL dasbor Grafana
             // Update URL iframe dengan parameter waktu
             const cuacaGrafana =
                 `${grafanaEmbedUrlCuaca}&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=5&__feature.dashboardSceneSolo`;
