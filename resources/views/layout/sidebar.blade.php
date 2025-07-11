@@ -63,23 +63,26 @@
                     <label>Cuaca</label>
                     <i class="ti ti-dashboard"></i>
                 </li>
-                <li class="pc-item">
-                    <a href="{{ route('cuacaTerkini.index') }}"
-                        class="pc-link {{ $activeMenu == 'cuacaTerkini' ? 'active' : '' }}">
+                <li class="pc-item pc-hasmenu">
+                    <a href="#" class="pc-link">
                         <span class="pc-micon">
-                            <i class="bi bi-cloud-arrow-down"></i>
+                            <i class="ti ti-history"></i>
                         </span>
-                        <span class="pc-mtext">Cuaca Terkini</span>
-                    </a>
-                </li>
-                <li class="pc-item">
-                    <a href="{{ route('monitoringCuaca.index') }}"
-                        class="pc-link {{ $activeMenu == 'monitoringCuaca' ? 'active' : '' }}">
-                        <span class="pc-micon">
-                            <i class="ti ti-cloud"></i>
+                        <span class="pc-mtext">Pemantauan Cuaca</span>
+                        <span class="pc-arrow">
+                            <i data-feather="ti ti-cloud"></i>
                         </span>
-                        <span class="pc-mtext">Prediksi Cuaca</span>
                     </a>
+                    <ul class="pc-submenu">
+                        <li class="pc-item">
+                            <a class="pc-link {{ $activeMenu == 'monitoringCuaca' ? 'active' : '' }}"
+                                href="{{ route('monitoringCuaca.index') }}">Prediksi Cuaca</a>
+                        </li>
+                        <li class="pc-item">
+                            <a class="pc-link {{ $activeMenu == 'cuacaTerkini' ? 'active' : '' }}"
+                                href="{{ route('cuacaTerkini.index') }}">Cuaca Terkini</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="pc-item">
                     <a href="{{ route('riwayatDataCuaca.index') }}"
