@@ -11,11 +11,11 @@ class MonitoringCuacaController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'Monitoring Cuaca',
-            'paragraph' => 'Pantau data cuaca secara real-time untuk menjaga kondisi optimal pada greenhouse.',
+            'title' => 'Prediksi Cuaca',
+            'paragraph' => 'Prediksi cuaca 7 hari ke depan untuk membantu petani merencanakan tanam, penyiraman, dan pemupukan secara efisien.',
             'list' => [
                 ['label' => 'Dasbor', 'url' => route('dashboard.index')],
-                ['label' => 'Pantauan Cuaca'],
+                ['label' => 'Prediksi Cuaca'],
             ]
         ];
         $activeMenu = 'monitoringCuaca';

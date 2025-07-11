@@ -229,8 +229,9 @@
     </script>
     <script>
         function defaultGrafanaIframe() {
-            const baseGrafanaUrl = "http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1";
-            const commonParams = "&timezone=Asia%2FJakarta&refresh=1h&theme=light&__feature.dashboardSceneSolo";
+            const baseGrafanaUrl =
+                "http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1";
+            const commonParams = "&timezone=browser&refresh=1h&theme=light&__feature.dashboardSceneSolo"
 
             const panels = [{
                     id: 1,

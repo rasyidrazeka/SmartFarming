@@ -217,7 +217,7 @@
                 "http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1"; // URL dasbor Grafana
             // Update URL iframe dengan parameter waktu
             const cuacaGrafana =
-                `${grafanaEmbedUrlCuaca}&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=5&__feature.dashboardSceneSolo`;
+                `${grafanaEmbedUrlCuaca}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1h&theme=light&panelId=6&__feature.dashboardSceneSolo`;
             document.getElementById('grafanaIframeCuaca').src = cuacaGrafana;
 
             const titleIframeIds = [
@@ -253,6 +253,10 @@
                 "http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=11&__feature.dashboardSceneSolo"; // URL dasbor Grafana
             // Update URL iframe dengan parameter waktu
             document.getElementById('grafanaIframeNpks2').src = grafanaEmbedUrlNpks2;
+
+            const grafanaEmbedUrlCuaca =
+                "http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=6&__feature.dashboardSceneSolo"; // URL dasbor Grafana
+            document.getElementById('grafanaIframeCuaca').src = grafanaEmbedUrlCuaca;
 
             const titleIframeIds = [
                 'titleDht',

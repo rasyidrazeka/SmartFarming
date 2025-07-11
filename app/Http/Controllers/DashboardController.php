@@ -21,7 +21,7 @@ class DashboardController extends Controller
 
         $nowJakarta = Carbon::now('Asia/Jakarta');
         $nowUtc = $nowJakarta->copy()->setTimezone('UTC');
-        $latestData = DB::table('weather_data')
+        $latestData = DB::table('weather_now')
             ->whereDate('time', $nowUtc->toDateString()) // tanggal dalam UTC
             ->whereTime('time', '<=', $nowUtc->format('H:i:s')) // waktu dalam UTC
             ->orderByDesc('time')
