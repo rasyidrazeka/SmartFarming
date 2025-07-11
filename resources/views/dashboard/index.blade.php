@@ -57,13 +57,16 @@
                 </div>
             </div>
         </div>
+        <iframe
+            src="http://localhost:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=5&__feature.dashboardSceneSolo"
+            width="450" height="200" frameborder="0"></iframe>
         <div class="col-12 col-lg-12">
             <div class="card" style="border-color: #CED4DA">
                 <div class="card-body">
                     <h6 id="titleCuaca" data-original="Cuaca">Cuaca</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeCuaca"
-                            src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=5&__feature.dashboardSceneSolo"
+                            src="http://localhost:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=5&__feature.dashboardSceneSolo"
                             allowfullscreen style="display: none"></iframe>
                     </div>
                 </div>

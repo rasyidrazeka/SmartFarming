@@ -64,12 +64,21 @@
                     <i class="ti ti-dashboard"></i>
                 </li>
                 <li class="pc-item">
+                    <a href="{{ route('cuacaTerkini.index') }}"
+                        class="pc-link {{ $activeMenu == 'cuacaTerkini' ? 'active' : '' }}">
+                        <span class="pc-micon">
+                            <i class="bi bi-cloud-arrow-down"></i>
+                        </span>
+                        <span class="pc-mtext">Cuaca Terkini</span>
+                    </a>
+                </li>
+                <li class="pc-item">
                     <a href="{{ route('monitoringCuaca.index') }}"
                         class="pc-link {{ $activeMenu == 'monitoringCuaca' ? 'active' : '' }}">
                         <span class="pc-micon">
                             <i class="ti ti-cloud"></i>
                         </span>
-                        <span class="pc-mtext">Pemantauan Cuaca</span>
+                        <span class="pc-mtext">Prediksi Cuaca</span>
                     </a>
                 </li>
                 <li class="pc-item">
@@ -78,7 +87,7 @@
                         <span class="pc-micon">
                             <i class="ti ti-history"></i>
                         </span>
-                        <span class="pc-mtext">Riwayat Cuaca</span>
+                        <span class="pc-mtext">Riwayat Prediksi Cuaca</span>
                     </a>
                 </li>
                 @if (session('role_code') === 'ADMN')

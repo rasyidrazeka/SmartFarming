@@ -28,7 +28,7 @@
                         <h6 id="titleTemperature" data-original="Suhu">Suhu</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeTemperature"
-                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=1&__feature.dashboardSceneSolo"
+                                src="http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=1&__feature.dashboardSceneSolo"
                                 allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                         <h6 id="titleCloudCover" data-original="Tutupan Awan">Tutupan Awan</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeCloudCover"
-                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=2&__feature.dashboardSceneSolo"
+                                src="http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=3&__feature.dashboardSceneSolo"
                                 allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         <h6 id="titleWindSpeed" data-original="Kecepatan Angin">Kecepatan Angin</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeWindSpeed"
-                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=3&__feature.dashboardSceneSolo"
+                                src="http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=4&__feature.dashboardSceneSolo"
                                 allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                         <h6 id="titleWeather" data-original="Cuaca">Cuaca</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeWeather"
-                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=4&__feature.dashboardSceneSolo"
+                                src="http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=5&__feature.dashboardSceneSolo"
                                 allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
@@ -154,19 +154,19 @@
             const endDate = picker.endDate.format('YYYY-MM-DD');
             const today = moment().format('YYYY-MM-DD');
 
-            // if (endDate > today) {
-            //     Swal.fire({
-            //         toast: true,
-            //         position: 'top-end',
-            //         icon: 'error',
-            //         title: 'Tanggal tidak boleh lebih dari hari ini',
-            //         showConfirmButton: false,
-            //         timer: 3000,
-            //         timerProgressBar: true,
-            //     });
-            //     $(this).val(''); // Reset input
-            //     return;
-            // }
+            if (endDate > today) {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Tanggal tidak boleh lebih dari hari ini',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+                $(this).val(''); // Reset input
+                return;
+            }
 
             $(this).val(picker.startDate.format('DD-MM-YY') + ' → ' + picker.endDate.format('DD-MM-YY'));
             const currentUrl = new URL(window.location.href);
@@ -195,7 +195,8 @@
             const toDate = new Date(endDate);
             toDate.setHours(23, 59, 59, 999); // pastikan akhir hari
             const toTimestamp = toDate.getTime();
-            const baseGrafanaUrl = "http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1";
+            const baseGrafanaUrl =
+                "http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1";
             const commonParams =
                 `&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1h&theme=light&__feature.dashboardSceneSolo`;
 
@@ -204,15 +205,15 @@
                     elementId: "grafanaIframeTemperature"
                 },
                 {
-                    id: 2,
+                    id: 3,
                     elementId: "grafanaIframeCloudCover"
                 },
                 {
-                    id: 3,
+                    id: 4,
                     elementId: "grafanaIframeWindSpeed"
                 },
                 {
-                    id: 4,
+                    id: 5,
                     elementId: "grafanaIframeWeather"
                 }
             ];
@@ -236,15 +237,15 @@
                     elementId: "grafanaIframeTemperature"
                 },
                 {
-                    id: 2,
+                    id: 3,
                     elementId: "grafanaIframeCloudCover"
                 },
                 {
-                    id: 3,
+                    id: 4,
                     elementId: "grafanaIframeWindSpeed"
                 },
                 {
-                    id: 4,
+                    id: 5,
                     elementId: "grafanaIframeWeather"
                 }
             ];

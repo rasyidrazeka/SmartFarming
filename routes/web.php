@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CuacaTerkiniController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MonitoringCuacaController;
@@ -36,6 +37,7 @@ Route::middleware(['checkrole:ADMN,USER', 'prevent_back'])->group(function () {
         Route::get('/DHT', [MonitoringSensorDHTController::class, 'index'])->name('monitoringSensorDHT.index');
     });
     Route::get('/monitoringCuaca', [MonitoringCuacaController::class, 'index'])->name('monitoringCuaca.index');
+    Route::get('/monitoringCuacaRealtime', [CuacaTerkiniController::class, 'index'])->name('cuacaTerkini.index');
     Route::group(['prefix' => 'riwayatDataDHT'], function () {
         Route::get('/', [RiwayatDataDHTController::class, 'index'])->name('riwayatDataDHT.index');
         Route::post('/list', [RiwayatDataDHTController::class, 'list'])->name('riwayatDataDHT.list');
