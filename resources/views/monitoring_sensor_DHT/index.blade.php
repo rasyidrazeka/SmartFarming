@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="form-group col-6 col-lg-3 ms-auto">
+            <div class="form-group col-12 col-lg-3 ms-auto">
                 <label for="start_date" class="form-label">Filter Tanggal:</label>
                 <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Masukkan tanggal">
             </div>

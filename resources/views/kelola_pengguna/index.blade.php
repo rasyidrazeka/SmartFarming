@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-flex row justify-content-between mb-2">
-            <div class="form-group col-6 col-lg-3">
+            <div class="form-group col-12 col-lg-3">
                 <label for="start_date" class="form-label">Filter Status Akun:</label>
                 <select id="is_ban" class="form-select">
                     <option value="">- Semua Status -</option>
@@ -11,7 +11,7 @@
                     <option value="1">Banned</option>
                 </select>
             </div>
-            <div class="form-group col-6 col-lg-3">
+            <div class="form-group col-12 col-lg-3">
                 <label for="start_date" class="form-label">Filter Role:</label>
                 <select class="form-select" name="role" id="role">
                     <option value="">- Semua Role -</option>
