@@ -66,11 +66,11 @@
                 <li class="pc-item pc-hasmenu">
                     <a href="#" class="pc-link">
                         <span class="pc-micon">
-                            <i class="ti ti-history"></i>
+                            <i class="ti ti-cloud"></i>
                         </span>
                         <span class="pc-mtext">Pemantauan Cuaca</span>
                         <span class="pc-arrow">
-                            <i data-feather="ti ti-cloud"></i>
+                            <i data-feather="chevron-right"></i>
                         </span>
                     </a>
                     <ul class="pc-submenu">
