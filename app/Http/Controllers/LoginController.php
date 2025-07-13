@@ -58,7 +58,7 @@ class LoginController extends Controller
                     'role_name'  => $decoded['user']['role']['name'] ?? 'GUEST',
                     'role_code'  => $decoded['user']['role']['code'] ?? 'Guest',
                 ]);
-                Alert::toast('Selamat Datang', 'success');
+                Alert::toast('Selamat Datang, ' . session('nama'), 'success');
                 return redirect('/dashboard');
             } else {
                 Alert::toast('Respon login tidak valid', 'error');
@@ -89,12 +89,12 @@ class LoginController extends Controller
                 ->post('http://labai.polinema.ac.id:3042/auth/logout');
 
             if ($response->successful()) {
+                Session::flush();
                 Alert::toast('Berhasil logout!', 'success');
             } else {
                 Alert::toast('Gagal menghubungi server logout.', 'error');
             }
         }
-        Session::flush();
         return redirect()->route('login.index');
     }
 }
