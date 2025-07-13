@@ -39,6 +39,12 @@ class LoginController extends Controller
                 // Decode JWT
                 $decoded = $this->decodeJwtPayload($jwt);
 
+                $isBanned = $decoded['user']['is_ban'] ?? false;
+                if ($isBanned) {
+                    Alert::toast('Akun Anda diblokir, silakan hubungi admin.', 'error');
+                    return back()->withInput();
+                }
+
                 // Simpan ke session
                 session([
                     'token' => $token,
