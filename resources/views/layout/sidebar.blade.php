@@ -93,6 +93,35 @@
                         <span class="pc-mtext">Riwayat Prediksi Cuaca</span>
                     </a>
                 </li>
+                <li class="pc-item pc-caption">
+                    <label>Komoditas</label>
+                    <i class="ti ti-dashboard"></i>
+                </li>
+                <li class="pc-item pc-hasmenu">
+                    <a href="#" class="pc-link">
+                        <span class="pc-micon">
+                            <i class="bi bi-bar-chart-line"></i>
+                        </span>
+                        <span class="pc-mtext">Harga Komoditas</span>
+                        <span class="pc-arrow">
+                            <i data-feather="chevron-right"></i>
+                        </span>
+                    </a>
+                    <ul class="pc-submenu">
+                        <li class="pc-item">
+                            <a class="pc-link {{ $activeMenu == 'prediksiHarga' ? 'active' : '' }}"
+                                href="{{ route('komoditas.prediksi') }}">Prediksi Harga</a>
+                        </li>
+                        <li class="pc-item">
+                            <a class="pc-link {{ $activeMenu == 'trendHarga' ? 'active' : '' }}"
+                                href="{{ route('komoditas.trend') }}">Trend Harga</a>
+                        </li>
+                        <li class="pc-item">
+                            <a class="pc-link {{ $activeMenu == 'riwayatHarga' ? 'active' : '' }}"
+                                href="{{ route('komoditas.riwayat') }}">Riwayat Harga</a>
+                        </li>
+                    </ul>
+                </li>
                 @if (session('role_code') === 'ADMN')
                     <li class="pc-item pc-caption">
                         <label>Manajemen</label>

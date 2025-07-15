@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CuacaTerkiniController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KomoditasController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MonitoringCuacaController;
 use App\Http\Controllers\MonitoringSensorDHTController;
@@ -54,6 +55,15 @@ Route::middleware(['checkrole:ADMN,USER', 'prevent_back'])->group(function () {
         Route::get('/', [ProfilController::class, 'index'])->name('profil.index');
         Route::get('/edit', [ProfilController::class, 'edit'])->name('profil.edit');
         Route::get('/update', [ProfilController::class, 'update'])->name('profil.update');
+    });
+    Route::group(['prefix' => 'komoditas'], function () {
+        Route::get('/prediksi', [KomoditasController::class, 'prediksi'])->name('komoditas.prediksi');
+        Route::get('/trend', [KomoditasController::class, 'trend'])->name('komoditas.trend');
+        Route::get('/riwayat', [KomoditasController::class, 'riwayat'])->name('komoditas.riwayat');
+        Route::get('/prediksi/data', [KomoditasController::class, 'getPrediksiData'])->name('prediksi.data');
+        Route::get('/get-pasar/{kabkota_id}', [KomoditasController::class, 'getPasarByKabkota'])->name('get.pasar.by.kabkota');
+        Route::get('/riwayat-data', [KomoditasController::class, 'getRiwayatData'])->name('riwayat.data');
+
     });
 }); // untuk user dan admin
 Route::middleware(['checkrole:ADMN', 'prevent_back'])->group(function () {
