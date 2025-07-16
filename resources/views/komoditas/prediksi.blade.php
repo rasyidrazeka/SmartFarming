@@ -23,7 +23,6 @@
         </div>
         <div class="card" style="border-color: #CED4DA">
             <div class="card-body">
-                <h6 id="titleTemperature_sensor2" data-original="Suhu Tanah">Suhu Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaFrame"
                         src="http://localhost:3010/d-solo/aekxvuuuvs1z4d/grafik-prediksi?orgId=1&from=1747146651126&to=1763044251126&timezone=browser&var-nama_komoditas=Cabe%20Merah%20Besar&var-limit=60&var-tanggal=2025-07-13&refresh=1d&showCategory=Legend&panelId=3&__feature.dashboardSceneSolo"
@@ -116,7 +115,16 @@
                         },
                         {
                             data: 'prediksi',
-                            className: 'text-center'
+                            className: 'text-center',
+                            render: function(data, type, row) {
+                                if (data == null) return '-';
+
+                                const rounded = Math.floor(data / 1000) * 1000;
+                                const decimal = (data - rounded).toFixed(3).split('.')[
+                                1]; // ambil 3 digit pecahan
+
+                                return 'Rp ' + rounded.toLocaleString('id-ID') + ',' + decimal;
+                            }
                         }
                     ]
                 });
