@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcceptanceController;
 use App\Http\Controllers\CuacaTerkiniController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KomoditasController;
@@ -28,6 +29,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['guest.custom'])->group(function () {
     Route::get('/', [LoginController::class, 'index'])->name('login.index');
     Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+    Route::get('/accept-invitation', [AcceptanceController::class, 'index'])->name('acceptance.index');
+    Route::post('/accept-invitation', [AcceptanceController::class, 'process'])->name('acceptance.process');
 });
 
 Route::middleware(['checkrole:ADMN,USER', 'prevent_back'])->group(function () {
@@ -63,18 +66,17 @@ Route::middleware(['checkrole:ADMN,USER', 'prevent_back'])->group(function () {
         Route::get('/prediksi/data', [KomoditasController::class, 'getPrediksiData'])->name('prediksi.data');
         Route::get('/get-pasar/{kabkota_id}', [KomoditasController::class, 'getPasarByKabkota'])->name('get.pasar.by.kabkota');
         Route::get('/riwayat-data', [KomoditasController::class, 'getRiwayatData'])->name('riwayat.data');
-
     });
 }); // untuk user dan admin
 Route::middleware(['checkrole:ADMN', 'prevent_back'])->group(function () {
     Route::group(['prefix' => 'kelolaPengguna'], function () {
         Route::get('/', [UserController::class, 'index'])->name('kelolaPengguna.index');
         Route::post('/list', [UserController::class, 'list'])->name('kelolaPengguna.list');
-        // Route::get('/create', [UserController::class, 'create'])->name('kelolaPengguna.create');
-        // Route::post('/', [UserController::class, 'store'])->name('kelolaPengguna.store');
-        Route::get('/{id}', [UserController::class, 'show'])->name('kelolaPengguna.show');
-        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('kelolaPengguna.edit');
-        Route::put('/{id}', [UserController::class, 'update'])->name('kelolaPengguna.update');
-        // Route::delete('/{id}', [UserController::class, 'destroy'])->name('kelolaPengguna.destroy');
+        Route::get('/create', [UserController::class, 'create'])->name('kelolaPengguna.create');
+        Route::post('/', [UserController::class, 'store'])->name('kelolaPengguna.store');
+        Route::get('/{username}', [UserController::class, 'show'])->name('kelolaPengguna.show');
+        Route::get('/{username}/edit', [UserController::class, 'edit'])->name('kelolaPengguna.edit');
+        Route::put('/{username}', [UserController::class, 'update'])->name('kelolaPengguna.update');
+        Route::delete('/{username}', [UserController::class, 'destroy'])->name('kelolaPengguna.destroy');
     });
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\NPKSModel;
 use App\Models\SensorReadingsModel;
 use App\Models\SensorsModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -76,7 +77,7 @@ class RiwayatDataNPKController extends Controller
                 return ($row->payload['soilPotassium'] ?? 'null') . ' mg/kg';
             })
             ->editColumn('created_at', function ($row) {
-                return $row->created_at->format('d-m-Y H:i:s');
+                return Carbon::parse($row->time)->timezone('Asia/Jakarta')->format('d-m-Y H:i:s');
             })
             ->addColumn('sensors.public_name', function ($row) {
                 return optional($row->sensor)->public_name;

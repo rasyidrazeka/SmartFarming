@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Login | Agrilink Vocpro</title>
+    <title>Acceptance | Agrilink Vocpro</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,7 +40,7 @@
             background: none !important;
         }
     </style>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -61,36 +61,30 @@
                 <div class="card my-5">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-end mb-4">
-                            <h3 class="mb-0"><b>Login</b></h3>
+                            <h3 class="mb-0"><b>Buat Password</b></h3>
                         </div>
-                        <form action="{{ route('login.authenticate') }}" method="POST">
+                        <form action="{{ route('acceptance.process', ['token' => request('token')]) }}" method="POST">
                             @csrf
                             <div class="form-group mb-3">
-                                <label class="form-label">Email</label>
-                                <input type="text" class="form-control  @error('email') is-invalid @enderror"
-                                    placeholder="example@gmail.com" id="email" name="email" autofocus required>
-                                @error('email')
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control  @error('password') is-invalid @enderror"
+                                    id="password" name="password" placeholder="Masukkan Password" required>
+                                @error('password')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label">Password</label>
-                                <input type="password" class="form-control  @error('password') is-invalid @enderror"
-                                    placeholder="Masukkan Password" id="password" name="password" required>
-                                @if ($errors->has('password'))
-                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                <label class="form-label">Konfirmasi Password</label>
+                                <input type="password"
+                                    class="form-control  @error('password_confirmation') is-invalid @enderror"
+                                    id="password_confirmation" name="password_confirmation"
+                                    placeholder="Masukkan Ulang Password" required>
+                                @if ($errors->has('password_confirmation'))
+                                    <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
                                 @endif
                             </div>
-                            <div class="d-flex mt-1 justify-content-between">
-                                <div class="form-check">
-                                    <input class="form-check-input input-primary" type="checkbox" value="1"
-                                        id="remember" name="remember" checked>
-                                    <label class="form-check-label text-muted" for="customCheckc1">Keep me sign
-                                        in</label>
-                                </div>
-                            </div>
                             <div class="d-grid mt-4">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                                <button type="submit" class="btn btn-primary">Kirim</button>
                             </div>
                         </form>
                     </div>
@@ -144,6 +138,7 @@
             }
         });
     </script>
+
 </body>
 
 </html>

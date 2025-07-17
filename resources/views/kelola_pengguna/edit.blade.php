@@ -8,11 +8,21 @@
                     <h5><i class="icon fas fa-ban white"></i> Kesalahan!</h5> Data yang Anda cari tidak ditemukan.
                 </div>
             @else
-                <form method="POST" action="{{ route('kelolaPengguna.update', $user->account_id) }}" class="form-horizontal"
+                <form method="POST" action="{{ route('kelolaPengguna.update', $user->username) }}" class="form-horizontal"
                     enctype="multipart/form-data" id="editPengguna">
                     @csrf {!! method_field('PUT') !!}
                     <div class=" form-group row">
                         <div class="col-12 col-md-12">
+                            <div class="form-group">
+                                <label for="no_hp" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control @error('fullname') is-invalid @enderror"
+                                    id="fullname" name="fullname" value="{{ old('fullname', $user->fullname) }}"
+                                    placeholder="Masukkan Nama Lengkap">
+                                <p><small class="text-muted">Wajib Diisi.</small></p>
+                                @if ($errors->has('fullname'))
+                                    <span class="text-danger">{{ $errors->first('fullname') }}</span>
+                                @endif
+                            </div>
                             <div class="form-group">
                                 <label for="username" class="form-label">Username</label>
                                 <input type="text" class="form-control @error('username') is-invalid @enderror"
@@ -25,27 +35,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email"
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
                                     name="email" value="{{ old('email', $user->email) }}"
                                     placeholder="Masukkan Email Pengguna" required>
                                 <p><small class="text-muted">Wajib Diisi!</small></p>
                                 @if ($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label for="password" class="form-label">Password</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                        id="password" name="password"
-                                        placeholder="Abaikan (Jangan Diisi) Jika Tidak Ingin Mengganti Password">
-                                    <span class="input-group-text" id="toggle-password" style="cursor: pointer;">
-                                        <i class="fa fa-eye" id="eye-icon"></i>
-                                    </span>
-                                </div>
-                                <p><small class="text-muted">Boleh Dikosongi.</small></p>
-                                @if ($errors->has('password'))
-                                    <span class="text-danger">{{ $errors->first('password') }}</span>
                                 @endif
                             </div>
                             <div class="form-group">
@@ -60,31 +55,6 @@
                                                 {{ $item->role_name }}
                                             </option>
                                         @endforeach
-                                    </select>
-                                    <p><small class="text-muted">Wajib Diisi!</small></p>
-                                </div>
-                                @if ($errors->has('urole_id'))
-                                    <span class="text-danger">{{ $errors->first('urole_id') }}</span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label for="no_hp" class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control @error('fullname') is-invalid @enderror"
-                                    id="fullname" name="fullname" value="{{ old('fullname', $user->fullname) }}"
-                                    placeholder="Masukkan Nama Lengkap">
-                                <p><small class="text-muted">Wajib Diisi.</small></p>
-                                @if ($errors->has('fullname'))
-                                    <span class="text-danger">{{ $errors->first('fullname') }}</span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label for="is_ban" class="form-label">Status Akun</label>
-                                <div class="form-group">
-                                    <select class="choices form-select @error('is_ban') is-invalid @enderror" name="is_ban"
-                                        id="is_ban" required>
-                                        <option value="">- Status Akun -</option>
-                                        <option value="0" {{ $user->is_ban == 0 ? 'selected' : '' }}>Aktif</option>
-                                        <option value="1" {{ $user->is_ban == 1 ? 'selected' : '' }}>Banned</option>
                                     </select>
                                     <p><small class="text-muted">Wajib Diisi!</small></p>
                                 </div>

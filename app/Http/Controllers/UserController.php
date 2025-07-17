@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\AccountModel;
 use App\Models\RoleModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Validation\Rule;
+
 
 class UserController extends Controller
 {
@@ -91,9 +95,15 @@ class UserController extends Controller
             // ✅ Kolom Aksi
             ->addColumn('aksi', function ($row) {
                 $btn = '<div class="text-center d-flex gap-1 justify-content-center">';
-                $btn .= '<a href="' . route('kelolaPengguna.show', $row->account_id) . '" class="btn btn-sm btn-info">Show</a>';
-                $btn .= '<a href="' . route('kelolaPengguna.edit', $row->account_id) . '" class="btn btn-sm btn-warning">Edit</a>';
-                $btn .= '<button class="btn btn-sm btn-danger" onclick="hapusPengguna(\'' . $row->id . '\')">Hapus</button>';
+                $btn .= '<a href="' . route('kelolaPengguna.show', $row->username) . '" class="btn btn-sm btn-info">Detail</a>';
+                $btn .= '<a href="' . route('kelolaPengguna.edit', $row->username) . '" class="btn btn-sm btn-warning">Ubah</a>';
+
+                if ($row->is_ban) {
+                    $btn .= '<button class="btn btn-sm btn-success" onclick="ubahStatusBlokir(\'' . $row->username . '\', false)">Buka Blokir</button>';
+                } else {
+                    $btn .= '<button class="btn btn-sm btn-danger" onclick="ubahStatusBlokir(\'' . $row->username . '\', true)">Blokir</button>';
+                }
+
                 $btn .= '</div>';
                 return $btn;
             })
@@ -102,39 +112,86 @@ class UserController extends Controller
             ->make(true);
     }
 
-    // public function create()
-    // {
-    //     $breadcrumb = (object) [
-    //         'title' => 'Tambah Pengguna',
-    //         'paragraph' => 'Masukkan data pengguna baru dengan lengkap untuk proses registrasi akun.',
-    //         'list' => [
-    //             ['label' => 'Kelola Pengguna', 'url' => route('kelolaPengguna.index')],
-    //             ['label' => 'Tambah Pengguna'],
-    //         ]
-    //     ];
-
-    //     $roles = RoleModel::select([
-    //         'user.role.id as role_id',
-    //         'user.role.code as role_code',
-    //         'user.role.name as role_name',
-    //         'user.role.created_at as role_createdAt',
-    //         'user.role.updated_at as role_updatedAt',
-    //     ])->get();
-
-    //     $activeMenu = 'kelolaPengguna';
-    //     return view('kelola_pengguna.create', compact(
-    //         'breadcrumb',
-    //         'activeMenu',
-    //         'roles',
-    //     ));
-    // }
-
-    public function show($id)
+    public function create()
     {
-        if (!Str::isUuid($id)) {
-            abort(404, 'ID tidak valid');
+        $breadcrumb = (object) [
+            'title' => 'Tambah Pengguna',
+            'paragraph' => 'Masukkan data pengguna baru dengan lengkap untuk proses registrasi akun.',
+            'list' => [
+                ['label' => 'Kelola Pengguna', 'url' => route('kelolaPengguna.index')],
+                ['label' => 'Tambah Pengguna'],
+            ]
+        ];
+
+        $roles = RoleModel::select([
+            'user.role.id as role_id',
+            'user.role.code as role_code',
+            'user.role.name as role_name',
+            'user.role.created_at as role_createdAt',
+            'user.role.updated_at as role_updatedAt',
+        ])->get();
+
+        $activeMenu = 'kelolaPengguna';
+        return view('kelola_pengguna.create', compact(
+            'breadcrumb',
+            'activeMenu',
+            'roles',
+        ));
+    }
+
+    public function store(Request $request)
+    {
+        $token = session('token');
+        if (!$token) {
+            return back()->withErrors(['message' => 'Token tidak ditemukan. Silakan login ulang.']);
         }
 
+        $validator = Validator::make($request->all(), [
+            'username' => ['required', 'string'],
+            'fullname' => ['required', 'string'],
+            'email' => ['required', 'email'],
+        ]);
+
+        if (DB::table('user.account')->where('username', $request->username)->exists()) {
+            $validator->errors()->add('username', 'Username sudah digunakan.');
+        }
+
+        if (DB::table('user.account')->where('fullname', $request->fullname)->exists()) {
+            $validator->errors()->add('fullname', 'Fullname sudah digunakan.');
+        }
+
+        if (DB::table('user.account')->where('email', $request->email)->exists()) {
+            $validator->errors()->add('email', 'Email sudah digunakan.');
+        }
+
+        // Ambil semua data request dan tambahkan frontend_url
+        $data = $request->all();
+        $data = $request->except('_token');
+        $data['frontend_url'] = url('http://127.0.0.1:8000');
+
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token, // ⬅️ pastikan format benar!
+                'Accept' => 'application/json',
+            ])->asJson()->post('http://labai.polinema.ac.id:3042/api/admin/users', $data);
+
+            if ($response->successful()) {
+                Alert::toast('Data pengguna berhasil ditambah', 'success');
+                return redirect()->route('kelolaPengguna.index');
+            } else {
+                Alert::toast('Email, nama, atau username sudah digunakan', 'error');
+                return back()->withInput();
+            }
+        } catch (\Exception $e) {
+            return back()->withErrors([
+                'message' => 'Terjadi kesalahan saat menghubungi API.',
+                'error' => $e->getMessage(),
+            ])->withInput();
+        }
+    }
+
+    public function show($username)
+    {
         $breadcrumb = (object) [
             'title' => 'Detail Pengguna',
             'paragraph' => 'Lihat informasi lengkap akun pengguna.',
@@ -159,7 +216,7 @@ class UserController extends Controller
             'user.account.deleted_at',
             'user.role.name as role_name'
         ])->leftJoin('user.role', 'user.account.urole_id', '=', 'user.role.id')
-            ->where('user.account.id', $id)
+            ->where('user.account.username', $username)
             ->first();
 
         return view('kelola_pengguna.show', compact(
@@ -169,12 +226,8 @@ class UserController extends Controller
         ));
     }
 
-    public function edit($id)
+    public function edit($username)
     {
-        if (!Str::isUuid($id)) {
-            abort(404, 'ID tidak valid');
-        }
-
         $breadcrumb = (object) [
             'title' => 'Edit Pengguna',
             'paragraph' => 'Perbarui informasi akun pengguna untuk memastikan data tetap akurat dan terkini.',
@@ -198,7 +251,7 @@ class UserController extends Controller
             'user.account.deleted_at',
             'user.role.name as role_name'
         ])->leftJoin('user.role', 'user.account.urole_id', '=', 'user.role.id')
-            ->where('user.account.id', $id)
+            ->where('user.account.username', $username)
             ->first();
 
         $roles = RoleModel::select([
@@ -217,41 +270,80 @@ class UserController extends Controller
         ));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $username)
     {
-        $user = AccountModel::select([
-            'user.account.id as account_id',
-            'user.account.username',
-            'user.account.fullname',
-            'user.account.email',
-            'user.account.avatar',
-            'user.account.is_ban',
-            'user.account.urole_id',
-            'user.account.created_at',
-            'user.account.updated_at',
-            'user.account.deleted_at',
-            'user.role.name as role_name'
-        ])->leftJoin('user.role', 'user.account.urole_id', '=', 'user.role.id')
-            ->where('user.account.id', $id)
-            ->first();
+        // Ambil token dari session
+        $token = session('token');
 
-        $validated = $request->validate([
-            'fullname' => 'required|string|max:255',
-            'username' => 'required|string|max:50|unique:user.account,username,' . $id,
-            'email' => 'required|email|unique:user.account,email,' . $id,
-            'password' => 'nullable|min:6',
-            'urole_id' => 'required|exists:user.role,id',
-            'is_ban' => 'required|boolean',
-        ]);
-
-        if ($request->filled('password')) {
-            $validated['password'] = Hash::make($request->password);
-        } else {
-            unset($validated['password']); // jangan ubah password jika kosong
+        if (!$token) {
+            return back()->withErrors(['message' => 'Token tidak ditemukan. Silakan login ulang.']);
         }
 
-        $user->update($validated);
-        Alert::toast('Data pengguna berhasil diperbarui!', 'success');
-        return redirect()->route('kelolaPengguna.index');
+        // Validasi input
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'fullname' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'urole_id' => 'required|uuid', // validasi UUID
+        ]);
+
+        $user = AccountModel::where('username', $username)->first();
+
+        if ($request->email != $user->email) {
+            $response = Http::withToken($token)->put("http://labai.polinema.ac.id:3042/api/admin/users/{$username}", [
+                'email' => $request->email,
+            ]);
+        }
+
+        if ($request->username != $user->username) {
+            $response = Http::withToken($token)->put("http://labai.polinema.ac.id:3042/api/admin/users/{$username}", [
+                'username' => $request->username,
+            ]);
+        }
+
+        $response = Http::withToken($token)->put("http://labai.polinema.ac.id:3042/api/admin/users/{$username}", [
+            'fullname' => $request->fullname,
+            'urole_id' => $request->urole_id,
+        ]);
+
+        if ($response->successful()) {
+            Alert::toast('Data pengguna berhasil diubah', 'success');
+            return redirect()->route('kelolaPengguna.index');
+        } else {
+            Alert::toast('Data pengguna gagal diubah', 'error');
+            return back()->withInput();
+        }
     }
+
+    // public function destroy($username)
+    // {
+    //     $token = session('token');
+
+    //     if (!$token) {
+    //         return back()->withErrors(['message' => 'Token tidak ditemukan. Silakan login ulang.']);
+    //     }
+
+    //     try {
+    //         $apiUrl = "http://labai.polinema.ac.id:3042/api/admin/users/{$username}";
+
+    //         $response = Http::withToken($token)
+    //             ->withHeaders([
+    //                 'Accept' => 'application/json',
+    //             ])
+    //             ->delete($apiUrl);
+
+    //         if ($response->successful()) {
+    //             Alert::toast('Akun berhasil dihapus.', 'success');
+    //             return redirect()->route('kelolaPengguna.index');
+    //         } else {
+    //             Alert::toast('Akun tidak berhasil dihapus.', 'error');
+    //             return back();
+    //         }
+    //     } catch (\Exception $e) {
+    //         return back()->withErrors([
+    //             'message' => 'Terjadi kesalahan saat menghubungi API.',
+    //             'error' => $e->getMessage()
+    //         ]);
+    //     }
+    // }
 }

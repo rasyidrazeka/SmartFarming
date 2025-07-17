@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DHTSModel;
 use App\Models\SensorReadingsModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -61,7 +62,7 @@ class RiwayatDataDHTController extends Controller
 
             // Format tanggal
             ->editColumn('created_at', function ($row) {
-                return $row->created_at->format('d-m-Y H:i:s');
+                return Carbon::parse($row->time)->timezone('Asia/Jakarta')->format('d-m-Y H:i:s');
             })
 
             // Tampilkan sensor name dari relasi jika ada

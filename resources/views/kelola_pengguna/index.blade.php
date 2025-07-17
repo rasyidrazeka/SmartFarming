@@ -24,7 +24,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex justify-content-end">
-                    <a class="btn btn-sm btn-primary" href="#"
+                    <a class="btn btn-sm btn-primary" href="{{ route('kelolaPengguna.create') }}"
                         style="background-color: #227066; border-color: #227066;">Tambah</a>
                 </div>
             </div>
@@ -43,6 +43,10 @@
                                     <th>Status Akun</th>
                                     {{-- <th>Terdaftar</th> --}}
                                     <th>Aksi</th>
+                                    <form id="formHapusPengguna" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
                                 </tr>
                             </thead>
                         </table>
@@ -141,25 +145,35 @@
             // Reload table
             table.ajax.reload();
         });
+    </script>
+    <script>
+        function ubahStatusBlokir(username, blokir) {
+            const status = blokir ? 'memblokir' : 'membuka blokir';
+            if (confirm(`Yakin ingin ${status} pengguna ${username}?`)) {
 
+                const token = '{{ session('token') }}';
+                const apiUrl = `http://labai.polinema.ac.id:3042/api/admin/users/${username}/ban`;
+                console.log('Username:', username);
 
-        // Fungsi hapus
-        function hapusPengguna(id) {
-            if (confirm("Yakin ingin menghapus pengguna ini?")) {
-                $.ajax({
-                    url: '/admin/user/' + id,
-                    type: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        $('#table_kelola_pengguna').DataTable().ajax.reload();
-                        alert('Pengguna berhasil dihapus.');
-                    },
-                    error: function() {
-                        alert('Terjadi kesalahan saat menghapus.');
-                    }
-                });
+                fetch(apiUrl, {
+                        method: 'PATCH',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            is_ban: blokir
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message || 'Status blokir berhasil diubah.');
+                        $('#table_kelola_pengguna').DataTable().ajax.reload(null, false);
+                    })
+                    .catch(error => {
+                        console.error('Gagal update:', error);
+                        alert('Gagal memperbarui status blokir.');
+                    });
             }
         }
     </script>
