@@ -40,7 +40,7 @@ class AcceptanceController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-        ])->post("http://labai.polinema.ac.id:3042/users/accept-invitation?token={$token}", [
+        ])->post("http://labai.polinema.ac.id:3042/api/accept-invitation?token={$token}", [
             'password' => $request->password,
             'password_confirmation' => $request->password_confirmation
         ]);
