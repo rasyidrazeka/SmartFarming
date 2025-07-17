@@ -173,15 +173,21 @@ class KomoditasController extends Controller
         $tanggal = $request->input('tanggal') ?? Carbon::now()->format('Y-m-d');
         $tanggalObj = Carbon::parse($tanggal);
         $sebelumnya = $tanggalObj->copy()->subDay()->format('Y-m-d');
-        // dd($tanggal, $sebelumnya, $pasarId, $kabkotaId);
-
-        $tanggalList = [$sebelumnya, $tanggal];
+        // dd($tanggal, $sebelumnya, $pasarId);
 
         if ($pasarId) {
             $data = DB::connection('pgsql_secondary')
                 ->table('komoditas')
                 ->where('pasar_id', $pasarId)
-                ->whereIn('tanggal', $tanggalList)
+                ->where('tanggal', $tanggal)
+                ->select('tanggal', 'komoditas_nama', 'harga', 'satuan')
+                ->orderBy('tanggal', 'desc')
+                ->orderBy('komoditas_nama', 'asc')
+                ->get();
+            $data_sebelumnya = DB::connection('pgsql_secondary')
+                ->table('komoditas')
+                ->where('pasar_id', $pasarId)
+                ->where('tanggal', $sebelumnya)
                 ->select('tanggal', 'komoditas_nama', 'harga', 'satuan')
                 ->orderBy('tanggal', 'desc')
                 ->orderBy('komoditas_nama', 'asc')
@@ -189,30 +195,47 @@ class KomoditasController extends Controller
         } else {
             $data = DB::connection('pgsql_secondary')
                 ->table('komoditas_rata-rata')
-                ->whereIn('tanggal', $tanggalList)
+                ->where('tanggal', $tanggal)
+                ->select('tanggal', 'komoditas_nama', 'harga', 'satuan',)
+                ->orderBy('tanggal', 'desc')
+                ->orderBy('komoditas_nama', 'asc')
+                ->get();
+
+            $data_sebelumnya = DB::connection('pgsql_secondary')
+                ->table('komoditas_rata-rata')
+                ->where('tanggal', $sebelumnya)
                 ->select('tanggal', 'komoditas_nama', 'harga', 'satuan',)
                 ->orderBy('tanggal', 'desc')
                 ->orderBy('komoditas_nama', 'asc')
                 ->get();
         }
-        // dd($data);
 
         $formatted = [];
         foreach ($data as $index => $item) {
+            // Lewati jika harga sekarang kosong
+            if (is_null($item->harga)) {
+                continue;
+            }
+
+            // Cari harga kemarin berdasarkan komoditas
+            $harga_kemarin = $data_sebelumnya
+                ->where('komoditas_nama', $item->komoditas_nama)
+                ->first()->harga ?? 0;
+            // dd($harga_kemarin);
+
+            $perubahan = $item->harga - $harga_kemarin;
+            $persentase = $item->harga > 0
+                ? round(($perubahan / $item->harga) * 100, 2) . '%'
+                : '0%';
+
             $formatted[] = [
                 'no' => $index + 1,
                 'komoditas_nama' => $item->komoditas_nama,
                 'satuan' => $item->satuan,
-                'harga_sekarang' => $item->harga ?? $item->harga,
-                'harga_kemarin' => $data->where('tanggal', $sebelumnya)
-                    ->where('komoditas_nama', $item->komoditas_nama)
-                    ->first()->harga ?? null,
-                'perubahan' => $item->harga - ($data->where('tanggal', $sebelumnya)
-                    ->where('komoditas_nama', $item->komoditas_nama)
-                    ->first()->harga ?? 0),
-                'perubahan%' => $item->harga > 0 ? round((($item->harga - ($data->where('tanggal', $sebelumnya)
-                    ->where('komoditas_nama', $item->komoditas_nama)
-                    ->first()->harga ?? 0)) / $item->harga) * 100, 2) . '%' : '0%',
+                'harga_sekarang' => $item->harga,
+                'harga_kemarin' => $harga_kemarin ?: null,
+                'perubahan' => $perubahan,
+                'perubahan%' => $persentase,
             ];
         }
         // dd($formatted);
