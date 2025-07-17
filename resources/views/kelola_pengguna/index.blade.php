@@ -153,7 +153,6 @@
 
                 const token = '{{ session('token') }}';
                 const apiUrl = `http://labai.polinema.ac.id:3042/api/admin/users/${username}/ban`;
-                console.log('Username:', username);
 
                 fetch(apiUrl, {
                         method: 'PATCH',
