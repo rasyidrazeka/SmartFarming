@@ -149,31 +149,48 @@
     <script>
         function ubahStatusBlokir(username, blokir) {
             const status = blokir ? 'memblokir' : 'membuka blokir';
-            if (confirm(`Yakin ingin ${status} pengguna ${username}?`)) {
+            const token = '{{ session('token') }}';
+            const apiUrl = `http://labai.polinema.ac.id:3042/api/admin/users/${username}/ban`;
 
-                const token = '{{ session('token') }}';
-                const apiUrl = `http://labai.polinema.ac.id:3042/api/admin/users/${username}/ban`;
-
-                fetch(apiUrl, {
-                        method: 'PATCH',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            is_ban: blokir
+            Swal.fire({
+                title: `Yakin ingin ${status} pengguna ${username}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, lanjutkan!',
+                cancelButtonText: 'Batal',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(apiUrl, {
+                            method: 'PATCH',
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                is_ban: blokir
+                            })
                         })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert(data.message || 'Status blokir berhasil diubah.');
-                        $('#table_kelola_pengguna').DataTable().ajax.reload(null, false);
-                    })
-                    .catch(error => {
-                        console.error('Gagal update:', error);
-                        alert('Gagal memperbarui status blokir.');
-                    });
-            }
+                        .then(response => response.json())
+                        .then(data => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil!',
+                                text: data.message || 'Status blokir berhasil diubah.'
+                            });
+                            $('#table_kelola_pengguna').DataTable().ajax.reload(null, false);
+                        })
+                        .catch(error => {
+                            console.error('Gagal update:', error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal!',
+                                text: 'Gagal memperbarui status blokir.'
+                            });
+                        });
+                }
+            });
         }
     </script>
 @endpush
