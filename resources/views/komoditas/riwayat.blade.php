@@ -64,7 +64,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const select = document.getElementById('selected_komoditas');
             const iframe = document.getElementById('grafanaFrame');
-            let selectedDate = moment().format('YYYY-MM-DD'); // default hari ini
+            let selectedDate = moment().subtract(1, 'days').format('YYYY-MM-DD'); // default hari ini
             let table; // untuk referensi DataTable
 
             function getSelectedKomoditas() {
@@ -233,14 +233,17 @@
                         render: function(data, type, row) {
                             let value = parseFloat(data);
                             let color = 'black';
+                            let icon = '';
 
                             if (value > 0) {
                                 color = 'red';
+                                icon = '▲';
                             } else if (value < 0) {
                                 color = 'green';
+                                icon = '▼';
                             }
 
-                            return `<span style="color:${color}">${value}%</span>`;
+                            return `<span style="color:${color}">${value} % ${icon}</span>`;
                         }
                     }
                 ]
