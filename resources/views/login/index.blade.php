@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description"
-        content="Mantis is made using Bootstrap 5 design framework. Download the free admin template & use it for your project.">
+        content="Platform website untuk monitoring smart farming dengan visualisasi data sensor pertanian secara real-time dan prediksi cuaca berbasis web.">
     <meta name="keywords"
-        content="Mantis, Dashboard UI Kit, Bootstrap 5, Admin Template, Admin Dashboard, CRM, CMS, Bootstrap Admin Template">
-    <meta name="author" content="CodedThemes">
+        content="Smart Farming, Monitoring Pertanian, Website Pertanian, Visualisasi Data Sensor, Dashboard Pertanian, Prediksi Cuaca, IoT Pertanian, Agritech, Sistem Monitoring Greenhouse">
+    <meta name="author" content="Rasyid Razeka Alamsyah">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />

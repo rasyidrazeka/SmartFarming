@@ -6,9 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Web Monitoring dan Visualisasi Data Smart Farming">
-    <meta name="keywords" content="Web Monitoring Smart Farming">
-    <meta name="author" content="Rasyid">
+    <meta name="description"
+        content="Platform website untuk monitoring smart farming dengan visualisasi data sensor pertanian secara real-time dan prediksi cuaca berbasis web.">
+    <meta name="keywords"
+        content="Smart Farming, Monitoring Pertanian, Website Pertanian, Visualisasi Data Sensor, Dashboard Pertanian, Prediksi Cuaca, IoT Pertanian, Agritech, Sistem Monitoring Greenhouse">
+    <meta name="author" content="Rasyid Razeka Alamsyah">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('storage/asset_web/LOGO NO BG.png') }}" type="image/x-icon">
     <link rel="stylesheet"
