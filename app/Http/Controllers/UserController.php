@@ -167,7 +167,7 @@ class UserController extends Controller
         // Ambil semua data request dan tambahkan frontend_url
         $data = $request->all();
         $data = $request->except('_token');
-        $data['frontend_url'] = url('http://127.0.0.1:8000');
+        $data['frontend_url'] = url('http://labai.polinema.ac.id:5020');
 
         try {
             $response = Http::withHeaders([
