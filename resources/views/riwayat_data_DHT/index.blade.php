@@ -39,7 +39,7 @@
                 serverSide: true,
                 responsive: true,
                 ajax: {
-                    url: "{{ url('riwayatDataDHT/list') }}",
+                    url: "{{ route('riwayatDataDHT.list') }}",
                     type: "POST",
                     data: function(d) {
                         d.start_date = startDate;
