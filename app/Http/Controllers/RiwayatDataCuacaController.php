@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CuacaModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class RiwayatDataCuacaController extends Controller
@@ -28,8 +29,12 @@ class RiwayatDataCuacaController extends Controller
 
     public function list(Request $request)
     {
-        $cuaca = CuacaModel::select(['id', 'time', 'temperature_2m', 'weather_code', 'cloud_cover', 'wind_speed_10m'])
-            ->orderBy('time', 'desc');
+        $locationId = session('selected_location_id', 1);
+        $cuaca = DB::table('weather_data')
+            ->select('id', 'time', 'temperature_2m', 'weather_code', 'cloud_cover', 'wind_speed_10m')
+            ->where('location_id', $locationId)
+            ->orderBy('time', 'desc')
+            ->get();
 
         // ✅ Tambahkan filter tanggal jika tersedia
         if ($request->start_date && $request->end_date) {

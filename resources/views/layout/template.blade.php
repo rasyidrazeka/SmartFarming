@@ -109,6 +109,12 @@
             }
         });
     </script>
+    <script>
+        document.getElementById('location_select').addEventListener('change', function() {
+            document.getElementById('redirect_to_input').value = window.location.href;
+            document.getElementById('locationForm').submit();
+        });
+    </script>
     @stack('js')
 </body>
 

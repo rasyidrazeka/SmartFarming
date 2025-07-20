@@ -20,35 +20,53 @@ class MonitoringSensorDHTController extends Controller
         ];
         $activeMenu = 'monitoringSensorDHT';
 
+        $locationId = session('selected_location_id', 1);
         Carbon::setLocale('id');
         $latestData = DB::table('sensor_readings')
-            ->where('sensor_id', 1)
-            ->orderByDesc('created_at')
+            ->select(
+                'sensor_readings.id',
+                'sensor_readings.payload',
+                'sensor_readings.sensor_id',
+                'sensor_readings.created_at',
+                'sensors.name as sensor_name',
+                'sensors.public_name as sensor_public_name'
+            )
+            ->join('sensors', 'sensor_readings.sensor_id', '=', 'sensors.id')
+            ->join('bed_locations', 'sensors.bed_location_id', '=', 'bed_locations.id')
+            ->join('locations', 'bed_locations.location_id', '=', 'locations.id')
+            ->where('sensor_readings.sensor_id', 1)
+            ->where('locations.id', $locationId)
+            ->orderByDesc('sensor_readings.created_at')
             ->limit(1)
             ->get();
         $dataDHT = collect();
+
         foreach ($latestData as $data) {
             $payload = json_decode($data->payload, true);
             $createdAt = Carbon::parse($data->created_at)->timezone('Asia/Jakarta');
             $jamMenit = $createdAt->format('H:i');
+
             $dataDHT->push([
                 'label' => 'Update Terakhir',
                 'value' => $jamMenit,
                 'unit' => '',
                 'icon' => 'bi-calendar'
             ]);
+
             $dataDHT->push([
                 'label' => 'Suhu Ruangan',
                 'value' => $payload['viciTemperature'] ?? '-',
                 'unit' => '°C',
                 'icon' => 'bi-thermometer-half'
             ]);
+
             $dataDHT->push([
                 'label' => 'Kelembapan Ruangan',
                 'value' => $payload['viciHumidity'] ?? '-',
                 'unit' => '%',
                 'icon' => 'bi-droplet-half'
             ]);
+
             $dataDHT->push([
                 'label' => 'Intensitas Cahaya',
                 'value' => $payload['viciLuminosity'] ?? '-',
@@ -61,6 +79,7 @@ class MonitoringSensorDHTController extends Controller
             'breadcrumb',
             'activeMenu',
             'dataDHT',
+            'locationId'
         ));
     }
 }

@@ -67,6 +67,11 @@ Route::middleware(['checkrole:ADMN,USER', 'prevent_back'])->group(function () {
         Route::get('/get-pasar/{kabkota_id}', [KomoditasController::class, 'getPasarByKabkota'])->name('get.pasar.by.kabkota');
         Route::get('/riwayat-data', [KomoditasController::class, 'getRiwayatData'])->name('riwayat.data');
     });
+    Route::get('/set-location', function (Illuminate\Http\Request $request) {
+        session(['selected_location_id' => $request->location_id]);
+        $redirectTo = $request->redirect_to ?? route('dashboard.index');
+        return redirect($redirectTo);
+    })->name('set.location');
 }); // untuk user dan admin
 Route::middleware(['checkrole:ADMN', 'prevent_back'])->group(function () {
     Route::group(['prefix' => 'kelolaPengguna'], function () {

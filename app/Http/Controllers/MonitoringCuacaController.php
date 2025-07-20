@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class MonitoringCuacaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $breadcrumb = (object) [
             'title' => 'Prediksi Cuaca',
@@ -20,9 +20,11 @@ class MonitoringCuacaController extends Controller
         ];
         $activeMenu = 'monitoringCuaca';
 
+        $locationId = session('selected_location_id', 1);
         $nowJakarta = Carbon::now('Asia/Jakarta');
         $nowUtc = $nowJakarta->copy()->setTimezone('UTC');
         $latestData = DB::table('weather_data')
+            ->where('location_id', $locationId)
             ->whereDate('time', $nowUtc->toDateString()) // tanggal dalam UTC
             ->whereTime('time', '<=', $nowUtc->format('H:i:s')) // waktu dalam UTC
             ->orderByDesc('time')
@@ -145,6 +147,7 @@ class MonitoringCuacaController extends Controller
             'breadcrumb',
             'activeMenu',
             'weatherData',
+            'locationId',
         ));
     }
 }

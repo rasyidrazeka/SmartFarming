@@ -17,7 +17,7 @@
         <!-- [Mobile Media Block end] -->
         <div class="ms-auto">
             <ul class="list-unstyled">
-                <li class="dropdown pc-h-item">
+                {{-- <li class="dropdown pc-h-item">
                     <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#"
                         role="button" aria-haspopup="false" aria-expanded="false">
                         <i class="ti ti-mail"></i>
@@ -93,7 +93,26 @@
                             <a href="#!" class="link-primary">View all</a>
                         </div>
                     </div>
-                </li>
+                </li> --}}
+                {{-- <div class="d-flex row align-items-center">
+                    <div class="col p-0">
+                        <label for="location">Green House : </label>
+                    </div>
+                    <div class="col me-3">
+                    </div>
+                </div> --}}
+                <form action="{{ route('set.location') }}" method="GET" id="locationForm"
+                    class="d-flex align-items-center me-4">
+                    <input type="hidden" name="redirect_to" id="redirect_to_input" value="{{ url()->current() }}">
+                    <select name="location_id" id="location_select" class="form-select pe-5">
+                        @foreach ($locations as $location)
+                            <option value="{{ $location->id }}"
+                                {{ session('selected_location_id', 1) == $location->id ? 'selected' : '' }}>
+                                {{ $location->public_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
                 <li class="dropdown pc-h-item header-user-profile">
                     <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#"
                         role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
@@ -121,18 +140,19 @@
                                     @csrf
                                 </form>
                             </div>
+
                         </div>
                         <ul class="nav drp-tabs nav-fill nav-tabs" id="mydrpTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="drp-t1" data-bs-toggle="tab"
-                                    data-bs-target="#drp-tab-1" type="button" role="tab"
-                                    aria-controls="drp-tab-1" aria-selected="true"><i class="ti ti-user"></i>
+                                    data-bs-target="#drp-tab-1" type="button" role="tab" aria-controls="drp-tab-1"
+                                    aria-selected="true"><i class="ti ti-user"></i>
                                     Profile</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="drp-t2" data-bs-toggle="tab"
-                                    data-bs-target="#drp-tab-2" type="button" role="tab"
-                                    aria-controls="drp-tab-2" aria-selected="false"><i class="ti ti-settings"></i>
+                                <button class="nav-link" id="drp-t2" data-bs-toggle="tab" data-bs-target="#drp-tab-2"
+                                    type="button" role="tab" aria-controls="drp-tab-2" aria-selected="false"><i
+                                        class="ti ti-settings"></i>
                                     Setting</button>
                             </li>
                         </ul>

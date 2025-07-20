@@ -28,7 +28,7 @@
                         <h6 id="titleTemperature" data-original="Suhu">Suhu</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeTemperature"
-                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=1&__feature.dashboardSceneSolo"
+                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&var-location_id={{ $locationId }}&refresh=1h&theme=light&panelId=1&__feature.dashboardSceneSolo"
                                 allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                         <h6 id="titleCloudCover" data-original="Tutupan Awan">Tutupan Awan</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeCloudCover"
-                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=2&__feature.dashboardSceneSolo"
+                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&var-location_id={{ $locationId }}&refresh=1h&theme=light&panelId=2&__feature.dashboardSceneSolo"
                                 allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         <h6 id="titleWindSpeed" data-original="Kecepatan Angin">Kecepatan Angin</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeWindSpeed"
-                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=3&__feature.dashboardSceneSolo"
+                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&var-location_id={{ $locationId }}&refresh=1h&theme=light&panelId=3&__feature.dashboardSceneSolo"
                                 allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                         <h6 id="titleWeather" data-original="Cuaca">Cuaca</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeWeather"
-                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=Asia%2FJakarta&refresh=1h&theme=light&panelId=4&__feature.dashboardSceneSolo"
+                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&var-location_id={{ $locationId }}&refresh=1h&theme=light&panelId=4&__feature.dashboardSceneSolo"
                                 allowfullscreen style="display: none"></iframe>
                         </div>
                     </div>
@@ -78,6 +78,9 @@
 @push('css')
 @endpush
 @push('js')
+    <script>
+        window.locationId = @json($locationId);
+    </script>
     <script>
         const iframeIds = [
             'grafanaIframeTemperature',
@@ -105,30 +108,6 @@
                         showAllIframes();
                     }
                 };
-            }
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const startDateParam = urlParams.get('start_date');
-            const endDateParam = urlParams.get('end_date');
-
-            if (startDateParam && endDateParam) {
-                const start = moment(startDateParam, "YYYY-MM-DD");
-                const end = moment(endDateParam, "YYYY-MM-DD");
-
-                $('#daterange').data('daterangepicker').setStartDate(start);
-                $('#daterange').data('daterangepicker').setEndDate(end);
-                $('#daterange').val(start.format('DD-MM-YY') + ' → ' + end.format('DD-MM-YY'));
-
-                // Ini penting agar iframe langsung update
-                setTimeout(() => {
-                    updateGrafanaIframe(startDateParam, endDateParam);
-                }, 1000); // tambahkan delay kecil untuk memastikan iframe ada di DOM
-            } else {
-                defaultGrafanaIframe();
             }
         });
     </script>
@@ -190,14 +169,18 @@
 
     <script>
         function updateGrafanaIframe(startDate, endDate) {
-            const fromTimestamp = new Date(startDate).getTime();
+            const locationId = window.locationId;
+            // Mulai dari jam 00:00:00
+            const fromDate = new Date(startDate);
+            fromDate.setHours(0, 0, 0, 0);
+            const fromTimestamp = fromDate.getTime();
 
+            // Sampai jam 23:00:00
             const toDate = new Date(endDate);
-            toDate.setHours(23, 59, 59, 999); // pastikan akhir hari
+            toDate.setHours(23, 0, 0, 0);
             const toTimestamp = toDate.getTime();
-            const baseGrafanaUrl = "http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1";
-            const commonParams =
-                `&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1h&theme=light&__feature.dashboardSceneSolo`;
+            const baseGrafanaUrl =
+                `http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&var-location_id=${locationId}&refresh=1h&theme=light&__feature.dashboardSceneSolo`;
 
             const panels = [{
                     id: 1,
@@ -218,7 +201,7 @@
             ];
 
             panels.forEach(panel => {
-                const url = `${baseGrafanaUrl}${commonParams}&panelId=${panel.id}`;
+                const url = `${baseGrafanaUrl}&panelId=${panel.id}`;
                 const iframe = document.getElementById(panel.elementId);
                 if (iframe) {
                     iframe.src = url;
@@ -226,10 +209,11 @@
             });
         }
     </script>
+
     <script>
         function defaultGrafanaIframe() {
-            const baseGrafanaUrl = "http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1";
-            const commonParams = "&timezone=Asia%2FJakarta&refresh=1h&theme=light&__feature.dashboardSceneSolo";
+            const baseGrafanaUrl =
+                "http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&var-location_id={{ $locationId }}&refresh=1h&theme=light&panelId=1&__feature.dashboardSceneSolo";
 
             const panels = [{
                     id: 1,
@@ -252,9 +236,33 @@
             panels.forEach(panel => {
                 const iframe = document.getElementById(panel.elementId);
                 if (iframe) {
-                    iframe.src = `${baseGrafanaUrl}${commonParams}&panelId=${panel.id}`;
+                    iframe.src = `${baseGrafanaUrl}&panelId=${panel.id}`;
                 }
             });
         }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const startDateParam = urlParams.get('start_date');
+            const endDateParam = urlParams.get('end_date');
+
+            if (startDateParam && endDateParam) {
+                const start = moment(startDateParam, "YYYY-MM-DD");
+                const end = moment(endDateParam, "YYYY-MM-DD");
+
+                $('#daterange').data('daterangepicker').setStartDate(start);
+                $('#daterange').data('daterangepicker').setEndDate(end);
+                $('#daterange').val(start.format('DD-MM-YY') + ' → ' + end.format('DD-MM-YY'));
+
+                // Ini penting agar iframe langsung update
+                setTimeout(() => {
+                    updateGrafanaIframe(startDateParam, endDateParam);
+                }, 1000); // tambahkan delay kecil untuk memastikan iframe ada di DOM
+            } else {
+                defaultGrafanaIframe();
+            }
+        });
     </script>
 @endpush

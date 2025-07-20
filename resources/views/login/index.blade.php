@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/css/style.css') }}" id="main-style-link">
     <link rel="stylesheet" href="{{ asset('Mantis-Bootstrap-1.0.0/dist/assets/css/style-preset.css') }}">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         .auth-main {
             background: url("{{ asset('storage/asset_web/bg login.png') }}") no-repeat center center fixed;
@@ -75,12 +76,19 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-control  @error('password') is-invalid @enderror"
-                                    placeholder="Masukkan Password" id="password" name="password" required>
+                                <div class="input-group">
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                        placeholder="Masukkan Password" id="password" name="password" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword"
+                                        tabindex="-1">
+                                        <i class="bi bi-eye-slash" id="iconToggle"></i>
+                                    </button>
+                                </div>
                                 @if ($errors->has('password'))
                                     <span class="text-danger">{{ $errors->first('password') }}</span>
                                 @endif
                             </div>
+
                             <div class="d-flex mt-1 justify-content-between">
                                 <div class="form-check">
                                     <input class="form-check-input input-primary" type="checkbox" value="1"
@@ -144,6 +152,23 @@
             }
         });
     </script>
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = document.getElementById('iconToggle');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            }
+        });
+    </script>
+
 </body>
 
 </html>

@@ -27,7 +27,7 @@
                     <h6 id="titleDht" data-original="Sensor DHT">Sensor DHT</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeDhts"
-                            src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=7&__feature.dashboardSceneSolo"
+                            src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&refresh=5s&var-query0=&var-sensor_npk=3&theme=light&panelId=7&__feature.dashboardSceneSolo"
                             allowfullscreen style="display: none"></iframe>
                     </div>
                 </div>
@@ -39,8 +39,9 @@
                     <h6 id="titleNpk1" data-original="Sensor NPK 1">Sensor NPK 1</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeNpks1"
-                            src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=10&__feature.dashboardSceneSolo"
-                            allowfullscreen style="display: none"></iframe>
+                            src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&refresh=5s&var-query0=&editIndex=1&var-sensor_npk=2&theme=light&panelId=10&__feature.dashboardSceneSolo"
+                            allowfullscreen style="display: none">
+                        </iframe>
                     </div>
                 </div>
             </div>
@@ -51,7 +52,7 @@
                     <h6 id="titleNpk2" data-original="Sensor NPK 2">Sensor NPK 2</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeNpks2"
-                            src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=11&__feature.dashboardSceneSolo"
+                            src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&refresh=5s&var-query0=&editIndex=1&var-sensor_npk=3&theme=light&panelId=10&__feature.dashboardSceneSolo"
                             allowfullscreen style="display: none"></iframe>
                     </div>
                 </div>
@@ -63,7 +64,7 @@
                     <h6 id="titleCuaca" data-original="Cuaca">Cuaca</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeCuaca"
-                            src="http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=6&__feature.dashboardSceneSolo"
+                            src="http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1&timezone=browser&refresh=1h&var-location_id={{ $locationId }}&editIndex=0&theme=light&panelId=6&__feature.dashboardSceneSolo"
                             allowfullscreen style="display: none"></iframe>
                     </div>
                 </div>
@@ -76,60 +77,8 @@
 @endpush
 @push('js')
     <script>
-        const iframeIds = [
-            'grafanaIframeDhts',
-            'grafanaIframeNpks1',
-            'grafanaIframeNpks2',
-            'grafanaIframeCuaca',
-        ];
-
-        let loadedCount = 0;
-        const totalIframes = iframeIds.length;
-
-        function showAllIframes() {
-            iframeIds.forEach(id => {
-                const iframe = document.getElementById(id);
-                if (iframe) iframe.style.display = 'block';
-            });
-        }
-
-        iframeIds.forEach(id => {
-            const iframe = document.getElementById(id);
-            if (iframe) {
-                iframe.onload = function() {
-                    loadedCount++;
-                    if (loadedCount === totalIframes) {
-                        showAllIframes();
-                    }
-                };
-            }
-        });
+        window.locationId = @json($locationId);
     </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const startDateParam = urlParams.get('start_date');
-            const endDateParam = urlParams.get('end_date');
-
-            if (startDateParam && endDateParam) {
-                const start = moment(startDateParam, "YYYY-MM-DD");
-                const end = moment(endDateParam, "YYYY-MM-DD");
-
-                $('#daterange').data('daterangepicker').setStartDate(start);
-                $('#daterange').data('daterangepicker').setEndDate(end);
-                $('#daterange').val(start.format('DD-MM-YY') + ' → ' + end.format('DD-MM-YY'));
-
-                // Ini penting agar iframe langsung update
-                setTimeout(() => {
-                    updateGrafanaIframe(startDateParam, endDateParam);
-                }, 1000); // tambahkan delay kecil untuk memastikan iframe ada di DOM
-            } else {
-                defaultGrafanaIframe();
-            }
-        });
-    </script>
-
     <script>
         $('#daterange').daterangepicker({
             opens: 'left',
@@ -183,49 +132,80 @@
             defaultGrafanaIframe();
         });
     </script>
+    <script>
+        const iframeIds = [
+            'grafanaIframeDhts',
+            'grafanaIframeNpks1',
+            'grafanaIframeNpks2',
+            'grafanaIframeCuaca',
+        ];
 
+        let loadedCount = 0;
+        const totalIframes = iframeIds.length;
+
+        function showAllIframes() {
+            iframeIds.forEach(id => {
+                const iframe = document.getElementById(id);
+                if (iframe) iframe.style.display = 'block';
+            });
+        }
+
+        iframeIds.forEach(id => {
+            const iframe = document.getElementById(id);
+            if (iframe) {
+                iframe.onload = function() {
+                    loadedCount++;
+                    if (loadedCount === totalIframes) {
+                        showAllIframes();
+                    }
+                };
+            }
+        });
+    </script>
     <script>
         function updateGrafanaIframe(startDate, endDate) {
-            const fromTimestamp = new Date(startDate).getTime();
+            const locationId = window.locationId;
+            // Mulai dari jam 00:00:00
+            const fromDate = new Date(startDate);
+            fromDate.setHours(0, 0, 0, 0);
+            const fromTimestamp = fromDate.getTime();
 
+            // Sampai jam 23:00:00
             const toDate = new Date(endDate);
-            toDate.setHours(23, 59, 59, 999); // pastikan akhir hari
+            toDate.setHours(23, 0, 0, 0);
             const toTimestamp = toDate.getTime();
 
-            const grafanaEmbedUrlDhts =
-                "http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
-            // Update URL iframe dengan parameter waktu
-            const dhtsGrafana =
-                `${grafanaEmbedUrlDhts}&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1d&theme=light&panelId=1&__feature.dashboardSceneSolo`;
-            document.getElementById('grafanaIframeDhts').src = dhtsGrafana;
+            const dhtsIframe = document.getElementById('grafanaIframeDhts');
+            if (dhtsIframe) {
+                const dhtsUrl =
+                    `http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&var-location_id=${locationId}&refresh=1d&var-query0=&editIndex=1&var-sensor_npk=2&theme=light&panelId=1&__feature.dashboardSceneSolo`;
+                dhtsIframe.src = dhtsUrl;
+            }
 
-            const grafanaEmbedUrlNpks1 =
-                "http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
-            // Update URL iframe dengan parameter waktu
-            const npks1Grafana =
-                `${grafanaEmbedUrlNpks1}&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1d&theme=light&panelId=3&__feature.dashboardSceneSolo`;
-            document.getElementById('grafanaIframeNpks1').src = npks1Grafana;
+            const npks1Iframe = document.getElementById('grafanaIframeNpks1');
+            if (npks1Iframe) {
+                const npks1Url =
+                    `http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&var-location_id=${locationId}&refresh=1d&var-query0=&editIndex=1&var-sensor_npk=2&theme=light&panelId=3&__feature.dashboardSceneSolo`;
+                npks1Iframe.src = npks1Url;
+            }
 
-            const grafanaEmbedUrlNpks2 =
-                "http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1"; // URL dasbor Grafana
-            // Update URL iframe dengan parameter waktu
-            const npks2Grafana =
-                `${grafanaEmbedUrlNpks2}&from=${fromTimestamp}&to=${toTimestamp}&timezone=Asia%2FJakarta&refresh=1d&theme=light&panelId=4&__feature.dashboardSceneSolo`;
-            document.getElementById('grafanaIframeNpks2').src = npks2Grafana;
+            const npks2Iframe = document.getElementById('grafanaIframeNpks2');
+            if (npks2Iframe) {
+                const npks2Url =
+                    `http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&var-location_id=${locationId}&refresh=1d&var-query0=&editIndex=1&var-sensor_npk=3&theme=light&panelId=3&__feature.dashboardSceneSolo`;
+                npks2Iframe.src = npks2Url;
+            }
 
-            const grafanaEmbedUrlCuaca =
-                "http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1"; // URL dasbor Grafana
-            // Update URL iframe dengan parameter waktu
-            const cuacaGrafana =
-                `${grafanaEmbedUrlCuaca}&from=${fromTimestamp}&to=${toTimestamp}&timezone=browser&refresh=1h&theme=light&panelId=6&__feature.dashboardSceneSolo`;
-            document.getElementById('grafanaIframeCuaca').src = cuacaGrafana;
+            const cuacaIframe = document.getElementById('grafanaIframeCuaca');
+            if (cuacaIframe) {
+                const cuacaUrl =
+                    `http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini` +
+                    `?orgId=1&timezone=browser&from=${fromTimestamp}&to=${toTimestamp}` +
+                    `&refresh=1h&var-location_id=${locationId}&editIndex=0&theme=light&panelId=6&__feature.dashboardSceneSolo`;
+                cuacaIframe.src = cuacaUrl;
+            }
 
-            const titleIframeIds = [
-                'titleDht',
-                'titleNpk1',
-                'titleNpk2',
-            ];
-
+            const titleIframeIds = ['titleNpk1', 'titleNpk2', 'titleDht'];
             titleIframeIds.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
@@ -233,29 +213,28 @@
                     el.innerText = 'Rata-Rata Harian ' + original;
                 }
             });
-
         }
     </script>
-
     <script>
         function defaultGrafanaIframe() {
+            const locationId = window.locationId;
             const grafanaEmbedUrlDhts =
-                "http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=7&__feature.dashboardSceneSolo"; // URL dasbor Grafana
+                "http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&refresh=5s&var-query0=&var-sensor_npk=3&theme=light&panelId=7&__feature.dashboardSceneSolo"; // URL dasbor Grafana
             // Update URL iframe dengan parameter waktu
             document.getElementById('grafanaIframeDhts').src = grafanaEmbedUrlDhts;
 
             const grafanaEmbedUrlNpks1 =
-                "http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=10&__feature.dashboardSceneSolo"; // URL dasbor Grafana
+                "http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&refresh=5s&var-query0=&editIndex=1&var-sensor_npk=2&theme=light&panelId=10&__feature.dashboardSceneSolo"; // URL dasbor Grafana
             // Update URL iframe dengan parameter waktu
             document.getElementById('grafanaIframeNpks1').src = grafanaEmbedUrlNpks1;
 
             const grafanaEmbedUrlNpks2 =
-                "http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=11&__feature.dashboardSceneSolo"; // URL dasbor Grafana
+                "http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&refresh=5s&var-query0=&editIndex=1&var-sensor_npk=3&theme=light&panelId=10&__feature.dashboardSceneSolo"; // URL dasbor Grafana
             // Update URL iframe dengan parameter waktu
             document.getElementById('grafanaIframeNpks2').src = grafanaEmbedUrlNpks2;
 
             const grafanaEmbedUrlCuaca =
-                "http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=6&__feature.dashboardSceneSolo"; // URL dasbor Grafana
+                "http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1&timezone=browser&refresh=1h&var-location_id={{ $locationId }}&editIndex=0&theme=light&panelId=6&__feature.dashboardSceneSolo"; // URL dasbor Grafana
             document.getElementById('grafanaIframeCuaca').src = grafanaEmbedUrlCuaca;
 
             const titleIframeIds = [
@@ -272,4 +251,27 @@
             });
         }
     </script>
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const startDateParam = urlParams.get('start_date');
+            const endDateParam = urlParams.get('end_date');
+
+            if (startDateParam && endDateParam) {
+                const start = moment(startDateParam, "YYYY-MM-DD");
+                const end = moment(endDateParam, "YYYY-MM-DD");
+
+                $('#daterange').data('daterangepicker').setStartDate(start);
+                $('#daterange').data('daterangepicker').setEndDate(end);
+                $('#daterange').val(start.format('DD-MM-YY') + ' → ' + end.format('DD-MM-YY'));
+
+                // Ini penting agar iframe langsung update
+                setTimeout(() => {
+                    updateGrafanaIframe(startDateParam, endDateParam);
+                }, 1000); // tambahkan delay kecil untuk memastikan iframe ada di DOM
+            } else {
+                defaultGrafanaIframe();
+            }
+        });
+    </script> --}}
 @endpush

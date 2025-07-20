@@ -20,9 +20,11 @@ class CuacaTerkiniController extends Controller
         ];
         $activeMenu = 'cuacaTerkini';
 
+        $locationId = session('selected_location_id', 1);
         $nowJakarta = Carbon::now('Asia/Jakarta');
         $nowUtc = $nowJakarta->copy()->setTimezone('UTC');
         $latestData = DB::table('weather_now')
+            ->where('location_id', $locationId)
             ->whereDate('time', $nowUtc->toDateString()) // tanggal dalam UTC
             ->whereTime('time', '<=', $nowUtc->format('H:i:s')) // waktu dalam UTC
             ->orderByDesc('time')
@@ -145,6 +147,7 @@ class CuacaTerkiniController extends Controller
             'breadcrumb',
             'activeMenu',
             'weatherData',
+            'locationId'
         ));
     }
 }
