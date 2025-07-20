@@ -45,8 +45,7 @@ class RiwayatDataDHTController extends Controller
             ->join('locations', 'bed_locations.location_id', '=', 'locations.id')
             ->where('sensor_readings.sensor_id', 1)
             ->where('locations.id', $locationId)
-            ->orderBy('sensor_readings.created_at', 'desc')
-            ->get();
+            ->orderBy('sensor_readings.created_at', 'desc');
 
         // ✅ Filter tanggal jika tersedia
         if ($request->start_date && $request->end_date) {
