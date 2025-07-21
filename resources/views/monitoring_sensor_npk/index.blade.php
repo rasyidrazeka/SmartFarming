@@ -23,19 +23,36 @@
             </div>
         </div>
         <!-- Carousel Mulai dari sini -->
+        @php
+            $defaultDataNPK = collect([
+                ['label' => 'Update Terakhir', 'value' => 'Kosong', 'unit' => '', 'icon' => 'bi-calendar'],
+                ['label' => 'Suhu Tanah', 'value' => 'Kosong', 'unit' => '°C', 'icon' => 'bi-thermometer-half'],
+                ['label' => 'Kelembapan Tanah', 'value' => 'Kosong', 'unit' => '%', 'icon' => 'bi-droplet-half'],
+                ['label' => 'Konduktivitas Tanah', 'value' => 'Kosong', 'unit' => 'μS/cm', 'icon' => 'bi-lightning'],
+                ['label' => 'pH Tanah', 'value' => 'Kosong', 'unit' => 'pH', 'icon' => 'bi-speedometer'],
+                ['label' => 'Nitrogen Tanah', 'value' => 'Kosong', 'unit' => 'mg/kg', 'icon' => 'bi-droplet-half'],
+                ['label' => 'Fosfor Tanah', 'value' => 'Kosong', 'unit' => 'mg/kg', 'icon' => 'bi-capsule'],
+                ['label' => 'Kalium Tanah', 'value' => 'Kosong', 'unit' => 'mg/kg', 'icon' => 'bi-shield-check'],
+            ]);
+
+            if ($dataNPK->isNotEmpty()) {
+                $defaultDataNPK = $dataNPK;
+            }
+        @endphp
+
         <div id="carouselNPK" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 {{-- Slide Pertama --}}
                 <div class="carousel-item active">
                     <div class="row">
-                        @foreach ($dataNPK->slice(0, 4) as $item)
+                        @foreach ($defaultDataNPK->slice(0, 4) as $item)
                             <div class="col-12 col-lg-3">
                                 <div class="card text-center p-3" style="border-color: #CED4DA">
                                     <div class="mb-2">
                                         <i class="{{ $item['icon'] }} fs-1" style="color: #227066"></i>
                                     </div>
                                     <div class="fw-bold">{{ $item['label'] }}</div>
-                                    <div class="fs-4">{{ $item['value'] }} {{ $item['unit'] }}</div>
+                                    <div class="fs-4">{{ $item['value'] ?? 'null' }} {{ $item['unit'] }}</div>
                                 </div>
                             </div>
                         @endforeach
@@ -45,20 +62,21 @@
                 {{-- Slide Kedua --}}
                 <div class="carousel-item">
                     <div class="row">
-                        @foreach ($dataNPK->slice(4, 4) as $item)
-                            <div class="col-md-3">
+                        @foreach ($defaultDataNPK->slice(4, 4) as $item)
+                            <div class="col-12 col-lg-3">
                                 <div class="card text-center p-3" style="border-color: #CED4DA">
                                     <div class="mb-2">
                                         <i class="{{ $item['icon'] }} fs-1" style="color: #227066"></i>
                                     </div>
                                     <div class="fw-bold">{{ $item['label'] }}</div>
-                                    <div class="fs-4">{{ $item['value'] }} {{ $item['unit'] }}</div>
+                                    <div class="fs-4">{{ $item['value'] ?? 'null' }} {{ $item['unit'] }}</div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 </div>
             </div>
+
             <!-- Navigasi -->
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselNPK" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
@@ -67,6 +85,7 @@
                 <span class="carousel-control-next-icon"></span>
             </button>
         </div>
+
         <div id="visualisasi_data">
             @php
                 $selectedSensor = request()->get('selected_sensor_npk');
@@ -86,6 +105,9 @@
 @endpush
 @push('js')
     <script>
+        window.locationId = @json($locationId);
+    </script>
+    <script>
         const npkFilter = document.getElementById('selected_sensor_npk');
 
         npkFilter.addEventListener('change', function() {
@@ -93,30 +115,6 @@
             const currentUrl = new URL(window.location.href);
             currentUrl.searchParams.set('selected_sensor_npk', selectedValue);
             window.location.href = currentUrl.toString(); // Redirect ke URL baru dengan param
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const startDateParam = urlParams.get('start_date');
-            const endDateParam = urlParams.get('end_date');
-
-            if (startDateParam && endDateParam) {
-                const start = moment(startDateParam, "YYYY-MM-DD");
-                const end = moment(endDateParam, "YYYY-MM-DD");
-
-                $('#daterange').data('daterangepicker').setStartDate(start);
-                $('#daterange').data('daterangepicker').setEndDate(end);
-                $('#daterange').val(start.format('DD-MM-YY') + ' → ' + end.format('DD-MM-YY'));
-
-                // Ini penting agar iframe langsung update
-                setTimeout(() => {
-                    updateGrafanaIframe(startDateParam, endDateParam);
-                }, 1000); // tambahkan delay kecil untuk memastikan iframe ada di DOM
-            } else {
-                defaultGrafanaIframe();
-            }
         });
     </script>
 
@@ -177,6 +175,7 @@
 
     <script>
         function updateGrafanaIframe(startDate, endDate) {
+            const locationId = window.locationId;
             const selectedSensor = '{{ request()->get('selected_sensor_npk') }}' || 'all'; // sensor ID atau all
 
             const panelMapSensor2 = {
@@ -190,13 +189,13 @@
             };
 
             const panelMapSensor3 = {
-                'Temperature': 19,
-                'Humidity': 20,
-                'Conductivity': 21,
-                'Ph': 22,
-                'Nitrogen': 23,
-                'Phosphorus': 24,
-                'Potassium': 25,
+                'Temperature': 12,
+                'Humidity': 13,
+                'Conductivity': 14,
+                'Ph': 15,
+                'Nitrogen': 16,
+                'Phosphorus': 17,
+                'Potassium': 18,
             };
 
             const panelMapSensorAll = {
@@ -215,11 +214,14 @@
                     const iframe = document.getElementById(iframeId);
                     if (!iframe) return;
 
-                    const from = new Date(startDate).getTime();
-                    const to = new Date(endDate).getTime();
-
+                    const fromDate = new Date(startDate);
+                    fromDate.setHours(0, 0, 0, 0);
+                    const from = fromDate.getTime();
+                    const toDate = new Date(endDate);
+                    toDate.setHours(23, 59, 59, 999);
+                    const to = toDate.getTime();
                     const newSrc =
-                        `http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                        `http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&var-location_id=${locationId}&var-sensor_npk=2&var-sensor_dht=1&refresh=1d&theme=light&panelId=${panelId}&__feature.dashboardSceneSolo`;
 
                     iframe.src = newSrc;
                 });
@@ -247,11 +249,14 @@
                     const iframe = document.getElementById(iframeId);
                     if (!iframe) return;
 
-                    const from = new Date(startDate).getTime();
-                    const to = new Date(endDate).getTime();
-
+                    const fromDate = new Date(startDate);
+                    fromDate.setHours(0, 0, 0, 0);
+                    const from = fromDate.getTime();
+                    const toDate = new Date(endDate);
+                    toDate.setHours(23, 59, 59, 999);
+                    const to = toDate.getTime();
                     const newSrc =
-                        `http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                        `http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&var-location_id=${locationId}&var-sensor_npk=3&var-sensor_dht=1&refresh=1d&theme=light&panelId=${panelId}&__feature.dashboardSceneSolo`;
 
                     iframe.src = newSrc;
                 });
@@ -279,11 +284,14 @@
                     const iframe = document.getElementById(iframeId);
                     if (!iframe) return;
 
-                    const from = new Date(startDate).getTime();
-                    const to = new Date(endDate).getTime();
-
+                    const fromDate = new Date(startDate);
+                    fromDate.setHours(0, 0, 0, 0);
+                    const from = fromDate.getTime();
+                    const toDate = new Date(endDate);
+                    toDate.setHours(23, 59, 59, 999);
+                    const to = toDate.getTime();
                     const newSrc =
-                        `http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&refresh=1d&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                        `http://labai.polinema.ac.id:3010/d-solo/aembuxu4ks5q8c/rata-rata-harian?orgId=1&from=${from}&to=${to}&timezone=browser&var-location_id=${locationId}&var-sensor_npk=2&var-sensor_dht=1&refresh=1d&theme=light&panelId=${panelId}&__feature.dashboardSceneSolo`;
 
                     iframe.src = newSrc;
                 });
@@ -324,13 +332,13 @@
             };
 
             const panelMapSensor3 = {
-                'Temperature': 19,
-                'Humidity': 20,
-                'Conductivity': 21,
-                'Ph': 22,
-                'Nitrogen': 23,
-                'Phosphorus': 24,
-                'Potassium': 25,
+                'Temperature': 12,
+                'Humidity': 13,
+                'Conductivity': 14,
+                'Ph': 15,
+                'Nitrogen': 16,
+                'Phosphorus': 17,
+                'Potassium': 18,
             };
 
             const panelMapSensorAll = {
@@ -350,7 +358,7 @@
                     if (!iframe) return;
 
                     const defaultSrc =
-                        `http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                        `http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location=${locationId}&var-sensor_npk=2&var-sensor_dht=1&refresh=5s&editIndex=2&theme=light&panelId=${panelId}&__feature.dashboardSceneSolo`;
                     iframe.src = defaultSrc;
                 });
 
@@ -377,7 +385,7 @@
                     if (!iframe) return;
 
                     const defaultSrc =
-                        `http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                        `http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location=${locationId}&var-sensor_npk=3&var-sensor_dht=1&refresh=5s&editIndex=2&theme=light&panelId=${panelId}&__feature.dashboardSceneSolo`;
                     iframe.src = defaultSrc;
                 });
 
@@ -404,7 +412,7 @@
                     if (!iframe) return;
 
                     const defaultSrc =
-                        `http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=${panelId}&__feature=dashboardSceneSolo`;
+                        `http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location=${locationId}&var-sensor_npk=2&var-sensor_dht=1&refresh=5s&editIndex=2&theme=light&panelId=${panelId}&__feature.dashboardSceneSolo`;
                     iframe.src = defaultSrc;
                 });
 
@@ -426,5 +434,29 @@
                 });
             }
         }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const startDateParam = urlParams.get('start_date');
+            const endDateParam = urlParams.get('end_date');
+
+            if (startDateParam && endDateParam) {
+                const start = moment(startDateParam, "YYYY-MM-DD");
+                const end = moment(endDateParam, "YYYY-MM-DD");
+
+                $('#daterange').data('daterangepicker').setStartDate(start);
+                $('#daterange').data('daterangepicker').setEndDate(end);
+                $('#daterange').val(start.format('DD-MM-YY') + ' → ' + end.format('DD-MM-YY'));
+
+                // Ini penting agar iframe langsung update
+                setTimeout(() => {
+                    updateGrafanaIframe(startDateParam, endDateParam);
+                }, 1000); // tambahkan delay kecil untuk memastikan iframe ada di DOM
+            } else {
+                defaultGrafanaIframe();
+            }
+        });
     </script>
 @endpush

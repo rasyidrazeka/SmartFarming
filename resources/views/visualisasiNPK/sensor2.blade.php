@@ -5,7 +5,7 @@
                 <h6 id="titleTemperature_sensor3" data-original="Suhu Tanah">Suhu Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframeTemperature_sensor3"
-                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=19&__feature.dashboardSceneSolo"
+                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&var-sensor_npk=3&var-sensor_dht=1&refresh=5s&editIndex=2&theme=light&panelId=12&__feature.dashboardSceneSolo"
                         allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
@@ -17,7 +17,7 @@
                 <h6 id="titleHumidity_sensor3" data-original="Kelembapan Tanah">Kelembapan Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframeHumidity_sensor3"
-                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=20&__feature.dashboardSceneSolo"
+                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&var-sensor_npk=3&var-sensor_dht=1&refresh=5s&editIndex=2&theme=light&panelId=13&__feature.dashboardSceneSolo"
                         allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <h6 id="titleConductivity_sensor3" data-original="Konduktivitas Tanah">Konduktivitas Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframeConductivity_sensor3"
-                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=21&__feature.dashboardSceneSolo"
+                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&var-sensor_npk=3&var-sensor_dht=1&refresh=5s&editIndex=2&theme=light&panelId=14&__feature.dashboardSceneSolo"
                         allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <h6 id="titlepH_sensor3" data-original="pH Tanah">pH Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframePh_sensor3"
-                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=22&__feature.dashboardSceneSolo"
+                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&var-sensor_npk=3&var-sensor_dht=1&refresh=5s&editIndex=2&theme=light&panelId=15&__feature.dashboardSceneSolo"
                         allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 <h6 id="titleNitrogen_sensor3" data-original="Nitrogen Tanah">Nitrogen Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframeNitrogen_sensor3"
-                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=23&__feature.dashboardSceneSolo"
+                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&var-sensor_npk=3&var-sensor_dht=1&refresh=5s&editIndex=2&theme=light&panelId=16&__feature.dashboardSceneSolo"
                         allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 <h6 id="titlePhosphorus_sensor3" data-original="Fosfor Tanah">Fosfor Tanah</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframePhosphorus_sensor3"
-                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=24&__feature.dashboardSceneSolo"
+                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&var-sensor_npk=3&var-sensor_dht=1&refresh=5s&editIndex=2&theme=light&panelId=17&__feature.dashboardSceneSolo"
                         allowfullscreen style="display: none"></iframe>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 <h6 id="titlePotassium_sensor3" data-original="Kalium Tanah">Soil Potassium</h6>
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaIframePotassium_sensor3"
-                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&theme=light&panelId=25&__feature.dashboardSceneSolo"
+                        src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&var-sensor_npk=3&var-sensor_dht=1&refresh=5s&editIndex=2&theme=light&panelId=18&__feature.dashboardSceneSolo"
                         allowfullscreen style="display: none"></iframe>
                 </div>
             </div>

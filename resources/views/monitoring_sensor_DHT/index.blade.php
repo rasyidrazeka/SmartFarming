@@ -10,10 +10,15 @@
         </div>
         @php
             $defaultDataDHT = collect([
-                ['label' => 'Update Terakhir', 'value' => null, 'unit' => '', 'icon' => 'bi-calendar'],
-                ['label' => 'Suhu Ruangan', 'value' => null, 'unit' => '°C', 'icon' => 'bi-thermometer-half'],
-                ['label' => 'Kelembapan Ruangan', 'value' => null, 'unit' => '%', 'icon' => 'bi-droplet-half'],
-                ['label' => 'Intensitas Cahaya', 'value' => null, 'unit' => 'lux', 'icon' => 'bi-brightness-high-fill'],
+                ['label' => 'Update Terakhir', 'value' => 'Kosong', 'unit' => '', 'icon' => 'bi-calendar'],
+                ['label' => 'Suhu Ruangan', 'value' => 'Kosong', 'unit' => '°C', 'icon' => 'bi-thermometer-half'],
+                ['label' => 'Kelembapan Ruangan', 'value' => 'Kosong', 'unit' => '%', 'icon' => 'bi-droplet-half'],
+                [
+                    'label' => 'Intensitas Cahaya',
+                    'value' => 'Kosong',
+                    'unit' => 'lux',
+                    'icon' => 'bi-brightness-high-fill',
+                ],
             ]);
             // Jika dataDHT tidak kosong, timpa default-nya
             if ($dataDHT->isNotEmpty()) {

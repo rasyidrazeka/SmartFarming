@@ -21,26 +21,58 @@ class MonitoringSensorNPKController extends Controller
         ];
         $activeMenu = 'monitoringSensorNPK';
 
-        $sensor_npk = SensorsModel::whereNotNull('bed_location_id')->get();
+        $locationId = session('selected_location_id', 1);
+        $sensor_npk = DB::table('sensors')
+            ->join('sensor_readings', 'sensors.id', '=', 'sensor_readings.sensor_id')
+            ->join('bed_locations', 'sensors.bed_location_id', '=', 'bed_locations.id')
+            ->join('locations', 'bed_locations.location_id', '=', 'locations.id')
+            ->whereIn('sensor_readings.sensor_id', [2, 3])
+            ->where('locations.id', $locationId)
+            ->select('sensors.id', 'sensors.public_name')
+            ->distinct()
+            ->get();
         $selectedSensor = $request->input('selected_sensor_npk');
         session(['selected_sensor_npk' => $selectedSensor]);
 
         Carbon::setLocale('id');
         if ($selectedSensor) {
-            $latestData = DB::table('sensor_readings')
-                ->where('sensor_id', $selectedSensor)
-                ->latest('created_at')
-                ->take(1) // ambil data terbaru saja
-                ->get();
+            $latestData = collect([
+                DB::table('sensor_readings')
+                    ->join('sensors', 'sensor_readings.sensor_id', '=', 'sensors.id')
+                    ->join('bed_locations', 'sensors.bed_location_id', '=', 'bed_locations.id')
+                    ->join('locations', 'bed_locations.location_id', '=', 'locations.id')
+                    ->where('sensor_readings.sensor_id', $selectedSensor)
+                    ->where('locations.id', $locationId)
+                    ->select(
+                        'sensor_readings.*',
+                        'sensors.public_name as sensor_name',
+                        'locations.public_name as location_name'
+                    )
+                    ->latest('sensor_readings.created_at')
+                    ->first()
+            ]);
         } else {
-            $latestData = DB::table('sensor_readings')
-                ->whereIn('sensor_id', [1, 2]) // ambil sensor_id 1 dan 2
-                ->orderByDesc('created_at')    // urutkan dari yang terbaru
-                ->limit(1)                     // ambil data terbaru
-                ->get();
+            $latestData = collect([
+                DB::table('sensor_readings')
+                    ->join('sensors', 'sensor_readings.sensor_id', '=', 'sensors.id')
+                    ->join('bed_locations', 'sensors.bed_location_id', '=', 'bed_locations.id')
+                    ->join('locations', 'bed_locations.location_id', '=', 'locations.id')
+                    ->whereIn('sensor_readings.sensor_id', [2, 3])
+                    ->where('locations.id', $locationId)
+                    ->select(
+                        'sensor_readings.*',
+                        'sensors.public_name as sensor_name',
+                        'locations.public_name as location_name'
+                    )
+                    ->latest('sensor_readings.created_at')
+                    ->first()
+            ]);
         }
         $dataNPK = collect();
         foreach ($latestData as $data) {
+            if ($data === null) {
+                continue;
+            }
             $payload = json_decode($data->payload, true);
             $createdAt = Carbon::parse($data->created_at)->timezone('Asia/Jakarta');
             $jamMenit = $createdAt->format('H:i');
@@ -99,6 +131,7 @@ class MonitoringSensorNPKController extends Controller
             'sensor_npk',
             'selectedSensor',
             'dataNPK',
+            'locationId'
         ));
     }
 
