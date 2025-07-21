@@ -29,16 +29,9 @@ class KomoditasController extends Controller
                 ->pluck('nama_komoditas')
                 ->toArray();
         });
+        // dd($data);
 
-        // $data = $this->forecastService->get_nama_komoditas_forecast();
-        $data = DB::connection('pgsql_secondary')
-            ->table('hasil_prediksi')
-            ->select('nama_komoditas')
-            ->distinct()
-            ->get()
-            ->pluck('nama_komoditas')
-            ->toArray();
-        $selectedKomoditas = request()->input('selected_komoditas', 'Tomat Merah');
+        $selectedKomoditas = request()->input('selected_komoditas', 'Cabe Merah Besar');
 
 
         if (!$data) {

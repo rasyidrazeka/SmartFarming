@@ -3,17 +3,36 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-flex align-items-end form-group row mb-0">
-            <div class="form-group col-12 col-lg-3 mb-0">
+            <div class="form-group col-12 col-lg-6 mb-0">
                 <label for="sensor_npk" class="form-label">Komoditas :</label>
                 <div class="form-group">
-                    <select class="choices form-select" name="selected_komoditas" id="selected_komoditas" required>
-                        <option value="">- Komoditas -</option>
+                    <div class="d-flex flex-wrap gap-2">
+                        @php
+                            // Mapping nama gambar (key = nama asli dari database, value = nama file svg)
+                            $iconMap = [
+                                'Bawang Merah' => 'bawang-merah.svg',
+                                'Bawang Putih Sinco/Honan' => 'bawang-putih.svg',
+                                'Tomat Merah' => 'tomat.svg',
+                                'Cabe Merah Besar' => 'cabe-besar.svg',
+                                'Cabe Rawit Merah' => 'cabe-rawit.svg',
+                                // Tambahkan jika ada komoditas lain
+                            ];
+                        @endphp
                         @foreach ($data as $item)
-                            <option value="{{ $item }}" {{ $selectedKomoditas == $item ? 'selected' : '' }}>
-                                {{ $item }}
-                            </option>
+                            @php
+                                $displayName = $item === 'Bawang Putih Sinco/Honan' ? 'Bawang Putih' : $item;
+                                $icon = $iconMap[$item] ?? 'default.svg';
+                            @endphp
+                            <button type="button"
+                                class="btn d-flex align-items-center {{ $selectedKomoditas == $item ? 'btn-secondary' : 'btn-outline-secondary' }} komoditas-btn"
+                                data-value="{{ $item }}">
+                                <img src="{{ asset('storage/asset_web/' . $icon) }}" alt="{{ $displayName }}"
+                                    width="24" class="me-2">
+                                {{ $displayName }}
+                            </button>
                         @endforeach
-                    </select>
+                    </div>
+
                 </div>
             </div>
             <div class="form-group col-12 col-lg-3 ms-auto">
@@ -25,7 +44,7 @@
             <div class="card-body">
                 <div class="ratio ratio-16x9">
                     <iframe id="grafanaFrame"
-                        src="http://localhost:3010/d-solo/aekxvuuuvs1z4d/grafik-prediksi?orgId=1&from=1747146651126&to=1763044251126&timezone=browser&var-nama_komoditas=Cabe%20Merah%20Besar&var-limit=60&var-tanggal=2025-07-13&refresh=1d&showCategory=Legend&panelId=3&__feature.dashboardSceneSolo"
+                        src="http://labai.polinema.ac.id:3010/d-solo/aekxvuuuvs1z4d/grafik-prediksi?orgId=1&from=1748044800000&to=1760054400000&timezone=browser&var-nama_komoditas=Cabe%20Merah%20Besar&var-limit=60&var-tanggal=2025-07-13&refresh=1d&theme=light&panelId=3&__feature.dashboardSceneSolo"
                         width="450" height="200" frameborder="0"></iframe>
                 </div>
             </div>
@@ -54,19 +73,12 @@
 @push('js')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const select = document.getElementById('selected_komoditas');
+            let selectedKomoditas = '{{ $selectedKomoditas ?? 'Tomat Merah' }}';
+            let selectedDate = moment().format('YYYY-MM-DD');
             const iframe = document.getElementById('grafanaFrame');
-            let selectedDate = moment().format('YYYY-MM-DD'); // default hari ini
-            let table; // untuk referensi DataTable
-
-            function getSelectedKomoditas() {
-                return select.value || 'Tomat Merah';
-            }
+            let table;
 
             function updateIframe() {
-                const tanggal = selectedDate;
-                const selectedKomoditas = getSelectedKomoditas();
-
                 const baseGrafanaURL = "http://labai.polinema.ac.id:3010/d-solo/aekxvuuuvs1z4d/tes-grafik";
 
                 const now = new Date();
@@ -85,7 +97,7 @@
                     timezone: "browser",
                     'var-nama_komoditas': selectedKomoditas,
                     'var-limit': 60,
-                    'var-tanggal': tanggal,
+                    'var-tanggal': selectedDate,
                     theme: "light",
                     panelId: 3,
                     __feature: "dashboardSceneSolo"
@@ -102,7 +114,7 @@
                         url: "{{ route('prediksi.data') }}",
                         data: function(d) {
                             d.tanggal = selectedDate;
-                            d.komoditas = getSelectedKomoditas();
+                            d.komoditas = selectedKomoditas;
                         }
                     },
                     columns: [{
@@ -116,13 +128,10 @@
                         {
                             data: 'prediksi',
                             className: 'text-center',
-                            render: function(data, type, row) {
+                            render: function(data) {
                                 if (data == null) return '-';
-
                                 const rounded = Math.floor(data / 1000) * 1000;
-                                const decimal = (data - rounded).toFixed(3).split('.')[
-                                1]; // ambil 3 digit pecahan
-
+                                const decimal = (data - rounded).toFixed(3).split('.')[1];
                                 return 'Rp ' + rounded.toLocaleString('id-ID') + ',' + decimal;
                             }
                         }
@@ -131,9 +140,12 @@
             }
 
             function reloadTable() {
-                table.ajax.reload();
+                if (table) {
+                    table.ajax.reload();
+                }
             }
 
+            // Datepicker
             $('#daterange').daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
@@ -151,63 +163,27 @@
                 reloadTable();
             });
 
-            select.addEventListener('change', function() {
-                updateIframe();
-                reloadTable();
+            // Tombol komoditas
+            const komoditasButtons = document.querySelectorAll('.komoditas-btn');
+            komoditasButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    selectedKomoditas = this.dataset.value;
+
+                    // Highlight tombol aktif
+                    komoditasButtons.forEach(btn => btn.classList.remove('btn-secondary'));
+                    komoditasButtons.forEach(btn => btn.classList.add('btn-outline-secondary'));
+                    this.classList.remove('btn-outline-secondary');
+                    this.classList.add('btn-secondary');
+
+                    updateIframe();
+                    reloadTable();
+                });
             });
 
-            // Set nilai awal datepicker dan iframe
+            // Inisialisasi awal
             $('#daterange').val(selectedDate);
             updateIframe();
             initTable();
-        });
-    </script>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const select = document.getElementById('selected_komoditas');
-            const iframe = document.getElementById('grafanaFrame');
-
-            window.updateIframe = function() {
-                const selectedKomoditas = select.value || 'Tomat Merah';
-
-                // Gunakan tanggal dari picker
-                const tanggal = selectedDate;
-
-                const baseGrafanaURL = "http://labai.polinema.ac.id:3010/d-solo/aekxvuuuvs1z4d/tes-grafik";
-
-                const now = new Date();
-                const fromDate = new Date(now);
-                fromDate.setMonth(fromDate.getMonth() - 2);
-                const toDate = new Date(now);
-                toDate.setMonth(toDate.getMonth() + 4);
-
-                const from = fromDate.getTime();
-                const to = toDate.getTime();
-
-                const params = new URLSearchParams({
-                    orgId: 1,
-                    from: from,
-                    to: to,
-                    timezone: "browser",
-                    'var-nama_komoditas': selectedKomoditas,
-                    'var-limit': 60,
-                    'var-tanggal': tanggal,
-                    theme: "light",
-                    panelId: 3,
-                    __feature: "dashboardSceneSolo"
-                });
-
-                iframe.src = `${baseGrafanaURL}?${params.toString()}`;
-                console.log(`Updated iframe src: ${iframe.src}`);
-            }
-
-            // Update saat pertama kali
-            updateIframe();
-
-            // Update saat select berubah
-            select.addEventListener('change', updateIframe);
         });
     </script>
 @endpush
