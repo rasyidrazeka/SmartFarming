@@ -33,7 +33,7 @@
             let endDate = getQueryParam('end_date') || '';
 
             // Inisialisasi DataTable
-            const datadhts = $('#table_riwayat_data_cuaca').DataTable({
+            const datacuaca = $('#table_riwayat_data_cuaca').DataTable({
                 searching: false,
                 processing: true,
                 serverSide: true,
@@ -116,7 +116,7 @@
                 const newUrl = updateQueryString(window.location.href, startDate, endDate);
                 window.history.replaceState(null, '', newUrl);
 
-                datadhts.draw();
+                datacuaca.draw();
             });
 
             // Saat "Batal" ditekan
@@ -126,7 +126,7 @@
                 endDate = '';
                 const newUrl = removeQueryString(window.location.href);
                 window.history.replaceState(null, '', newUrl);
-                datadhts.draw();
+                datacuaca.draw();
             });
 
             // Helper: Ambil query param dari URL

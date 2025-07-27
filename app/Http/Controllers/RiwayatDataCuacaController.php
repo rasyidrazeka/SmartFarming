@@ -33,16 +33,16 @@ class RiwayatDataCuacaController extends Controller
         $cuaca = DB::table('weather_data')
             ->select('id', 'time', 'temperature_2m', 'weather_code', 'cloud_cover', 'wind_speed_10m')
             ->where('location_id', $locationId)
-            ->orderBy('time', 'desc')
-            ->get();
+            ->orderBy('time', 'desc');
 
         // ✅ Tambahkan filter tanggal jika tersedia
         if ($request->start_date && $request->end_date) {
-            $cuaca->whereBetween('time', [
-                $request->start_date . ' 00:00:00',
-                $request->end_date . ' 23:59:59',
-            ]);
+            $startUtc = Carbon::parse($request->start_date . ' 00:00:00', 'Asia/Jakarta')->setTimezone('UTC');
+            $endUtc = Carbon::parse($request->end_date . ' 23:59:59', 'Asia/Jakarta')->setTimezone('UTC');
+
+            $cuaca->whereBetween('time', [$startUtc, $endUtc]);
         }
+
 
         $weatherDescriptions = [
             0 => 'Cerah',
