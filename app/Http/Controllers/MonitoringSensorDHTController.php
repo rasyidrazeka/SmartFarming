@@ -11,11 +11,11 @@ class MonitoringSensorDHTController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'Pemantauan Sensor DHT',
-            'paragraph' => 'Pantau data sensor secara real-time untuk menjaga kondisi optimal pada greenhouse.',
+            'title' => 'DHT Sensor Monitoring',
+            'paragraph' => 'Monitor sensor data in real time to maintain optimal conditions in the greenhouse',
             'list' => [
-                ['label' => 'Dasbor', 'url' => route('dashboard.index')],
-                ['label' => 'Sensor DHT'],
+                ['label' => 'Dashboard', 'url' => route('dashboard.index')],
+                ['label' => 'DHT Sensor'],
             ]
         ];
         $activeMenu = 'monitoringSensorDHT';
