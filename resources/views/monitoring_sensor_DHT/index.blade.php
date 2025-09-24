@@ -4,18 +4,18 @@
     <div class="container-fluid">
         <div class="row">
             <div class="form-group col-12 col-lg-3 ms-auto">
-                <label for="start_date" class="form-label">Filter Tanggal:</label>
-                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Masukkan tanggal">
+                <label for="start_date" class="form-label">Daily Average Date Range:</label>
+                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Enter the date">
             </div>
         </div>
         @php
             $defaultDataDHT = collect([
-                ['label' => 'Update Terakhir', 'value' => 'Kosong', 'unit' => '', 'icon' => 'bi-calendar'],
-                ['label' => 'Suhu Ruangan', 'value' => 'Kosong', 'unit' => '°C', 'icon' => 'bi-thermometer-half'],
-                ['label' => 'Kelembapan Ruangan', 'value' => 'Kosong', 'unit' => '%', 'icon' => 'bi-droplet-half'],
+                ['label' => 'Latest Update', 'value' => 'Null', 'unit' => '', 'icon' => 'bi-calendar'],
+                ['label' => 'Room Temperature', 'value' => 'Null', 'unit' => '°C', 'icon' => 'bi-thermometer-half'],
+                ['label' => 'Room Humidity', 'value' => 'Null', 'unit' => '%', 'icon' => 'bi-droplet-half'],
                 [
-                    'label' => 'Intensitas Cahaya',
-                    'value' => 'Kosong',
+                    'label' => 'Light Intensity',
+                    'value' => 'Null',
                     'unit' => 'lux',
                     'icon' => 'bi-brightness-high-fill',
                 ],
@@ -42,7 +42,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6 id="titleTemperature" data-original="Suhu Ruangan">Suhu Ruangan</h6>
+                        <h6 id="titleTemperature" data-original="Room Temperature">Room Temperature</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeTemperature"
                                 src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&var-sensor_npk=2&refresh=5s&theme=light&panelId=1&__feature.dashboardSceneSolo"
@@ -54,7 +54,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6 id="titleHumidity" data-original="Kelembapan Ruangan">Kelembapan Ruangan</h6>
+                        <h6 id="titleHumidity" data-original="Room Humidity">Room Humidity</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeHumidity"
                                 src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&var-sensor_npk=2&refresh=5s&theme=light&panelId=3&__feature.dashboardSceneSolo"
@@ -68,7 +68,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6 id="titleLuminosity" data-original="Intensitas Cahaya">Intensitas Cahaya</h6>
+                        <h6 id="titleLuminosity" data-original="Light Density">Intensitas Cahaya</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeLuminosity"
                                 src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&var-sensor_npk=2&refresh=5s&theme=light&panelId=4&__feature.dashboardSceneSolo"
@@ -142,7 +142,7 @@
                     toast: true,
                     position: 'top-end',
                     icon: 'error',
-                    title: 'Tanggal tidak boleh lebih dari hari ini',
+                    title: 'The date cannot be later than today',
                     showConfirmButton: false,
                     timer: 3000,
                     timerProgressBar: true,
@@ -218,7 +218,7 @@
                 const el = document.getElementById(id);
                 if (el) {
                     const original = el.dataset.original;
-                    el.innerText = 'Rata-Rata Harian ' + original;
+                    el.innerText = 'Daily Average ' + original;
                 }
             });
         }

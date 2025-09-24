@@ -47,28 +47,28 @@ class MonitoringSensorDHTController extends Controller
             $jamMenit = $createdAt->format('H:i');
 
             $dataDHT->push([
-                'label' => 'Update Terakhir',
+                'label' => 'Latest Update',
                 'value' => $jamMenit,
                 'unit' => '',
                 'icon' => 'bi-calendar'
             ]);
 
             $dataDHT->push([
-                'label' => 'Suhu Ruangan',
+                'label' => 'Room Temperature',
                 'value' => $payload['viciTemperature'] ?? '-',
                 'unit' => '°C',
                 'icon' => 'bi-thermometer-half'
             ]);
 
             $dataDHT->push([
-                'label' => 'Kelembapan Ruangan',
+                'label' => 'Room Humidity',
                 'value' => $payload['viciHumidity'] ?? '-',
                 'unit' => '%',
                 'icon' => 'bi-droplet-half'
             ]);
 
             $dataDHT->push([
-                'label' => 'Intensitas Cahaya',
+                'label' => 'Light Density',
                 'value' => $payload['viciLuminosity'] ?? '-',
                 'unit' => 'lux',
                 'icon' => 'bi-brightness-high-fill'

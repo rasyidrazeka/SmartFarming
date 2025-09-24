@@ -3,8 +3,8 @@
 @section('content')
     <div class="container-fluid">
         <div class="form-group col-12 col-lg-3 ms-auto">
-            <label for="start_date" class="form-label">Filter Tanggal:</label>
-            <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Masukkan tanggal">
+            <label for="start_date" class="form-label">Daily Average Date Range:</label>
+            <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Enter the date">
         </div>
         <div class="card">
             <div class="card-body">
@@ -13,11 +13,11 @@
                         <thead>
                             <tr class="text-center">
                                 <th class="text-center">No</th>
-                                <th class="text-center">Tanggal</th>
-                                <th class="text-center">Suhu</th>
-                                <th class="text-center">Tutupan Awan</th>
-                                <th class="text-center">Kecepatan Angin</th>
-                                <th class="text-center">Cuaca</th>
+                                <th class="text-center">Date Time</th>
+                                <th class="text-center">Temperature</th>
+                                <th class="text-center">Cloud Cover</th>
+                                <th class="text-center">Wind Speed</th>
+                                <th class="text-center">Weather</th>
                             </tr>
                         </thead>
                     </table>

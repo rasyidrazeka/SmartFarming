@@ -12,11 +12,11 @@ class MonitoringSensorNPKController extends Controller
     public function index(Request $request)
     {
         $breadcrumb = (object) [
-            'title' => 'Pemantauan Sensor NPK',
-            'paragraph' => 'Pantau data sensor secara real-time untuk menjaga kondisi optimal pada greenhouse.',
+            'title' => 'NPK Sensor Monitoring',
+            'paragraph' => 'Monitor sensor data in real time to maintain optimal conditions in the greenhouse.',
             'list' => [
-                ['label' => 'Dasbor', 'url' => route('dashboard.index')],
-                ['label' => 'Sensor NPK'],
+                ['label' => 'Dashboard', 'url' => route('dashboard.index')],
+                ['label' => 'NPK Sensor'],
             ]
         ];
         $activeMenu = 'monitoringSensorNPK';
@@ -77,49 +77,49 @@ class MonitoringSensorNPKController extends Controller
             $createdAt = Carbon::parse($data->created_at)->timezone('Asia/Jakarta');
             $jamMenit = $createdAt->format('H:i');
             $dataNPK->push([
-                'label' => 'Update Terakhir',
+                'label' => 'Latest Update',
                 'value' => $jamMenit,
                 'unit' => '',
                 'icon' => 'bi-calendar'
             ]);
             $dataNPK->push([
-                'label' => 'Suhu Tanah',
+                'label' => 'Soil Temperature',
                 'value' => $payload['soilTemperature'] ?? null,
                 'unit' => '°C',
                 'icon' => 'bi-thermometer-half'
             ]);
             $dataNPK->push([
-                'label' => 'Kelembapan Tanah',
+                'label' => 'Soil Humidity',
                 'value' => $payload['soilHumidity'] ?? null,
                 'unit' => '%',
                 'icon' => 'bi-droplet-half'
             ]);
             $dataNPK->push([
-                'label' => 'Konduktivitas Tanah',
+                'label' => 'Soil Conductivity',
                 'value' => $payload['soilConductivity'] ?? null,
                 'unit' => 'μS/cm',
                 'icon' => 'bi-lightning'
             ]);
             $dataNPK->push([
-                'label' => 'pH Tanah',
+                'label' => 'Soil pH',
                 'value' => $payload['soilPh'] ?? null,
                 'unit' => 'pH',
                 'icon' => 'bi-speedometer'
             ]);
             $dataNPK->push([
-                'label' => 'Nitrogen Tanah',
+                'label' => 'Soil Nitrogen',
                 'value' => $payload['soilNitrogen'] ?? null,
                 'unit' => 'mg/kg',
                 'icon' => 'bi-droplet-half'
             ]);
             $dataNPK->push([
-                'label' => 'Fosfor Tanah',
+                'label' => 'Soil Phosphorus',
                 'value' => $payload['soilPhosphorus'] ?? null,
                 'unit' => 'mg/kg',
                 'icon' => 'bi-capsule'
             ]);
             $dataNPK->push([
-                'label' => 'Kalium Tanah',
+                'label' => 'Soil Potassium',
                 'value' => $payload['soilPotassium'] ?? null,
                 'unit' => 'mg/kg',
                 'icon' => 'bi-shield-check'

@@ -4,10 +4,10 @@
     <div class="container-fluid">
         <div class="d-flex align-items-end form-group row mb-0">
             <div class="form-group col-12 col-lg-3 mb-0">
-                <label for="sensor_npk" class="form-label">Sensor NPK:</label>
+                <label for="sensor_npk" class="form-label">Select NPK Sensor:</label>
                 <div class="form-group">
                     <select class="choices form-select" name="selected_sensor_npk" id="selected_sensor_npk" required>
-                        <option value="">- Semua Sensor -</option>
+                        <option value="">- All Sensor -</option>
                         @foreach ($sensor_npk as $item)
                             <option value="{{ $item->id }}"
                                 {{ request()->get('selected_sensor_npk') == $item->id ? 'selected' : '' }}>
@@ -18,8 +18,8 @@
                 </div>
             </div>
             <div class="form-group col-12 col-lg-3 ms-auto">
-                <label for="start_date" class="form-label">Filter Tanggal:</label>
-                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Masukkan tanggal">
+                <label for="start_date" class="form-label">Daily Average Date Range:</label>
+                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Enter the date">
             </div>
         </div>
         <!-- Carousel Mulai dari sini -->
@@ -144,7 +144,7 @@
                     toast: true,
                     position: 'top-end',
                     icon: 'error',
-                    title: 'Tanggal tidak boleh lebih dari hari ini',
+                    title: 'The date cannot be later than today',
                     showConfirmButton: false,
                     timer: 3000,
                     timerProgressBar: true,
@@ -240,7 +240,7 @@
                     const el = document.getElementById(id);
                     if (el) {
                         const original = el.dataset.original;
-                        el.innerText = 'Rata-Rata Harian ' + original;
+                        el.innerText = 'Daily Average ' + original;
                     }
                 });
             } else if (selectedSensor == 3) {
@@ -275,7 +275,7 @@
                     const el = document.getElementById(id);
                     if (el) {
                         const original = el.dataset.original;
-                        el.innerText = 'Rata-Rata Harian ' + original;
+                        el.innerText = 'Daily Average ' + original;
                     }
                 });
             } else if (selectedSensor == 'all') {
@@ -310,7 +310,7 @@
                     const el = document.getElementById(id);
                     if (el) {
                         const original = el.dataset.original;
-                        el.innerText = 'Rata-Rata Harian ' + original;
+                        el.innerText = 'Daily Average ' + original;
                     }
                 });
             }

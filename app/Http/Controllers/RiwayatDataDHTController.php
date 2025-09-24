@@ -14,11 +14,11 @@ class RiwayatDataDHTController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'Riwayat Data Sensor DHT',
-            'paragraph' => 'Pusat informasi kondisi greenhouse Anda secara menyeluruh',
+            'title' => 'DHT Sensor Data History',
+            'paragraph' => 'Your comprehensive greenhouse condition information center',
             'list' => [
-                ['label' => 'Dasbor', 'url' => route('dashboard.index')],
-                ['label' => 'Sensor DHT'],
+                ['label' => 'Dashboard', 'url' => route('dashboard.index')],
+                ['label' => 'DHT Sensor'],
             ]
         ];
         $activeMenu = 'riwayatDataDHT';

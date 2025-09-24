@@ -4,10 +4,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="form-group col-12 col-lg-3 mb-0">
-                <label for="sensor_npk" class="form-label">Sensor NPK:</label>
+                <label for="sensor_npk" class="form-label">Select NPK Sensor:</label>
                 <div class="form-group">
                     <select class="choices form-select" name="selected_sensor_npk" id="selected_sensor_npk" required>
-                        <option value="">- Semua Sensor -</option>
+                        <option value="">- All Sensor -</option>
                         @foreach ($sensor_npk as $item)
                             <option value="{{ $item->id }}"
                                 {{ request()->get('selected_sensor_npk') == $item->id ? 'selected' : '' }}>
@@ -18,8 +18,8 @@
                 </div>
             </div>
             <div class="form-group col-12 col-lg-3 ms-auto">
-                <label for="start_date" class="form-label">Filter Tanggal:</label>
-                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Masukkan tanggal">
+                <label for="start_date" class="form-label">Daily Average Date Range:</label>
+                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Enter the date">
             </div>
         </div>
         <div class="card">
@@ -29,15 +29,15 @@
                         <thead>
                             <tr class="text-center">
                                 <th class="text-center">No</th>
-                                <th class="text-center">Suhu</th>
-                                <th class="text-center">Kelembapan</th>
-                                <th class="text-center">Konduktivitas</th>
+                                <th class="text-center">Temperature</th>
+                                <th class="text-center">Humidity</th>
+                                <th class="text-center">Conductivity</th>
                                 <th class="text-center">pH</th>
                                 <th class="text-center">Nitrogen</th>
-                                <th class="text-center">Fosfor</th>
-                                <th class="text-center">Kalium</th>
+                                <th class="text-center">Phosphorus</th>
+                                <th class="text-center">Potassium</th>
                                 <th class="text-center">Sensor</th>
-                                <th class="text-center">Tanggal</th>
+                                <th class="text-center">Date Time</th>
                             </tr>
                         </thead>
                     </table>

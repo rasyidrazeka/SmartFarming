@@ -15,11 +15,11 @@ class RiwayatDataNPKController extends Controller
     public function index(Request $request)
     {
         $breadcrumb = (object) [
-            'title' => 'Riwayat Data Sensor NPK',
-            'paragraph' => 'Pusat informasi kondisi greenhouse Anda secara menyeluruh',
+            'title' => 'NPK Sensor Data History',
+            'paragraph' => 'Your comprehensive greenhouse condition information center',
             'list' => [
-                ['label' => 'Dasbor', 'url' => route('dashboard.index')],
-                ['label' => 'Sensor NPK'],
+                ['label' => 'Dashboard', 'url' => route('dashboard.index')],
+                ['label' => 'NPK Sensor'],
             ]
         ];
         $activeMenu = 'riwayatDataNPK';

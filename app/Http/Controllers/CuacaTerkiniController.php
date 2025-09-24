@@ -11,11 +11,11 @@ class CuacaTerkiniController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'Cuaca Terkini',
-            'paragraph' => 'Pantau data cuaca secara real-time untuk menjaga kondisi optimal pada greenhouse.',
+            'title' => 'Current Weather',
+            'paragraph' => 'Monitor weather data in real time to maintain optimal conditions in the greenhouse',
             'list' => [
-                ['label' => 'Dasbor', 'url' => route('dashboard.index')],
-                ['label' => 'Cuaca Terkini'],
+                ['label' => 'Dashboard', 'url' => route('dashboard.index')],
+                ['label' => 'Current Weather'],
             ]
         ];
         $activeMenu = 'cuacaTerkini';
@@ -31,34 +31,34 @@ class CuacaTerkiniController extends Controller
             ->first();
 
         $weatherDescriptions = [
-            0 => 'Cerah',
-            1 => 'Cerah berawan',
-            2 => 'Berawan',
-            3 => 'Mendung',
-            45 => 'Kabut',
-            48 => 'Kabut dingin',
-            51 => 'Gerimis',
-            53 => 'Gerimis sedang',
-            55 => 'Gerimis lebat',
-            56 => 'Gerimis beku',
-            57 => 'Gerimis beku lebat',
-            61 => 'Hujan ringan',
-            63 => 'Hujan',
-            65 => 'Hujan lebat',
-            66 => 'Hujan es ringan',
-            67 => 'Hujan es',
-            71 => 'Salju ringan',
-            73 => 'Salju',
-            75 => 'Salju lebat',
-            77 => 'Butiran salju',
-            80 => 'Hujan sekejap',
-            81 => 'Hujan sebentar',
-            82 => 'Hujan deras',
-            85 => 'Salju sebentar',
-            86 => 'Salju deras',
-            95 => 'Petir',
-            96 => 'Petir + es ringan',
-            99 => 'Petir + es lebat',
+            0 => 'Clear',
+            1 => 'Mostly clear',
+            2 => 'Cloudy',
+            3 => 'Overcast',
+            45 => 'Fog',
+            48 => 'Freezing fog',
+            51 => 'Light drizzle',
+            53 => 'Moderate drizzle',
+            55 => 'Heavy drizzle',
+            56 => 'Freezing drizzle',
+            57 => 'Heavy freezing drizzle',
+            61 => 'Light rain',
+            63 => 'Rain',
+            65 => 'Heavy rain',
+            66 => 'Light freezing rain',
+            67 => 'Freezing rain',
+            71 => 'Light snow',
+            73 => 'Snow',
+            75 => 'Heavy snow',
+            77 => 'Snow grains',
+            80 => 'Rain showers',
+            81 => 'Short rain showers',
+            82 => 'Heavy rain showers',
+            85 => 'Snow showers',
+            86 => 'Heavy snow showers',
+            95 => 'Thunderstorm',
+            96 => 'Thunderstorm with light hail',
+            99 => 'Thunderstorm with heavy hail',
         ];
 
         $weatherIcons = [
@@ -106,7 +106,7 @@ class CuacaTerkiniController extends Controller
         $weatherData = collect();
 
         if ($latestData) {
-            $deskripsiCuaca = $weatherDescriptions[$latestData->weather_code] ?? 'Tidak diketahui';
+            $deskripsiCuaca = $weatherDescriptions[$latestData->weather_code] ?? 'Unknown';
             $ikonCuaca = $weatherIcons[$latestData->weather_code] ?? 'bi-question-circle-fill';
 
             if ($latestData->temperature_2m <= 20) {
@@ -118,25 +118,25 @@ class CuacaTerkiniController extends Controller
             }
 
             $weatherData->push([
-                'label' => 'Suhu',
+                'label' => 'Temperature',
                 'value' => $latestData->temperature_2m,
                 'unit' => '°C',
                 'icon' => 'bi ' . $ikonSuhu
             ]);
             $weatherData->push([
-                'label' => 'Tutupan Awan',
+                'label' => 'Cloud Cover',
                 'value' => $latestData->cloud_cover,
                 'unit' => '%',
                 'icon' => 'bi bi-clouds-fill'
             ]);
             $weatherData->push([
-                'label' => 'Kecepatan Angin',
+                'label' => 'Wind Speed',
                 'value' => $latestData->wind_speed_10m,
                 'unit' => 'km/h',
                 'icon' => 'bi bi-wind'
             ]);
             $weatherData->push([
-                'label' => 'Cuaca',
+                'label' => 'Weather',
                 'value' => $deskripsiCuaca,
                 'unit' => '',
                 'icon' => 'bi ' . $ikonCuaca

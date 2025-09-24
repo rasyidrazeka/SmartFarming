@@ -4,8 +4,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="form-group col-12 col-lg-3 ms-auto">
-                <label for="start_date" class="form-label">Filter Tanggal:</label>
-                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Masukkan tanggal">
+                <label for="start_date" class="form-label">Daily Average Date Range:</label>
+                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Enter the date">
             </div>
         </div>
         <div class="row">
@@ -25,7 +25,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6 id="titleTemperature" data-original="Suhu">Suhu</h6>
+                        <h6 id="titleTemperature" data-original="Temperature">Temperature</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeTemperature"
                                 src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&var-location_id={{ $locationId }}&refresh=1h&theme=light&panelId=1&__feature.dashboardSceneSolo"
@@ -37,7 +37,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6 id="titleCloudCover" data-original="Tutupan Awan">Tutupan Awan</h6>
+                        <h6 id="titleCloudCover" data-original="Cloud Cover">Cloud Cover</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeCloudCover"
                                 src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&var-location_id={{ $locationId }}&refresh=1h&theme=light&panelId=2&__feature.dashboardSceneSolo"
@@ -51,7 +51,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6 id="titleWindSpeed" data-original="Kecepatan Angin">Kecepatan Angin</h6>
+                        <h6 id="titleWindSpeed" data-original="Wind Speed">Wind Speed</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeWindSpeed"
                                 src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&var-location_id={{ $locationId }}&refresh=1h&theme=light&panelId=3&__feature.dashboardSceneSolo"
@@ -63,7 +63,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card" style="border-color: #CED4DA">
                     <div class="card-body">
-                        <h6 id="titleWeather" data-original="Cuaca">Cuaca</h6>
+                        <h6 id="titleWeather" data-original="Weather">Weather</h6>
                         <div class="ratio ratio-16x9">
                             <iframe id="grafanaIframeWeather"
                                 src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&var-location_id={{ $locationId }}&refresh=1h&theme=light&panelId=4&__feature.dashboardSceneSolo"
@@ -213,7 +213,7 @@
     <script>
         function defaultGrafanaIframe() {
             const baseGrafanaUrl =
-                "http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&var-location_id={{ $locationId }}&refresh=1h&theme=light&panelId=1&__feature.dashboardSceneSolo";
+                "http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&var-location_id={{ $locationId }}&refresh=1h&theme=light&__feature.dashboardSceneSolo";
 
             const panels = [{
                     id: 1,

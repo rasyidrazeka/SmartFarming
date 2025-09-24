@@ -73,6 +73,7 @@ Route::middleware(['checkrole:ADMN,USER', 'prevent_back'])->group(function () {
         return redirect($redirectTo);
     })->name('set.location');
 }); // untuk user dan admin
+
 Route::middleware(['checkrole:ADMN', 'prevent_back'])->group(function () {
     Route::group(['prefix' => 'kelolaPengguna'], function () {
         Route::get('/', [UserController::class, 'index'])->name('kelolaPengguna.index');

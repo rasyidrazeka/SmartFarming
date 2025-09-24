@@ -4,8 +4,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="form-group col-12 col-lg-3 ms-auto">
-                <label for="start_date" class="form-label">Filter Tanggal:</label>
-                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Masukkan tanggal">
+                <label for="start_date" class="form-label">Daily Average Date Range:</label>
+                <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Enter the date">
             </div>
         </div>
         <div class="row">
@@ -24,7 +24,7 @@
         <div class="col-12 col-lg-12">
             <div class="card" style="border-color: #CED4DA">
                 <div class="card-body">
-                    <h6 id="titleDht" data-original="Sensor DHT">Sensor DHT</h6>
+                    <h6 id="titleDht" data-original="DHT Sensor">DHT Sensor</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeDhts"
                             src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&refresh=5s&var-query0=&var-sensor_npk=3&theme=light&panelId=7&__feature.dashboardSceneSolo"
@@ -36,7 +36,7 @@
         <div class="col-12 col-lg-12">
             <div class="card" style="border-color: #CED4DA">
                 <div class="card-body">
-                    <h6 id="titleNpk1" data-original="Sensor NPK 1">Sensor NPK 1</h6>
+                    <h6 id="titleNpk1" data-original="NPK Sensor 1">NPK Sensor 1</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeNpks1"
                             src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&refresh=5s&var-query0=&editIndex=1&var-sensor_npk=2&theme=light&panelId=10&__feature.dashboardSceneSolo"
@@ -49,7 +49,7 @@
         <div class="col-12 col-lg-12">
             <div class="card" style="border-color: #CED4DA">
                 <div class="card-body">
-                    <h6 id="titleNpk2" data-original="Sensor NPK 2">Sensor NPK 2</h6>
+                    <h6 id="titleNpk2" data-original="NPK Sensor 2">NPK Sensor 2</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeNpks2"
                             src="http://labai.polinema.ac.id:3010/d-solo/eempvyqjk5csgf/website-visualisasi-data?orgId=1&timezone=browser&var-get_location={{ $locationId }}&refresh=5s&var-query0=&editIndex=1&var-sensor_npk=3&theme=light&panelId=10&__feature.dashboardSceneSolo"
@@ -61,7 +61,7 @@
         <div class="col-12 col-lg-12">
             <div class="card" style="border-color: #CED4DA">
                 <div class="card-body">
-                    <h6 id="titleCuaca" data-original="Cuaca">Cuaca</h6>
+                    <h6 id="titleCuaca" data-original="Cuaca">Current Weather</h6>
                     <div class="ratio ratio-16x9">
                         <iframe id="grafanaIframeCuaca"
                             src="http://labai.polinema.ac.id:3010/d-solo/8e8fc548-1ffd-4056-bc61-b38357d2d30a/cuaca-terkini?orgId=1&timezone=browser&refresh=1h&var-location_id={{ $locationId }}&editIndex=0&theme=light&panelId=6&__feature.dashboardSceneSolo"
@@ -84,13 +84,13 @@
             opens: 'left',
             autoUpdateInput: false,
             locale: {
-                applyLabel: 'Pilih',
-                cancelLabel: 'Batal',
+                applyLabel: 'Apply',
+                cancelLabel: 'Cancel',
                 format: 'DD-MM-YYYY',
-                daysOfWeek: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
-                monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-                    'Juli', 'Agustus', 'September', 'Oktober', 'November',
-                    'Desember'
+                daysOfWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                monthNames: ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November',
+                    'December'
                 ],
             }
         });
@@ -105,7 +105,7 @@
                     toast: true,
                     position: 'top-end',
                     icon: 'error',
-                    title: 'Tanggal tidak boleh lebih dari hari ini',
+                    title: 'The date cannot be later than today',
                     showConfirmButton: false,
                     timer: 3000,
                     timerProgressBar: true,
@@ -210,7 +210,7 @@
                 const el = document.getElementById(id);
                 if (el) {
                     const original = el.dataset.original;
-                    el.innerText = 'Rata-Rata Harian ' + original;
+                    el.innerText = 'Daily Average ' + original;
                 }
             });
         }

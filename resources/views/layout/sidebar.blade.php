@@ -10,7 +10,7 @@
                 <li class="pc-item">
                     <a href="{{ url('/dashboard') }}" class="pc-link {{ $activeMenu == 'dashboard' ? 'active' : '' }}">
                         <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-                        <span class="pc-mtext">Dasbor</span>
+                        <span class="pc-mtext">Dashboard</span>
                     </a>
                 </li>
                 <li class="pc-item pc-caption">
@@ -22,7 +22,7 @@
                         <span class="pc-micon">
                             <i class="ti ti-access-point"></i>
                         </span>
-                        <span class="pc-mtext">Pemantauan Sensor</span>
+                        <span class="pc-mtext">Sensor Monitoring</span>
                         <span class="pc-arrow">
                             <i data-feather="chevron-right"></i>
                         </span>
@@ -30,11 +30,11 @@
                     <ul class="pc-submenu">
                         <li class="pc-item">
                             <a class="pc-link {{ $activeMenu == 'monitoringSensorNPK' ? 'active' : '' }}"
-                                href="{{ route('monitoringSensorNPK.index') }}">Sensor NPK</a>
+                                href="{{ route('monitoringSensorNPK.index') }}">NPK Sensor</a>
                         </li>
                         <li class="pc-item">
                             <a class="pc-link {{ $activeMenu == 'monitoringSensorDHT' ? 'active' : '' }}"
-                                href="{{ route('monitoringSensorDHT.index') }}">Sensor DHT</a>
+                                href="{{ route('monitoringSensorDHT.index') }}">DHT Sensor</a>
                         </li>
                     </ul>
                 </li>
@@ -43,7 +43,7 @@
                         <span class="pc-micon">
                             <i class="ti ti-history"></i>
                         </span>
-                        <span class="pc-mtext">Riwayat Sensor</span>
+                        <span class="pc-mtext">Sensor Data History</span>
                         <span class="pc-arrow">
                             <i data-feather="chevron-right"></i>
                         </span>
@@ -51,16 +51,16 @@
                     <ul class="pc-submenu">
                         <li class="pc-item">
                             <a class="pc-link {{ $activeMenu == 'riwayatDataNPK' ? 'active' : '' }}"
-                                href="{{ route('riwayatDataNPK.index') }}">Sensor NPK</a>
+                                href="{{ route('riwayatDataNPK.index') }}">NPK Sensor</a>
                         </li>
                         <li class="pc-item">
                             <a class="pc-link {{ $activeMenu == 'riwayatDataDHT' ? 'active' : '' }}"
-                                href="{{ route('riwayatDataDHT.index') }}">Sensor DHT</a>
+                                href="{{ route('riwayatDataDHT.index') }}">DHT Sensor</a>
                         </li>
                     </ul>
                 </li>
                 <li class="pc-item pc-caption">
-                    <label>Cuaca</label>
+                    <label>Weather</label>
                     <i class="ti ti-dashboard"></i>
                 </li>
                 <li class="pc-item pc-hasmenu">
@@ -68,7 +68,7 @@
                         <span class="pc-micon">
                             <i class="ti ti-cloud"></i>
                         </span>
-                        <span class="pc-mtext">Pemantauan Cuaca</span>
+                        <span class="pc-mtext">Weather Monitoring</span>
                         <span class="pc-arrow">
                             <i data-feather="chevron-right"></i>
                         </span>
@@ -76,11 +76,11 @@
                     <ul class="pc-submenu">
                         <li class="pc-item">
                             <a class="pc-link {{ $activeMenu == 'monitoringCuaca' ? 'active' : '' }}"
-                                href="{{ route('monitoringCuaca.index') }}">Prediksi Cuaca</a>
+                                href="{{ route('monitoringCuaca.index') }}">Weather Forecast</a>
                         </li>
                         <li class="pc-item">
                             <a class="pc-link {{ $activeMenu == 'cuacaTerkini' ? 'active' : '' }}"
-                                href="{{ route('cuacaTerkini.index') }}">Cuaca Terkini</a>
+                                href="{{ route('cuacaTerkini.index') }}">Current Weather</a>
                         </li>
                     </ul>
                 </li>
@@ -90,11 +90,11 @@
                         <span class="pc-micon">
                             <i class="ti ti-history"></i>
                         </span>
-                        <span class="pc-mtext">Riwayat Prediksi Cuaca</span>
+                        <span class="pc-mtext">Weather Forecast History</span>
                     </a>
                 </li>
                 <li class="pc-item pc-caption">
-                    <label>Komoditas</label>
+                    <label>Commodity</label>
                     <i class="ti ti-dashboard"></i>
                 </li>
                 <li class="pc-item pc-hasmenu">
@@ -102,7 +102,7 @@
                         <span class="pc-micon">
                             <i class="bi bi-bar-chart-line"></i>
                         </span>
-                        <span class="pc-mtext">Harga Komoditas</span>
+                        <span class="pc-mtext">Commodity Prices</span>
                         <span class="pc-arrow">
                             <i data-feather="chevron-right"></i>
                         </span>
@@ -110,15 +110,15 @@
                     <ul class="pc-submenu">
                         <li class="pc-item">
                             <a class="pc-link {{ $activeMenu == 'prediksiHarga' ? 'active' : '' }}"
-                                href="{{ route('komoditas.prediksi') }}">Prediksi Harga</a>
+                                href="{{ route('komoditas.prediksi') }}">Price Prediction</a>
                         </li>
                         <li class="pc-item">
                             <a class="pc-link {{ $activeMenu == 'trendHarga' ? 'active' : '' }}"
-                                href="{{ route('komoditas.trend') }}">Trend Harga</a>
+                                href="{{ route('komoditas.trend') }}">Price Trend</a>
                         </li>
                         <li class="pc-item">
                             <a class="pc-link {{ $activeMenu == 'riwayatHarga' ? 'active' : '' }}"
-                                href="{{ route('komoditas.riwayat') }}">Riwayat Harga</a>
+                                href="{{ route('komoditas.riwayat') }}">Price History</a>
                         </li>
                     </ul>
                 </li>

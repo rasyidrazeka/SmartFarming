@@ -13,11 +13,11 @@ class RiwayatDataCuacaController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'Riwayat Data Cuaca',
-            'paragraph' => 'Menampilkan riwayat data cuaca yang direkam setiap 7 hari. Gunakan filter tanggal untuk melihat data sesuai periode yang diinginkan.',
+            'title' => 'Weather Forecast History',
+            'paragraph' => 'Displaying weather data history recorded every 7 days',
             'list' => [
-                ['label' => 'Dasbor', 'url' => route('dashboard.index')],
-                ['label' => 'Riwayat Cuaca'],
+                ['label' => 'Dashboard', 'url' => route('dashboard.index')],
+                ['label' => 'Weather History Forecast'],
             ]
         ];
         $activeMenu = 'riwayatDataCuaca';
@@ -43,36 +43,35 @@ class RiwayatDataCuacaController extends Controller
             $cuaca->whereBetween('time', [$startUtc, $endUtc]);
         }
 
-
         $weatherDescriptions = [
-            0 => 'Cerah',
-            1 => 'Cerah berawan',
-            2 => 'Berawan',
-            3 => 'Mendung',
-            45 => 'Kabut',
-            48 => 'Kabut dingin',
-            51 => 'Gerimis',
-            53 => 'Gerimis sedang',
-            55 => 'Gerimis lebat',
-            56 => 'Gerimis beku',
-            57 => 'Gerimis beku lebat',
-            61 => 'Hujan ringan',
-            63 => 'Hujan',
-            65 => 'Hujan lebat',
-            66 => 'Hujan es ringan',
-            67 => 'Hujan es',
-            71 => 'Salju ringan',
-            73 => 'Salju',
-            75 => 'Salju lebat',
-            77 => 'Butiran salju',
-            80 => 'Hujan sekejap',
-            81 => 'Hujan sebentar',
-            82 => 'Hujan deras',
-            85 => 'Salju sebentar',
-            86 => 'Salju deras',
-            95 => 'Petir',
-            96 => 'Petir + es ringan',
-            99 => 'Petir + es lebat',
+            0 => 'Clear',
+            1 => 'Mostly clear',
+            2 => 'Cloudy',
+            3 => 'Overcast',
+            45 => 'Fog',
+            48 => 'Freezing fog',
+            51 => 'Light drizzle',
+            53 => 'Moderate drizzle',
+            55 => 'Heavy drizzle',
+            56 => 'Freezing drizzle',
+            57 => 'Heavy freezing drizzle',
+            61 => 'Light rain',
+            63 => 'Rain',
+            65 => 'Heavy rain',
+            66 => 'Light freezing rain',
+            67 => 'Freezing rain',
+            71 => 'Light snow',
+            73 => 'Snow',
+            75 => 'Heavy snow',
+            77 => 'Snow grains',
+            80 => 'Rain showers',
+            81 => 'Short rain showers',
+            82 => 'Heavy rain showers',
+            85 => 'Snow showers',
+            86 => 'Heavy snow showers',
+            95 => 'Thunderstorm',
+            96 => 'Thunderstorm with light hail',
+            99 => 'Thunderstorm with heavy hail',
         ];
 
         return DataTables::of($cuaca)
