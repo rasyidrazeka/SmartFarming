@@ -5,7 +5,7 @@
         @php
             // pakai epoch agar aman untuk Grafana (ms)
             $fromPrediksi = now()->startOfDay()->timestamp * 1000; // hari ini jam 00:00
-            $toPrediksi = now()->addDays(3)->endOfDay()->timestamp * 1000; // hari ini + 7 hari
+            $toPrediksi = now()->addDays(7)->endOfDay()->timestamp * 1000; // hari ini + 7 hari
 
             // URL dasar tanpa var-lokasi
             $temperatureUrl =
