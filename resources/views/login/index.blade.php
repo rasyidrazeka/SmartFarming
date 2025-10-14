@@ -59,7 +59,7 @@
                     <a href="{{ route('login.index') }}"><img src="{{ asset('storage/asset_web/logo.png') }}"
                             alt="img" style="width: 180px; height: auto;"></a>
                 </div>
-                <div class="card my-5">
+                <div class="card my-5 shadow-sm">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-end mb-4">
                             <h3 class="mb-0"><b>Login</b></h3>

@@ -6,7 +6,7 @@
             <label for="start_date" class="form-label">Daily Average Date Range:</label>
             <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Enter the date">
         </div>
-        <div class="card">
+        <div class="card shadow-sm">
             <div class="card-body">
                 <div class="responsive-table-wrapper">
                     <table class="table align-middle table-striped table-bordered" id="table_riwayat_data_cuaca">

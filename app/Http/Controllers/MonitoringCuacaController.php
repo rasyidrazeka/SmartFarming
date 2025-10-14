@@ -30,6 +30,11 @@ class MonitoringCuacaController extends Controller
             ->orderByDesc('time')
             ->first();
 
+        $location = DB::table('locations')
+            ->where('id', $locationId)
+            ->first();
+        $locationName = $location ? $location->public_name : 'Unknown Location';
+
         $weatherDescriptions = [
             0 => 'Clear',
             1 => 'Mostly clear',
@@ -103,6 +108,28 @@ class MonitoringCuacaController extends Controller
             99 => 'bi-cloud-lightning-rain-fill',
         ];
 
+        $forecastData = DB::table('weather_data')
+            ->select(
+                DB::raw('DATE(time) as date'),
+                DB::raw('ROUND(AVG(temperature_2m)) as avg_temp'),
+                DB::raw('MODE() WITHIN GROUP (ORDER BY weather_code) as weather_code')
+            )
+            ->where('location_id', $locationId)
+            ->whereBetween('time', [
+                Carbon::now()->addDay()->startOfDay(),   // mulai besok
+                Carbon::now()->addDays(6)->endOfDay()    // sampai 6 hari ke depan
+            ])
+            ->groupBy(DB::raw('DATE(time)'))
+            ->orderBy(DB::raw('DATE(time)'))
+            ->limit(6)
+            ->get();
+
+        $forecastData = $forecastData->map(function ($item) use ($weatherIcons, $weatherDescriptions) {
+            $item->icon = $weatherIcons[$item->weather_code] ?? 'bi-question-circle';
+            $item->description = $weatherDescriptions[$item->weather_code] ?? 'Unknown';
+            return $item;
+        });
+
         $weatherData = collect();
 
         if ($latestData) {
@@ -148,6 +175,11 @@ class MonitoringCuacaController extends Controller
             'activeMenu',
             'weatherData',
             'locationId',
+            'latestData',
+            'ikonCuaca',
+            'deskripsiCuaca',
+            'locationName',
+            'forecastData',
         ));
     }
 }

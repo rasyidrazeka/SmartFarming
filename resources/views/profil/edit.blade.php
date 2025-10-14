@@ -2,7 +2,7 @@
 @section('title', 'Ubah Profil | Agrilink Vocpro')
 @section('content')
     <div class="card">
-        <div class="card-body">
+        <div class="card-body shadow-sm">
             <form method="POST" action="{{ route('profil.update') }}" class="form-horizontal" enctype="multipart/form-data"
                 id="editPengguna">
                 @csrf {!! method_field('PUT') !!}

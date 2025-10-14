@@ -104,6 +104,7 @@
                 <form action="{{ route('set.location') }}" method="GET" id="locationForm"
                     class="d-flex align-items-center me-4">
                     <input type="hidden" name="redirect_to" id="redirect_to_input" value="{{ url()->current() }}">
+                    <span class="me-2 fw-semibold">Greenhouse:</span>
                     <select name="location_id" id="location_select" class="form-select pe-5">
                         @foreach ($locations as $location)
                             <option value="{{ $location->id }}"

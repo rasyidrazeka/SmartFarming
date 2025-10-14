@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12 col-lg-6">
-        <div class="card" style="border-color: #CED4DA">
+        <div class="card shadow-sm">
             <div class="card-body">
                 <h6 id="titleTemperature_sensor2" data-original="Soil Temperature">Soil Temperature</h6>
                 <div class="ratio ratio-16x9">
@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="col-12 col-lg-6">
-        <div class="card" style="border-color: #CED4DA">
+        <div class="card shadow-sm">
             <div class="card-body">
                 <h6 id="titleHumidity_sensor2" data-original="Soil Humidity">Soil Humidity</h6>
                 <div class="ratio ratio-16x9">
@@ -26,7 +26,7 @@
 </div>
 <div class="row">
     <div class="col-12 col-lg-6">
-        <div class="card" style="border-color: #CED4DA">
+        <div class="card shadow-sm">
             <div class="card-body">
                 <h6 id="titleConductivity_sensor2" data-original="Soil Conductivity">Soil Conductivity</h6>
                 <div class="ratio ratio-16x9">
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="col-12 col-lg-6">
-        <div class="card" style="border-color: #CED4DA">
+        <div class="card shadow-sm">
             <div class="card-body">
                 <h6 id="titlepH_sensor2" data-original="Soil pH">Soil pH</h6>
                 <div class="ratio ratio-16x9">
@@ -52,7 +52,7 @@
 </div>
 <div class="row">
     <div class="col-12 col-lg-6">
-        <div class="card" style="border-color: #CED4DA">
+        <div class="card shadow-sm">
             <div class="card-body">
                 <h6 id="titleNitrogen_sensor2" data-original="Soil Nitrogen">Soil Nitrogen</h6>
                 <div class="ratio ratio-16x9">
@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="col-12 col-lg-6">
-        <div class="card" style="border-color: #CED4DA">
+        <div class="card shadow-sm">
             <div class="card-body">
                 <h6 id="titlePhosphorus_sensor2" data-original="Soil Phosphorus">Soil Phosphorus</h6>
                 <div class="ratio ratio-16x9">
@@ -78,7 +78,7 @@
 </div>
 <div class="row">
     <div class="col-12 col-lg-6">
-        <div class="card" style="border-color: #CED4DA">
+        <div class="card shadow-sm">
             <div class="card-body">
                 <h6 id="titlePotassium_sensor2" data-original="Soil Potassium">Soil Potassium</h6>
                 <div class="ratio ratio-16x9">

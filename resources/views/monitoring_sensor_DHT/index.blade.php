@@ -28,7 +28,7 @@
         <div class="row">
             @foreach ($defaultDataDHT->slice(0, 4) as $item)
                 <div class="col-12 col-lg-3">
-                    <div class="card text-center p-3" style="border-color: #CED4DA">
+                    <div class="card text-center p-3 shadow-sm">
                         <div class="mb-2">
                             <i class="{{ $item['icon'] }} fs-1" style="color: #227066"></i>
                         </div>
@@ -40,7 +40,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-6">
-                <div class="card" style="border-color: #CED4DA">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <h6 id="titleTemperature" data-original="Room Temperature">Room Temperature</h6>
                         <div class="ratio ratio-16x9">
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="col-12 col-lg-6">
-                <div class="card" style="border-color: #CED4DA">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <h6 id="titleHumidity" data-original="Room Humidity">Room Humidity</h6>
                         <div class="ratio ratio-16x9">
@@ -66,7 +66,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-6">
-                <div class="card" style="border-color: #CED4DA">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <h6 id="titleLuminosity" data-original="Light Density">Intensitas Cahaya</h6>
                         <div class="ratio ratio-16x9">

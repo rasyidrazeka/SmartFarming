@@ -3,9 +3,8 @@
 @section('content')
     <div class="container-fluid">
         @php
-            // pakai epoch agar aman untuk Grafana (ms)
-            $fromPrediksi = now()->startOfDay()->timestamp * 1000; // hari ini jam 00:00
-            $toPrediksi = now()->addDays(7)->endOfDay()->timestamp * 1000; // hari ini + 7 hari
+            $fromPrediksi = now()->startOfDay()->timestamp * 1000;
+            $toPrediksi = now()->addDays(3)->endOfDay()->timestamp * 1000;
 
             // URL dasar tanpa var-lokasi
             $temperatureUrl =
@@ -54,7 +53,7 @@
                 <input type="text" class="form-control" name="daterange" id="daterange" placeholder="Enter the date">
             </div>
         </div>
-        <div class="row">
+        {{-- <div class="row">
             @foreach ($weatherData->slice(0, 4) as $item)
                 <div class="col-12 col-lg-3">
                     <div class="card text-center p-3" style="border-color: #CED4DA">
@@ -66,10 +65,100 @@
                     </div>
                 </div>
             @endforeach
+        </div> --}}
+        <div class="row">
+            <div class="col-12 col-lg-7">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex flex-column mb-1">
+                            <div class="p-0">
+                                <h6 class="m-0 p-0" style="font-weight: 600">Current Weather</h6>
+                            </div>
+                            <div class="p-0">
+                                <small class="m-0 p-0" id="currentTime"></small>
+                            </div>
+                            <div class="p-0">
+                                <div class="d-flex flex-row align-items-center p-0">
+                                    <div class="p-0 pe-3">
+                                        @if ($latestData)
+                                            <i class="bi {{ $ikonCuaca }}" style="color: #227066; font-size: 90px"></i>
+                                        @endif
+                                    </div>
+                                    <div class="p-0 pe-0">
+                                        <h1 class="m-0" style="font-size: 60px; font-weight: 500;">
+                                            {{ intval($latestData->temperature_2m) }}</h1>
+                                    </div>
+                                    <div class="ps-0 pb-0 pe-3 align-self-start" style="padding-top: 2.4rem">
+                                        <h1 class="m-0" style="font-size: 30px; font-weight: 500;">°C</h1>
+                                    </div>
+                                    <div class="border-start border-3 border-secondary" style="height: 65px;"></div>
+                                    <div class="d-flex align-items-start flex-column p-0 pe-2 ps-3">
+                                        <h2>{{ $deskripsiCuaca }}</h2>
+                                        <h5>Greenhouse {{ $locationName }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container text-center">
+                            <div class="row">
+                                <div class="col p-0">
+                                    <div class="d-flex flex-column mb-1 align-items-start">
+                                        <div class="p-1 pb-0">Temperature</div>
+                                        <div class="p-1">{{ $latestData->temperature_2m }}° C</div>
+                                    </div>
+                                </div>
+                                <div class="col p-0">
+                                    <div class="d-flex flex-column mb-1 align-items-start">
+                                        <div class="p-1 pb-0">Cloud Cover</div>
+                                        <div class="p-1">{{ $latestData->cloud_cover }}%</div>
+                                    </div>
+                                </div>
+                                <div class="col p-0">
+                                    <div class="d-flex flex-column mb-1 align-items-start">
+                                        <div class="p-1 pb-0">Wind Speed</div>
+                                        <div class="p-1">{{ $latestData->wind_speed_10m }} km/h</div>
+                                    </div>
+                                </div>
+                                <div class="col p-0">
+                                    <div class="d-flex flex-column mb-1 align-items-start">
+                                        <div class="p-1 pb-0">Weather</div>
+                                        <div class="p-1">{{ $deskripsiCuaca }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-5">
+                <div class="card shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="ratio ratio-16x9" style="height: 285px">
+                            <iframe
+                                src="http://labai.polinema.ac.id:3010/d-solo/cept647sue8e8f/cuaca?orgId=1&timezone=browser&refresh=1h&theme=light&panelId=6&__feature.dashboardSceneSolo"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-2">
+            @foreach ($forecastData as $data)
+                <div class="col">
+                    <div class="card text-center shadow-sm" style="border-radius: 15px;">
+                        <div class="card-body p-2">
+                            <h6 class="mb-1">{{ \Carbon\Carbon::parse($data->date)->format('D') }}</h6>
+                            <i class="bi {{ $data->icon }}" style="font-size: 35px; color:#227066;"></i>
+                            <h5 class="my-1">{{ $data->avg_temp }}°C</h5>
+                            <small class="text-muted">{{ $data->description }}</small>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
         <div class="row">
             <div class="col-12 col-lg-6">
-                <div class="card" style="border-color: #CED4DA">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <h6 id="titleTemperature" data-original="Temperature">Temperature</h6>
                         <div class="ratio ratio-16x9">
@@ -79,7 +168,7 @@
                 </div>
             </div>
             <div class="col-12 col-lg-6">
-                <div class="card" style="border-color: #CED4DA">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <h6 id="titleCloudCover" data-original="Cloud Cover">Cloud Cover</h6>
                         <div class="ratio ratio-16x9">
@@ -94,7 +183,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-6">
-                <div class="card" style="border-color: #CED4DA">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <h6 id="titleWindSpeed" data-original="Wind Speed">Wind Speed</h6>
                         <div class="ratio ratio-16x9">
@@ -107,7 +196,7 @@
                 </div>
             </div>
             <div class="col-12 col-lg-6">
-                <div class="card" style="border-color: #CED4DA">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <h6 id="titleWeather" data-original="Weather">Weather</h6>
                         <div class="ratio ratio-16x9">
@@ -334,5 +423,24 @@
                 defaultGrafanaIframe();
             }
         });
+    </script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const options = {
+                weekday: 'long',
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            const formatted = now.toLocaleString('en-US', options);
+            document.getElementById('currentTime').textContent = formatted;
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime(); // Jalankan saat pertama kali
     </script>
 @endpush
