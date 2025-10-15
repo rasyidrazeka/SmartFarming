@@ -12,7 +12,7 @@ class MonitoringSensorDHTController extends Controller
     {
         $breadcrumb = (object) [
             'title' => 'DHT Sensor Monitoring',
-            'paragraph' => 'Monitor sensor data in real time to maintain optimal conditions in the greenhouse',
+            'paragraph' => 'Monitor environmental conditions to maintain optimal climate for plant growth and productivity.',
             'list' => [
                 ['label' => 'Dashboard', 'url' => route('dashboard.index')],
                 ['label' => 'DHT Sensor'],

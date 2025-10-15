@@ -15,7 +15,7 @@ class RiwayatDataDHTController extends Controller
     {
         $breadcrumb = (object) [
             'title' => 'DHT Sensor Data History',
-            'paragraph' => 'Your comprehensive greenhouse condition information center',
+            'paragraph' => 'Analyze historical climate data to understand environmental trends and maintain stable growing conditions for your crops.',
             'list' => [
                 ['label' => 'Dashboard', 'url' => route('dashboard.index')],
                 ['label' => 'DHT Sensor'],

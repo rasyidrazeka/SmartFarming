@@ -12,7 +12,7 @@ class MonitoringCuacaController extends Controller
     {
         $breadcrumb = (object) [
             'title' => 'Weather Forecast',
-            'paragraph' => '7-day weather forecast to help farmers plan planting, watering, and fertilizing efficiently',
+            'paragraph' => 'Monitor temperature, cloud cover, and wind forecasts to make informed decisions for irrigation and crop management.',
             'list' => [
                 ['label' => 'Dashboard', 'url' => route('dashboard.index')],
                 ['label' => 'Weather Forecast'],

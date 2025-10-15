@@ -16,7 +16,7 @@ class RiwayatDataNPKController extends Controller
     {
         $breadcrumb = (object) [
             'title' => 'NPK Sensor Data History',
-            'paragraph' => 'Your comprehensive greenhouse condition information center',
+            'paragraph' => 'Analyze historical nitrogen, phosphorus, and potassium data to track soil condition trends and plan better fertilization strategies.',
             'list' => [
                 ['label' => 'Dashboard', 'url' => route('dashboard.index')],
                 ['label' => 'NPK Sensor'],

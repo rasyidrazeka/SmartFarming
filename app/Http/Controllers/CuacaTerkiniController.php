@@ -12,7 +12,7 @@ class CuacaTerkiniController extends Controller
     {
         $breadcrumb = (object) [
             'title' => 'Current Weather',
-            'paragraph' => 'Monitor weather data in real time to maintain optimal conditions in the greenhouse',
+            'paragraph' => 'Track live temperature, cloud cover, and wind data to maintain optimal growing environments for your crops.',
             'list' => [
                 ['label' => 'Dashboard', 'url' => route('dashboard.index')],
                 ['label' => 'Current Weather'],

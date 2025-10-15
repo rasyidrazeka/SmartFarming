@@ -12,7 +12,7 @@ class DashboardController extends Controller
     {
         $breadcrumb = (object) [
             'title' => 'Dashboard',
-            'paragraph' => 'Your comprehensive greenhouse condition information center',
+            'paragraph' => 'Welcome to the Smart Farming Monitoring System. Visualize sensor and weather data to support precision agriculture.',
             'list' => [
                 ['label' => 'Dashboard'],
             ]

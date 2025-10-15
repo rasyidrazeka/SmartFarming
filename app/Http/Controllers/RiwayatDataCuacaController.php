@@ -14,7 +14,7 @@ class RiwayatDataCuacaController extends Controller
     {
         $breadcrumb = (object) [
             'title' => 'Weather Forecast History',
-            'paragraph' => 'Displaying weather data history recorded every 7 days',
+            'paragraph' => 'Analyze previous weather forecasts to evaluate accuracy, understand climate patterns, and improve future planning.',
             'list' => [
                 ['label' => 'Dashboard', 'url' => route('dashboard.index')],
                 ['label' => 'Weather History Forecast'],

@@ -13,7 +13,7 @@ class MonitoringSensorNPKController extends Controller
     {
         $breadcrumb = (object) [
             'title' => 'NPK Sensor Monitoring',
-            'paragraph' => 'Monitor sensor data in real time to maintain optimal conditions in the greenhouse.',
+            'paragraph' => 'Monitor nitrogen, phosphorus, and potassium to maintain optimal soil fertility and support healthy plant growth.',
             'list' => [
                 ['label' => 'Dashboard', 'url' => route('dashboard.index')],
                 ['label' => 'NPK Sensor'],
